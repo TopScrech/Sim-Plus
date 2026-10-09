@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// A wrapper around NSSearchField so we get a macOS-native search box
 struct SearchField: NSViewRepresentable {

@@ -1,5 +1,5 @@
 import CoreLocation
-import SwiftUI
+import ScrechKit
 
 /// Controls system-wide settings such as time and appearance.
 struct SystemView: View {
@@ -23,19 +23,19 @@ struct SystemView: View {
                 Section {
                     LabeledContent("Device:") {
                         Text("\(simulator.name) – \(simulator.runtime?.description ?? "Unknown OS")")
-                            .textSelection(.enabled)
+                            .enableSelection()
                     }
 
                     LabeledContent("Device ID:") {
                         Text(simulator.udid)
-                            .textSelection(.enabled)
+                            .enableSelection()
                     }
                     .padding(.vertical, 5)
 
                     LabeledContent("Root path:") {
                         Text(simulator.urlForFilePath(.root).relativePath)
                             .truncationMode(.head)
-                            .textSelection(.enabled)
+                            .enableSelection()
                     }
 
                     HStack {
@@ -47,10 +47,10 @@ struct SystemView: View {
                     LabeledContent("Files path:") {
                         VStack(alignment: .leading) {
                             Text(simulator.urlForFilePath(.files).relativePath)
-                                .textSelection(.enabled)
+                                .enableSelection()
 
                             HStack(alignment: .bottom) {
-                                Text(dropHovering ? "Drop to copy" : "Drag files here to copy").font(.caption)
+                                Text(dropHovering ? "Drop to copy" : "Drag files here to copy").caption()
                                 Spacer()
                                 Button("Open in Finder") { openInFinder(.files) }
                                 Button("Open in Terminal") { openInTerminal(.files) }

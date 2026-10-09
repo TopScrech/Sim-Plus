@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Constant strings to store our UserDefaults keys for safer access.
 enum Defaults {

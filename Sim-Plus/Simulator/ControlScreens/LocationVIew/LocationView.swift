@@ -1,5 +1,5 @@
 import MapKit
-import SwiftUI
+import ScrechKit
 import CoreLocation
 
 /// Map view to change simulated user's position
@@ -43,7 +43,6 @@ struct LocationView: View {
     @State private var jitteredLocation: CLLocationCoordinate2D?
 
     @State private var isJittering: Bool = false
-    private let jitterTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var annotations: [CLLocationCoordinate2D] {
         if let pinnedLocation = pinnedLocation {
@@ -76,7 +75,7 @@ struct LocationView: View {
                                     Map(coordinateRegion: $currentLocation.region, annotationItems: annotations) { location in
                                         MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), tint: .red)
                                     }
-                                    .cornerRadius(5)
+                                    .clipShape(.rect(cornerRadius: 5))
 
                                     Circle()
                                         .stroke(Color.blue, lineWidth: 4)
@@ -101,7 +100,7 @@ struct LocationView: View {
                                     if results.isEmpty {
                                         Text("No suggestions found")
                                             .frame(maxWidth: .infinity)
-                                            .foregroundColor(.secondary)
+                                            .secondary()
                                             .padding(.vertical, 8)
                                     }
                                 }
@@ -111,7 +110,7 @@ struct LocationView: View {
                             .frame(maxWidth: .infinity)
                             .background(.background)
                             .padding(.top, 24)
-                            .cornerRadius(12)
+                            .clipShape(.rect(cornerRadius: 12))
                             .opacity(presentResults ? 1 : 0)
                         }
 
@@ -129,7 +128,7 @@ struct LocationView: View {
                                     }
                             }
                         }
-                        .cornerRadius(5)
+                        .clipShape(.rect(cornerRadius: 5))
                         .frame(width: proxy.size.width * 0.3)
                     }
                 }
@@ -137,7 +136,7 @@ struct LocationView: View {
 
                 HStack {
                     Text("Coordinates: \(locationText)")
-                        .textSelection(.enabled)
+                        .enableSelection()
                     Button("Copy", action: copyCoordinatesToClipboard)
                     Spacer()
                     Toggle("Jitter location", isOn: $isJittering)
@@ -153,13 +152,22 @@ struct LocationView: View {
             Text("Location")
         }
         .padding()
-        .onReceive(jitterTimer) { _ in
+        .task(id: isJittering) {
             guard isJittering else {
                 jitteredLocation = nil
                 return
             }
 
-            jitterLocation()
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(1))
+                    jitterLocation()
+                }
+            } catch is CancellationError {
+                // Stop jittering when disabled or when the view disappears
+            } catch {
+                print(error.localizedDescription)
+            }
         }
         .alert("Save location", isPresented: $isShowingNewLocationAlert) {
             TextField("Name", text: $newLocationName)

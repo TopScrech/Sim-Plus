@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Hosts a LoadingView followed by the main ControlView, or a LoadingFailedView if simctl failed.
 struct MainView: View {

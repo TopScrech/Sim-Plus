@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct TogglesFormView: View {
     @EnvironmentObject private var preferences: Preferences

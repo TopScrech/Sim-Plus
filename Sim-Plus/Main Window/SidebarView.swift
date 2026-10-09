@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Shows the list of available simulators, allowing selection, filtering, and deletion.
 struct SidebarView: View {
@@ -49,8 +49,8 @@ struct SidebarView: View {
                 } label: {
                     Image(systemName: "power")
                         .resizable()
-                        .foregroundColor(preferences.shouldShowOnlyActiveDevices ? .accentColor : .secondary)
-                        .aspectRatio(contentMode: .fit)
+                        .foregroundStyle(preferences.shouldShowOnlyActiveDevices ? Color.accentColor : Color.secondary)
+                        .scaledToFit()
                         .frame(width: 16)
                         .padding(.horizontal, 2)
                 }
@@ -61,7 +61,7 @@ struct SidebarView: View {
                 SearchField("Filter", text: $filterText.onChange(controller.filterSimulators), onClear: {})
             }
             .padding(2)
-            .sheet(isPresented: $shouldShowDeleteAlert) {
+            .sheet($shouldShowDeleteAlert) {
                 SimulatorActionSheet(
                     icon: controller.selectedSimulators[0].image,
                     message: "Delete Simulators?",

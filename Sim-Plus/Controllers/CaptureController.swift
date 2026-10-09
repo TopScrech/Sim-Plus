@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Handles all screenshotting and video creation.
 class CaptureController: ObservableObject {
@@ -48,8 +48,11 @@ class CaptureController: ObservableObject {
                             if let tiff = result?.tiffRepresentation {
                                 let bitmap = NSBitmapImageRep(data: tiff)
                                 if let compressedBitmap = bitmap?.representation(using: resolvedFormat.nsFileType, properties: [:]) {
-                                    try FileManager.default.removeItem(at: filename)
-                                    try compressedBitmap.write(to: filename)
+                                    do {
+                                        try compressedBitmap.write(to: filename, options: .atomic)
+                                    } catch {
+                                        print(error.localizedDescription)
+                                    }
                                 }
                             }
                         }
@@ -120,16 +123,20 @@ class CaptureController: ObservableObject {
 
         exportDescription = "GIF"
 
-        Task {
-            let result = try await sourceURL.convertToGIF(maxSize: size) { [weak self] progress in
-                self?.exportProgress = progress
-            }
+        Task { [weak self] in
+            do {
+                let result = try await sourceURL.convertToGIF(maxSize: size) { [weak self] progress in
+                    self?.exportProgress = progress
+                }
 
-            switch result {
-            case .success(let gifURL):
-                try? FileManager.default.moveItem(atPath: gifURL.path, toPath: gifExtension)
-            case .failure(let reason):
-                print(reason.localizedDescription)
+                switch result {
+                case .success(let gifURL):
+                    try FileManager.default.moveItem(atPath: gifURL.path, toPath: gifExtension)
+                case .failure(let reason):
+                    print(reason.localizedDescription)
+                }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }

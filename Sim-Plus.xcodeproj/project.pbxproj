@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AAB200000000000000000003 /* ScrechKit in Frameworks */ = {isa = PBXBuildFile; productRef = AAB200000000000000000002 /* ScrechKit */; };
 		B852E2EB2DA39225003F5FD6 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				B852E2EB2DA39225003F5FD6 /* KeyboardShortcuts in Frameworks */,
+				AAB200000000000000000003 /* ScrechKit in Frameworks */,
 			);
 		};
 		B07F584B23F9F83800256D5D /* Frameworks */ = {
@@ -130,6 +132,7 @@
 			name = "Sim-Plus";
 			packageProductDependencies = (
 				B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */,
+				AAB200000000000000000002 /* ScrechKit */,
 			);
 			productName = ControlRoom;
 			productReference = 511BA57923F3FFEA00E3E660 /* Control Room.app */;
@@ -185,6 +188,7 @@
 			mainGroup = 511BA57023F3FFEA00E3E660;
 			packageReferences = (
 				B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				AAB200000000000000000001 /* XCRemoteSwiftPackageReference "ScrechKit" */,
 			);
 			preferredProjectObjectVersion = 110;
 			productRefGroup = 511BA57A23F3FFEA00E3E660 /* Products */;
@@ -416,6 +420,7 @@
 					"$(inherited)",
 					/Library/Developer/PrivateFrameworks,
 				);
+				LM_SKIP_METADATA_EXTRACTION = YES;
 				INFOPLIST_FILE = "Sim-Plus/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +457,7 @@
 					"$(inherited)",
 					/Library/Developer/PrivateFrameworks,
 				);
+				LM_SKIP_METADATA_EXTRACTION = YES;
 				INFOPLIST_FILE = "Sim-Plus/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -478,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				LM_SKIP_METADATA_EXTRACTION = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -500,6 +507,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				LM_SKIP_METADATA_EXTRACTION = YES;
 				INFOPLIST_FILE = UnitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -544,6 +552,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AAB200000000000000000001 /* XCRemoteSwiftPackageReference "ScrechKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TopScrech/ScrechKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.13;
+			};
+		};
 		B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -555,6 +571,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AAB200000000000000000002 /* ScrechKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAB200000000000000000001 /* XCRemoteSwiftPackageReference "ScrechKit" */;
+			productName = ScrechKit;
+		};
 		B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;

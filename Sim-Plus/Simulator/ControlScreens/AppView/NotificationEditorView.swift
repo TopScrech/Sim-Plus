@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct NotificationEditorView: View {
     @EnvironmentObject var preferences: Preferences
@@ -38,7 +38,7 @@ struct NotificationEditorView: View {
                 VStack(spacing: 16) {
                     VStack(alignment: .leading) {
                         Text("Aps")
-                            .font(.headline)
+                            .headline()
 
                         TextEditor(text: .constant(notificationAps.json))
                             .font(.system(.body, design: .monospaced))
@@ -53,7 +53,7 @@ struct NotificationEditorView: View {
 
                     VStack(alignment: .leading) {
                         Text("User info")
-                            .font(.headline)
+                            .headline()
 
                         TextEditor(text: $userInfo)
                             .font(.system(.body, design: .monospaced))
@@ -126,7 +126,7 @@ private struct APSFormView: View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 15) {
                 Text("Alert")
-                    .font(.headline)
+                    .headline()
                 TabView(selection: $selectedTabIndex) {
                     Group {
                         VStack(spacing: 10) {
@@ -174,7 +174,7 @@ private struct APSFormView: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 Text("Sound")
-                    .font(.headline)
+                    .headline()
 
                 VStack(alignment: .leading, spacing: 10) {
                     FieldView(title: "File name",
@@ -195,7 +195,7 @@ private struct APSFormView: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 Text("Misc")
-                    .font(.headline)
+                    .headline()
 
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 10) {

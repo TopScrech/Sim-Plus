@@ -1,6 +1,6 @@
 import Cocoa
 import Combine
-import SwiftUI
+import ScrechKit
 
 class MainWindowController: NSWindowController {
     // Without this, AppKit won't call -loadWindow

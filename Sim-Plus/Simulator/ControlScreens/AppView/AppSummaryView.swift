@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct AppSummaryView: View {
     let application: Application
@@ -9,11 +9,11 @@ struct AppSummaryView: View {
 
             VStack(alignment: .leading) {
                 Text(application.displayName)
-                    .font(.headline)
+                    .headline()
                 Text(application.versionNumber.isNotEmpty ? "Version \(application.versionNumber)" : "")
-                    .font(.caption)
+                    .caption()
                 Text(application.buildNumber.isNotEmpty ? "Build \(application.buildNumber)" : "")
-                    .font(.caption)
+                    .caption()
             }
         }
     }

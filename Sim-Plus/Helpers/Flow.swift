@@ -1,6 +1,6 @@
 // Thank you @Zef! https://gist.github.com/zef/e48e44a3a673c36b5a0c3d0eefb676ce
 
-import SwiftUI
+import ScrechKit
 
 struct CollectionView<Items, Content>: View where Items: RandomAccessCollection, Items.Element: Identifiable, Content: View {
     struct Row: Identifiable {

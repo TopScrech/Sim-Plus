@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 import KeyboardShortcuts
 
 struct NotificationsFormView: View {

@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct PickersFormView: View {
     /// The user's settings for capturing
@@ -48,7 +48,7 @@ struct PickersFormView: View {
                 VStack(alignment: .leading) {
                     Text("Add device chrome to screenshots")
                     Text("This is an experimental feature and may not function properly yet.")
-                        .font(.caption)
+                        .caption()
                 }
             }
         }

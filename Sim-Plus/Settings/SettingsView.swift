@@ -1,40 +1,40 @@
 import KeyboardShortcuts
-import SwiftUI
+import ScrechKit
 
 struct SettingsView: View {
     var body: some View {
         TabView {
             TogglesFormView()
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .maxFrame(.infinity)
                 .tabItem {
                     Label("Window", systemImage: "macwindow")
                 }
 
             NotificationsFormView()
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .maxFrame(.infinity)
                 .tabItem {
                     Label("Shortcuts", systemImage: "keyboard")
                 }
 
             PickersFormView()
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .maxFrame(.infinity)
                 .tabItem {
                     Label("Screenshots", systemImage: "camera.on.rectangle")
                 }
 
             ColorPickerView()
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .maxFrame(.infinity)
                 .tabItem {
                     Label("Colors", systemImage: "paintpalette")
                 }
 
             PathToTerminalTextFieldView()
                 .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .maxFrame(.infinity)
                 .tabItem {
                     Label("Locations", systemImage: "externaldrive")
                 }

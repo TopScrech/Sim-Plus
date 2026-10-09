@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct SnapshotsView: View {
 	let simulator: Simulator
@@ -42,14 +42,13 @@ struct SnapshotsView: View {
                                         }
 
                                         Text(snapshot.id)
-                                            .fontWeight(.semibold)
+                                            .semibold()
 
                                         Group {
                                             Text(snapshot.creationDate.formatted(date: .numeric, time: .standard))
                                             Text(formatter.string(from: folderSize.converted(to: .gigabytes)))
                                         }
-                                        .font(.callout)
-                                        .fontWeight(.thin)
+                                        .callout(.thin)
 
                                         Button {
                                             delete(snapshot: snapshot.id)
@@ -71,7 +70,7 @@ struct SnapshotsView: View {
                     Image(systemName: simulator.deviceFamily.snapshotUnavailableIcon)
                     Text("No snapshots yet")
                 }
-                .font(.title)
+                .title()
 			}
 		}
         .tabItem {

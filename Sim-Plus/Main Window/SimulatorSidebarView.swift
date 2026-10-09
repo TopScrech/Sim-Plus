@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 import KeyboardShortcuts
 
 /// Shows one simulator in the sidebar.

@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 import CoreLocation
 
 struct LocalSearchRowView: View {
@@ -15,18 +15,18 @@ struct LocalSearchRowView: View {
 
                 Image(systemName: "mappin.circle.fill")
                     .symbolRenderingMode(.multicolor)
-                        .font(.system(size: 24))
+                        .title2()
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(result.title)
                         .font(.body)
-                        .foregroundColor(.primary)
+                        .foregroundStyle(.primary)
                         .lineLimit(1)
 
                     if let subtitle = result.subtitle {
                         Text(subtitle)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                            .caption()
+                            .secondary()
                             .lineLimit(1)
                     }
                 }
@@ -38,7 +38,7 @@ struct LocalSearchRowView: View {
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(isHovered ? .blue : .clear)
-        .cornerRadius(8)
+        .clipShape(.rect(cornerRadius: 8))
         .onChange(of: lastHoverId) {
             isHovered = $0 == result.id
         }

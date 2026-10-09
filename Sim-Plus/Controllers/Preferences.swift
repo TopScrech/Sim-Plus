@@ -1,6 +1,6 @@
 import Combine
 import KeyboardShortcuts
-import SwiftUI
+import ScrechKit
 
 final class Preferences: ObservableObject {
     /// For parts of the app that want to observe a particular value directly,

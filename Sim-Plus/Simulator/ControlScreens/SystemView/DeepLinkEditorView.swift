@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct DeepLinkEditorView: View {
     @EnvironmentObject var deepLinks: DeepLinksController
@@ -25,7 +25,7 @@ struct DeepLinkEditorView: View {
     var body: some View {
         VStack {
             Text("Saved Deep Links")
-                .font(.title)
+                .title()
 
             Text("Create named deep links or other URLs to make them easier to open repeatedly inside Control Room. **Tip:** Adjusting the sort order adjusts the order here, in the System tab, and in the menu bar list.")
 
@@ -80,7 +80,7 @@ struct DeepLinkEditorView: View {
         } message: {
             Text("Make sure you include a schema, e.g. https:// or yourapp://")
         }
-        .sheet(isPresented: $showingEditSheet, content: {
+        .sheet($showingEditSheet, content: {
             EditDeepLinkView(deepLink: $selection)
         })
         .onChange(of: sortOrder) { newOrder in
@@ -120,7 +120,7 @@ private extension DeepLinkEditorView {
         var body: some View {
             VStack {
                 Text("Edit Deep Link")
-                    .font(.title)
+                    .title()
 
                 TextField("Name", text: $name)
                 TextField("URL", text: $url)

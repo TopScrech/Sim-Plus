@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct ColorsView: View {
     enum ColorOption {
@@ -36,12 +36,12 @@ struct ColorsView: View {
                             Circle()
                                 .strokeBorder(.primary, lineWidth: 1)
                         }
-                        .frame(width: 50, height: 50)
+                        .frame(50)
 
                     Text(pickedColor.hex)
-                        .font(.title)
+                        .title()
                         .textCase(uppercaseHex ? .uppercase : .lowercase)
-                        .textSelection(.enabled)
+                        .enableSelection()
                 }
                 .draggable(assetCatalogData(for: pickedColor))
                 .padding(10)
@@ -50,13 +50,13 @@ struct ColorsView: View {
                     LabeledContent("SwiftUI code:") {
                         Text(pickedColor.swiftUICode(roundedTo: colorPickerAccuracy))
                             .font(.body.monospaced())
-                            .textSelection(.enabled)
+                            .enableSelection()
                     }
 
                     LabeledContent("UIKit code:") {
                         Text(pickedColor.uiKitCode(roundedTo: colorPickerAccuracy))
                             .font(.body.monospaced())
-                            .textSelection(.enabled)
+                            .enableSelection()
                     }
                     .padding(.bottom, 10)
                 }
@@ -66,7 +66,7 @@ struct ColorsView: View {
                 .frame(height: 40)
 
             Text("Previous Colors")
-                .font(.headline)
+                .headline()
 
             Table(of: PickedColor.self, selection: $previouslyPickedSelection.onChange(updatePickedColor)) {
                 TableColumn("Color") { color in
@@ -76,7 +76,7 @@ struct ColorsView: View {
                             Circle()
                                 .strokeBorder(.primary, lineWidth: 1)
                         }
-                        .frame(width: 24, height: 24)
+                        .frame(24)
                 }
                 .width(40)
 

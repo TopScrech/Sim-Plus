@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct SimulatorActionSheet<Content: View>: View {
     @Environment(\.presentationMode) var presentationMode
@@ -38,7 +38,7 @@ struct SimulatorActionSheet<Content: View>: View {
 
                 VStack(alignment: .leading) {
                     Text(message)
-                        .fontWeight(.bold)
+                        .bold()
                         .lineLimit(1)
 
                     Text(informativeText)

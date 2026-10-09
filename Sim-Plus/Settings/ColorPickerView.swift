@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct ColorPickerView: View {
     /// Whether hex strings should be printed in uppercase or not.

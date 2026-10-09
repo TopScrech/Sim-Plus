@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct AboutView: View {
     var appName: String {
@@ -25,28 +25,28 @@ struct AboutView: View {
             Image(nsImage: NSImage(named: NSImage.applicationIconName)!)
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fit)
-                .frame(width: 64, height: 64)
+                .frame(64)
 
             Text("Control Room")
-                .fontWeight(.bold)
+                .bold()
 
             Text("Version \(appVersion) (\(appBuild))")
-                .font(.caption)
+                .caption()
 
             if authors.isNotEmpty {
                 Text("Built thanks to the contributions of:")
-                    .font(.caption)
+                    .caption()
 
                 // contributors
                 CollectionView(authors, horizontalSpacing: 0, horizontalAlignment: .center, verticalSpacing: 0) { author in
                     Link("@\(author.login)", destination: author.htmlUrl)
                         .padding(2)
                 }
-                .font(.caption)
+                .caption()
             }
 
             Text(copyright)
-                .font(.caption)
+                .caption()
         }
         .padding(20)
     }

@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Controls features relating to one specific app.
 struct AppView: View {

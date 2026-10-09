@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Controls WiFi and cellular data state for the whole device.
 struct StatusBarView: View {
@@ -105,7 +105,8 @@ struct StatusBarView: View {
 
                     VStack(spacing: 0) {
 						Text("Current battery percentage: \(Int(round(batteryLevel)))%")
-							.font(.callout.monospacedDigit())
+							.callout()
+							.monospacedDigit()
 
 						Slider(
 							value: $batteryLevel,

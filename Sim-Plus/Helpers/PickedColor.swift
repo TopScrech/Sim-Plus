@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// A color struct that can be saved easily and also identified uniquely in SwiftUI.
 struct PickedColor: Identifiable, Codable {

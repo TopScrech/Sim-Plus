@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// A horizontal split view that shows a left-hand sidebar of simulators and right-hand details.
 struct SplitLayoutView: View {
@@ -18,7 +18,7 @@ struct SplitLayoutView: View {
 				switch controller.selectedSimulatorIDs.count {
 				case 0:
 					Text("Select a simulator from the list.")
-						.frame(maxWidth: .infinity, maxHeight: .infinity)
+						.maxFrame(.infinity)
 				case 1:
 					ControlView(controller: controller,
 								simulator: controller.selectedSimulators[0],
@@ -35,7 +35,7 @@ struct SplitLayoutView: View {
 						.onDrop(of: [.fileURL], isTargeted: $dropHovering) { providers in
 							return copyFilesFromProviders(providers, toFilePath: .files)
 						}
-						.frame(maxWidth: .infinity, maxHeight: .infinity)
+						.maxFrame(.infinity)
 				}
             }
         }

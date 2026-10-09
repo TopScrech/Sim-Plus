@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// The main tab view to control simulator settings.
 struct ControlView: View {

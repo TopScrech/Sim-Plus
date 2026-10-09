@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Shown when loading the simulator data from simctl has failed.
 struct LoadingFailedView: View {
@@ -9,7 +9,7 @@ struct LoadingFailedView: View {
         VStack(spacing: 10) {
             Text(title)
                 .multilineTextAlignment(.center)
-                .font(.headline)
+                .headline()
                 .padding(.horizontal)
 
             Text(text)

@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct AppIcon: View {
     let application: Application
@@ -8,8 +8,8 @@ struct AppIcon: View {
         if let icon = application.icon {
             Image(nsImage: icon)
                 .resizable()
-                .cornerRadius(width / 5)
-                .frame(width: width, height: width)
+                .clipShape(.rect(cornerRadius: width / 5))
+                .frame(width)
         } else {
             Rectangle()
                 .fill(Color.clear)
@@ -17,7 +17,7 @@ struct AppIcon: View {
                     RoundedRectangle(cornerRadius: width / 5)
                         .stroke(Color.primary, style: StrokeStyle(lineWidth: 0.5, dash: [width / 20 + 1]))
                 )
-                .frame(width: width, height: width)
+                .frame(width)
         }
     }
 }

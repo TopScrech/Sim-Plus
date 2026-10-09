@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 /// Loads, manages, and saves the user's collection of picked colors.
 class ColorHistoryController: ObservableObject {

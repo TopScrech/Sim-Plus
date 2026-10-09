@@ -1,5 +1,5 @@
 import KeyboardShortcuts
-import SwiftUI
+import ScrechKit
 
 @main
 struct ControlRoomApp: App {

@@ -1,4 +1,4 @@
-import SwiftUI
+import ScrechKit
 
 struct OverridesView: View {
     let simulator: Simulator
@@ -63,7 +63,7 @@ struct OverridesView: View {
                     }
                     HStack {
                         Button("Set Language/Locale", action: updateLanguage)
-                        Text("(Requires Reboot)").font(.system(size: 11)).foregroundColor(.secondary)
+                        Text("(Requires Reboot)").caption().secondary()
                     }
                 }
 
@@ -72,7 +72,7 @@ struct OverridesView: View {
 
                 Section(header:
                     Text("Accessibility overrides")
-                        .font(.headline)
+                        .headline()
                 ) {
                     Picker("Content size:", selection: $contentSize) {
                         ForEach(SimCtl.UI.ContentSizes.allCases, id: \.self) { size in

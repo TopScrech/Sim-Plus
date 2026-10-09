@@ -1,6 +1,6 @@
 import Combine
 import Foundation
-import SwiftUI
+import ScrechKit
 
 /// A centralized class that loads simulator data and handles filtering.
 class SimulatorsController: ObservableObject {
