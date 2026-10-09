@@ -2,13 +2,13 @@ import ScrechKit
 
 /// A horizontal split view that shows a left-hand sidebar of simulators and right-hand details.
 struct SplitLayoutView: View {
-    @ObservedObject var controller: SimulatorsController
+    @Environment(SimulatorsController.self) var controller
 
 	@State private var dropHovering: Bool = false
 
     var body: some View {
         NavigationSplitView {
-            SidebarView(controller: controller)
+            SidebarView()
                 .frame(minWidth: 220)
         } detail: {
             // Use a GeometryReader here to take up as much space as possible
@@ -20,8 +20,7 @@ struct SplitLayoutView: View {
 					Text("Select a simulator from the list.")
 						.maxFrame(.infinity)
 				case 1:
-					ControlView(controller: controller,
-								simulator: controller.selectedSimulators[0],
+					ControlView(simulator: controller.selectedSimulators[0],
 								applications: controller.applications)
 						.padding()
 				default:
@@ -52,7 +51,8 @@ struct SplitLayoutView: View {
 struct SplitLayoutView_Previews: PreviewProvider {
     static var previews: some View {
         let preferences = Preferences()
-        SplitLayoutView(controller: SimulatorsController(preferences: preferences))
+        SplitLayoutView()
+            .environment(SimulatorsController(preferences: preferences))
             .environmentObject(preferences)
     }
 }

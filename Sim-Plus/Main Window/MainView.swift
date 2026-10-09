@@ -2,10 +2,13 @@ import ScrechKit
 
 /// Hosts a LoadingView followed by the main ControlView, or a LoadingFailedView if simctl failed.
 struct MainView: View {
-    @ObservedObject var controller: SimulatorsController
-    @EnvironmentObject var uiState: UIState
+    @Environment(SimulatorsController.self) var controller
+    @Environment(UIState.self) var uiState
+    @EnvironmentObject private var preferences: Preferences
 
     var body: some View {
+        @Bindable var uiState = uiState
+
 		Group {
 			switch controller.loadingStatus {
 			case .failed:
@@ -19,10 +22,18 @@ struct MainView: View {
 					text: "If you already have Xcode 11.4+ installed, go to Xcode's Preferences, choose the Locations tab, then make sure Xcode is selected for Command Line Tools."
 				)
 			case .success:
-				SplitLayoutView(controller: controller)
+				SplitLayoutView()
 			default:
 				LoadingView()
 			}
+        }
+        .task {
+            await controller.watchSimulators()
+        }
+        .onChange(of: [preferences.showDefaultSimulator,
+                       preferences.showBootedDevicesFirst,
+                       preferences.shouldShowOnlyActiveDevices]) {
+            controller.filterSimulators()
         }
         .frame(minWidth: 800, maxWidth: .infinity, minHeight: 550, maxHeight: .infinity)
         .sheet(item: $uiState.currentSheet, content: sheetView)
@@ -35,7 +46,7 @@ struct MainView: View {
 			case .preferences:
 				SettingsView()
 			case .createSimulator:
-				CreateSimulatorActionSheet(controller: controller)
+				CreateSimulatorActionSheet(deviceType: controller.deviceTypes.first, runtime: controller.runtimes.first)
 			case .deepLinkEditor:
 				DeepLinkEditorView()
 			case .notificationEditor:
@@ -73,7 +84,11 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(controller: SimulatorsController(preferences: Preferences()))
-            .environmentObject(UIState.shared)
+        let preferences = Preferences()
+        MainView()
+            .environment(SimulatorsController(preferences: preferences))
+            .environmentObject(preferences)
+            .environment(DeepLinksController())
+            .environment(UIState.shared)
     }
 }

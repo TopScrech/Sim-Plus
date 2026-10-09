@@ -1,12 +1,6 @@
-import Combine
-import KeyboardShortcuts
 import ScrechKit
 
 final class Preferences: ObservableObject {
-    /// For parts of the app that want to observe a particular value directly,
-    /// they need a way to be notified AFTER the value has changed.
-    let objectDidChange = PassthroughSubject<Void, Never>()
-
     @AppStorage("CRWantsMenuBarIcon") var wantsMenuBarIcon = true
     @AppStorage("CRWantsFloatingWindow") var wantsFloatingWindow = false
 

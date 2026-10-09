@@ -2,7 +2,8 @@ import Foundation
 import MapKit
 
 @MainActor
-class LocalSearchController: NSObject, ObservableObject {
+@Observable
+class LocalSearchController: NSObject {
     /// Prevents duplicate queries from being made
     private var lastQuery: String = ""
 
@@ -10,7 +11,7 @@ class LocalSearchController: NSObject, ObservableObject {
     private var callback: (([LocalSearchResult]) -> Void)?
 
     /// the MKLocalSearchCompleter used to make local search requests
-    private lazy var localSearchCompleter: MKLocalSearchCompleter = {
+    @ObservationIgnored private lazy var localSearchCompleter: MKLocalSearchCompleter = {
         let completer = MKLocalSearchCompleter()
         completer.resultTypes = [.address, .pointOfInterest]
         completer.delegate = self

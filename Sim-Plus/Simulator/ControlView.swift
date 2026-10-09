@@ -3,10 +3,7 @@ import ScrechKit
 /// The main tab view to control simulator settings.
 struct ControlView: View {
     /// Used to handle creating screenshots, videos, and GIFs.
-    @StateObject private var captureController = CaptureController()
-
-    /// Let's us watch the list of active simulators.
-    @ObservedObject var controller: SimulatorsController
+    @State private var captureController = CaptureController()
 
     let simulator: Simulator
     let applications: [Application]
@@ -15,10 +12,10 @@ struct ControlView: View {
         TabView {
             SystemView(simulator: simulator)
                 .disabled(simulator.state != .booted)
-            SnapshotsView(simulator: simulator, controller: controller)
+            SnapshotsView(simulator: simulator)
             Group {
                 AppView(simulator: simulator, applications: applications)
-                LocationView(controller: controller, simulator: simulator)
+                LocationView(simulator: simulator)
                 StatusBarView(simulator: simulator)
                 OverridesView(simulator: simulator)
                 ColorsView()
@@ -89,9 +86,10 @@ struct ControlView: View {
 
 struct ControlView_Previews: PreviewProvider {
     static var previews: some View {
-        ControlView(controller: .init(preferences: .init()),
-                    simulator: .example,
+        ControlView(simulator: .example,
                     applications: [])
+            .environment(SimulatorsController(preferences: Preferences()))
             .environmentObject(Preferences())
+            .environment(DeepLinksController())
     }
 }

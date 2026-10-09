@@ -1,9 +1,10 @@
 import ScrechKit
 
 /// Loads, manages, and saves the user's collection of picked colors.
-class ColorHistoryController: ObservableObject {
+@Observable
+class ColorHistoryController {
     /// The list of colors the user has picked over time.
-    @Published private(set) var colors: [PickedColor]
+    private(set) var colors: [PickedColor]
 
     /// The UserDefaults key where we save our picked colors.
     private let defaultsKey = "CRColorHistory"

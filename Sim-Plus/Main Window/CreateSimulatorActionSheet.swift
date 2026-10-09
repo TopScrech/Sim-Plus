@@ -1,23 +1,23 @@
 import ScrechKit
 
 struct CreateSimulatorActionSheet: View {
-    let controller: SimulatorsController
+    @Environment(SimulatorsController.self) private var controller
 
-    @State private var deviceType: DeviceType
-    @State private var runtime: Runtime
+    @State private var deviceType: DeviceType?
+    @State private var runtime: Runtime?
     @State private var name: String = ""
 
-    init(controller: SimulatorsController) {
-        self.controller = controller
-        _deviceType = State(initialValue: controller.deviceTypes[0])
-        _runtime = State(initialValue: controller.runtimes[0])
+    init(deviceType: DeviceType?, runtime: Runtime?) {
+        _deviceType = State(initialValue: deviceType)
+        _runtime = State(initialValue: runtime)
     }
 
     private var canCreate: Bool {
-        name.isNotEmpty && warning == nil
+        name.isNotEmpty && deviceType != nil && runtime != nil && warning == nil
     }
 
     private var warning: String? {
+        guard let deviceType, let runtime else { return nil }
         let supportedFamilies = runtime.supportedFamilies
         if supportedFamilies.contains(deviceType.family) { return nil }
 
@@ -27,7 +27,7 @@ struct CreateSimulatorActionSheet: View {
 
     var body: some View {
         SimulatorActionSheet(
-            icon: (deviceType.modelTypeIdentifier ?? .defaultiPhone).icon,
+            icon: (deviceType?.modelTypeIdentifier ?? .defaultiPhone).icon,
             message: "Create Simulator",
             informativeText: "Choose the device type and operating system for the new simulator",
             confirmationTitle: "Create",
@@ -39,13 +39,13 @@ struct CreateSimulatorActionSheet: View {
 
                     Picker("Device", selection: $deviceType) {
                         ForEach(controller.deviceTypes) {
-                            Text($0.name).tag($0)
+                            Text($0.name).tag(Optional($0))
                         }
                     }
 
                     Picker("System", selection: $runtime) {
                         ForEach(controller.runtimes) {
-                            Text($0.name).tag($0)
+                            Text($0.name).tag(Optional($0))
                         }
                     }
 
@@ -64,6 +64,7 @@ struct CreateSimulatorActionSheet: View {
     }
 
     private func confirm() {
+        guard let deviceType, let runtime else { return }
         SimCtl.create(name: name, deviceType: deviceType, runtime: runtime)
     }
 }

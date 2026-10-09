@@ -1,6 +1,7 @@
-import Combine
+import Foundation
 
-class UIState: ObservableObject {
+@Observable
+class UIState {
     enum Sheet: Int, Identifiable {
         case preferences
         case createSimulator
@@ -18,8 +19,8 @@ class UIState: ObservableObject {
     }
 
     static let shared = UIState()
-    @Published var currentSheet: Sheet?
-    @Published var currentAlert: Alert?
+    var currentSheet: Sheet?
+    var currentAlert: Alert?
 
     private init() { }
 }

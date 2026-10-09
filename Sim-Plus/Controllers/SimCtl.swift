@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 
 /// A container for all the functionality for talking to simctl.
@@ -7,30 +6,20 @@ enum SimCtl: CommandLineCommandExecuter {
 
     static let launchPath = "/usr/bin/xcrun"
 
-    static func watchDeviceList() -> AnyPublisher<DeviceList, SimCtl.Error> {
-        Timer.publish(every: 5, on: .main, in: .common)
-            .autoconnect()
-            .setFailureType(to: SimCtl.Error.self)
-            .flatMap { _ in return SimCtl.listDevices() }
-            .prepend(SimCtl.listDevices())
-            .removeDuplicates()
-            .eraseToAnyPublisher()
+    static func listDeviceTypes() async throws -> DeviceTypeList {
+        try await executeJSON(.list(filter: .devicetypes, flags: [.json]))
     }
 
-    static func listDeviceTypes() -> AnyPublisher<DeviceTypeList, SimCtl.Error> {
-        executeJSON(.list(filter: .devicetypes, flags: [.json]))
+    static func listDevices() async throws -> DeviceList {
+        try await executeJSON(.list(filter: .devices, search: .available, flags: [.json]))
     }
 
-    static func listDevices() -> AnyPublisher<DeviceList, SimCtl.Error> {
-        executeJSON(.list(filter: .devices, search: .available, flags: [.json]))
+    static func listRuntimes() async throws -> RuntimeList {
+        try await executeJSON(.list(filter: .runtimes, flags: [.json]))
     }
 
-    static func listRuntimes() -> AnyPublisher<RuntimeList, SimCtl.Error> {
-        executeJSON(.list(filter: .runtimes, flags: [.json]))
-    }
-
-    static func listApplications(_ simulator: String) -> AnyPublisher<ApplicationsList, SimCtl.Error> {
-        executePropertyList(.listApps(deviceId: simulator, flags: [.json]))
+    static func listApplications(_ simulator: String) async throws -> ApplicationsList {
+        try await executePropertyList(.listApps(deviceId: simulator, flags: [.json]))
     }
 
     static func boot(_ simulator: Simulator) {

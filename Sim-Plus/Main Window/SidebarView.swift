@@ -3,7 +3,7 @@ import ScrechKit
 /// Shows the list of available simulators, allowing selection, filtering, and deletion.
 struct SidebarView: View {
     @EnvironmentObject var preferences: Preferences
-    @ObservedObject var controller: SimulatorsController
+    @Environment(SimulatorsController.self) var controller
 
     @AppStorage("CRSidebar_FilterText") private var filterText = ""
     @AppStorage("CRLastSimulatorUDID") private var lastSimulatorUDID = "booted"
@@ -23,6 +23,8 @@ struct SidebarView: View {
     }
 
     var body: some View {
+        @Bindable var controller = controller
+
         VStack(spacing: 0) {
             List(selection: $controller.selectedSimulatorIDs.onChange(updateSelectedSimulators)) {
                 if controller.simulators.isEmpty {
@@ -119,7 +121,8 @@ struct SidebarView_Previews: PreviewProvider {
 
     static var previews: some View {
         let preferences = Preferences()
-        return SidebarView(controller: SimulatorsController(preferences: preferences))
+        return SidebarView()
+            .environment(SimulatorsController(preferences: preferences))
             .environmentObject(preferences)
     }
 }

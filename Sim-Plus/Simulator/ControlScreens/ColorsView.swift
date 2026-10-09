@@ -10,7 +10,7 @@ struct ColorsView: View {
     @AppStorage("CRColorPickerAccuracy") var colorPickerAccuracy = 2
     @AppStorage("CRColorPickerUppercaseHex") var uppercaseHex = true
 
-    @StateObject private var colorHistoryController = ColorHistoryController()
+    @State private var colorHistoryController = ColorHistoryController()
     @State private var previouslyPickedSelection: PickedColor.ID?
 
     var body: some View {

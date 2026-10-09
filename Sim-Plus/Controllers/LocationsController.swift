@@ -1,9 +1,10 @@
 import Foundation
 
 /// Loads, manages, and saves the user's collection of saved locations.
-class LocationsController: ObservableObject {
+@Observable
+class LocationsController {
     /// The list of saved locations the user has created.
-    @Published private(set) var locations: [Location]
+    private(set) var locations: [Location]
 
     /// The UserDefaults key where we save locations.
     private let defaultsKey = "CRSavedLocations"

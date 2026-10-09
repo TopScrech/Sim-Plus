@@ -1,9 +1,10 @@
-import Combine
 import Foundation
 import ScrechKit
 
 /// A centralized class that loads simulator data and handles filtering.
-class SimulatorsController: ObservableObject {
+@MainActor
+@Observable
+class SimulatorsController {
     /// Tracks the state of fetching simulator data from simctl.
     enum LoadingStatus {
         /// Loading is in progress
@@ -20,32 +21,33 @@ class SimulatorsController: ObservableObject {
     }
 
     /// The current loading state; defaults to .loading
-    @Published var loadingStatus: LoadingStatus = .loading
+    var loadingStatus: LoadingStatus = .loading
 
     /// An array of all simulators that match the user's current filter.
-    @Published var simulators = [Simulator]()
+    var simulators = [Simulator]()
 
     /// An array of all the applications installed on the selected simulator.
-    @Published var applications = [Application]()
+    var applications = [Application]()
 
     /// An array of all the snapshots of the selected simulator.
-    @Published var snapshots = [Snapshot]()
+    var snapshots = [Snapshot]()
 
     /// An array of all simulators that were loaded from simctl.
     private var allSimulators = [Simulator]()
 
     private(set) var deviceTypes = [DeviceType]()
     private(set) var runtimes = [Runtime]()
-    private var timer: Timer?
+    @ObservationIgnored private var applicationsTask: Task<Void, Never>?
+    @ObservationIgnored private var snapshotsTask: Task<Void, Never>?
 
-    @AppStorage("CRSidebar_FilterText") private var filterText = ""
+    @ObservationIgnored @AppStorage("CRSidebar_FilterText") private var filterText = ""
 
     /// The simulators the user has selected to work with. If this has one item then
     /// they are working with a simulator; if more than one they are probably about
     /// to delete several at a time.
     var selectedSimulatorIDs = Set<String>() {
-        willSet { objectWillChange.send() }
         didSet {
+            guard selectedSimulatorIDs != oldValue else { return }
             loadApplications()
             loadSnapshots()
         }
@@ -60,43 +62,48 @@ class SimulatorsController: ObservableObject {
         return selected
     }
 
-    @ObservedObject var preferences: Preferences
-    private var cancellables = Set<AnyCancellable>()
+    let preferences: Preferences
 
     init(preferences: Preferences) {
         self.preferences = preferences
-
-        XcodeCommandLineToolsController.selectedCommandLineTool()
-            .receive(on: DispatchQueue.main)
-            .sink { tool in
-                if tool != .empty {
-                    self.loadSimulators()
-                } else {
-                    self.loadingStatus = .invalidCommandLineTool
-                }
-            }
-            .store(in: &cancellables)
-
-        preferences.objectDidChange
-            .sink { [weak self] in
-                self?.filterSimulators()
-            }
-            .store(in: &cancellables)
     }
 
-    /// Fetches all simulators from simctl.
-    private func loadSimulators() {
+    /// Refreshes simulator data until the hosting view disappears
+    func watchSimulators() async {
+        defer {
+            applicationsTask?.cancel()
+            snapshotsTask?.cancel()
+        }
+        loadApplications()
+        loadSnapshots()
         loadingStatus = .loading
+        let tool = await XcodeCommandLineToolsController.selectedCommandLineTool()
+        guard !Task.isCancelled else { return }
+        guard tool != .empty else {
+            loadingStatus = .invalidCommandLineTool
+            return
+        }
 
-        let devices = SimCtl.watchDeviceList()
-        let deviceTypes = SimCtl.listDeviceTypes()
-        let runtimes = SimCtl.listRuntimes()
+        do {
+            async let types = SimCtl.listDeviceTypes()
+            async let availableRuntimes = SimCtl.listRuntimes()
+            let (deviceTypes, runtimes) = try await (types, availableRuntimes)
+            var previousDevices: SimCtl.DeviceList?
 
-        devices.combineLatest(deviceTypes, runtimes)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: finishedLoadingSimulators,
-                  receiveValue: handleLoadedInformation)
-            .store(in: &cancellables)
+            while !Task.isCancelled {
+                let devices = try await SimCtl.listDevices()
+                try Task.checkCancellation()
+                if devices != previousDevices {
+                    handleLoadedInformation(devices, deviceTypes, runtimes)
+                    previousDevices = devices
+                }
+                try await Task.sleep(for: .seconds(5))
+            }
+        } catch is CancellationError {
+            // Stop polling when the hosting view disappears
+        } catch {
+            loadingStatus = .failed
+        }
     }
 
     private func handleLoadedInformation(_ deviceList: SimCtl.DeviceList,
@@ -136,22 +143,15 @@ class SimulatorsController: ObservableObject {
             }
         }
 
-        objectWillChange.send()
         self.deviceTypes = deviceTypes.devicetypes
         self.runtimes = runtimes.runtimes
         loadingStatus = .success
         allSimulators = final
+        let previousSelection = selectedSimulatorIDs
         filterSimulators()
-    }
-
-    private func finishedLoadingSimulators(_ completion: Subscribers.Completion<SimCtl.Error>) {
-        objectWillChange.send()
-
-        switch completion {
-        case .failure:
-            loadingStatus = .failed
-        default:
-            loadingStatus = .success
+        if selectedSimulatorIDs == previousSelection {
+            loadApplications()
+            loadSnapshots()
         }
     }
 
@@ -175,7 +175,7 @@ class SimulatorsController: ObservableObject {
         }
 
         if trimmed.isNotEmpty {
-            filtered = filtered.filter { $0.name.localizedCaseInsensitiveContains(trimmed) }
+            filtered = filtered.filter { $0.name.localizedStandardContains(trimmed) }
         }
 
         if preferences.shouldShowOnlyActiveDevices == true {
@@ -188,47 +188,46 @@ class SimulatorsController: ObservableObject {
         let selectableIDs = Set(filtered.map(\.udid))
         let newSelection = oldSelection.intersection(selectableIDs)
 
-        selectedSimulatorIDs = newSelection
+        if newSelection != oldSelection {
+            selectedSimulatorIDs = newSelection
+        }
     }
 
     private func loadApplications() {
-        guard
-            let selectedDeviceUDID = selectedSimulatorIDs.first
-            else { return }
+        applicationsTask?.cancel()
+        guard let selectedDeviceUDID = selectedSimulatorIDs.first else {
+            applications = []
+            return
+        }
 
-        SimCtl.listApplications(selectedDeviceUDID)
-            .catch { _ in Just(SimCtl.ApplicationsList()) }
-            .map { $0.values.compactMap(Application.init) }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.applications, on: self)
-            .store(in: &cancellables)
+        applicationsTask = Task { [weak self] in
+            let list = (try? await SimCtl.listApplications(selectedDeviceUDID)) ?? SimCtl.ApplicationsList()
+            guard !Task.isCancelled else { return }
+            self?.applications = list.values.compactMap(Application.init)
+        }
     }
 
     private func loadSnapshots() {
-        guard
-            let selectedDeviceUDID = selectedSimulatorIDs.first
-            else { return }
-
-        DispatchQueue.main.async {
-            self.snapshots = SnapshotCtl.getSnapshots(deviceId: selectedDeviceUDID)
+        snapshotsTask?.cancel()
+        guard let selectedDeviceUDID = selectedSimulatorIDs.first else {
+            snapshots = []
+            return
         }
 
-        timer?.invalidate()
-
-        timer = .init(timeInterval: 5, repeats: true) { _ in
-            DispatchQueue.main.async {
-                self.snapshots = SnapshotCtl.getSnapshots(deviceId: selectedDeviceUDID)
+        snapshotsTask = Task { [weak self] in
+            do {
+                while !Task.isCancelled {
+                    self?.snapshots = SnapshotCtl.getSnapshots(deviceId: selectedDeviceUDID)
+                    try await Task.sleep(for: .seconds(5))
+                }
+            } catch {
+                // Stop polling when the selection changes
             }
         }
-
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let timer = self?.timer else { return }
-
-            let runLoop = RunLoop.current
-            runLoop.add(timer, forMode: .default)
-            runLoop.run()
-        }
-
     }
 
+    deinit {
+        applicationsTask?.cancel()
+        snapshotsTask?.cancel()
+    }
 }

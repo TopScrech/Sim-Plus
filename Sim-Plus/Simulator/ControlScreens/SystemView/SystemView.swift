@@ -6,7 +6,7 @@ struct SystemView: View {
     let simulator: Simulator
 
     @EnvironmentObject var preferences: Preferences
-    @EnvironmentObject var deepLinks: DeepLinksController
+    @Environment(DeepLinksController.self) var deepLinks
 
     @AppStorage("CRApps_LastOpenURL") private var lastOpenURL = ""
     @AppStorage("CRApps_LastCertificateFilePath") private var lastCertificateFilePath = ""

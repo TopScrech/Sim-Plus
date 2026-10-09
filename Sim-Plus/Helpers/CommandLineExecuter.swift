@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 
 /**
@@ -50,16 +49,17 @@ extension CommandLineCommand {
 
 extension CommandLineCommandExecuter {
 
-    private static func execute(_ command: Command, completion: @escaping (Result<Data, CommandLineError>) -> Void) {
-        let commandToExecute: String = command.command ?? launchPath
+    static func executeData(_ command: Command) async throws -> Data {
+        let executable = command.command ?? launchPath
+        let arguments = command.arguments
+        let environmentOverrides = command.environmentOverrides
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let data = Process.execute(commandToExecute, arguments: command.arguments, environmentOverrides: command.environmentOverrides) {
-                completion(.success(data))
-            } else {
-                completion(.failure(.missingCommand))
+        return try await Task.detached(priority: .userInitiated) {
+            guard let data = Process.execute(executable, arguments: arguments, environmentOverrides: environmentOverrides) else {
+                throw CommandLineError.missingCommand
             }
-        }
+            return data
+        }.value
     }
 
     static func executeAsync(_ command: Command) -> Process {
@@ -74,46 +74,32 @@ extension CommandLineCommandExecuter {
         return task
     }
 
-    static func executeSubject(_ command: Command) -> PassthroughSubject<Data, CommandLineError> {
-        let publisher = PassthroughSubject<Data, CommandLineError>()
-
-        execute(command) { result in
-            switch result {
-            case .success(let data):
-                publisher.send(data)
-                publisher.send(completion: .finished)
-            case .failure(let error):
-                publisher.send(completion: .failure(error))
+    static func execute(_ command: Command, completion: ((Result<Data, CommandLineError>) -> Void)? = nil) {
+        Task { @MainActor in
+            do {
+                let data = try await executeData(command)
+                completion?(.success(data))
+            } catch {
+                completion?(.failure(error as? CommandLineError ?? .unknown(error)))
             }
         }
-
-        return publisher
     }
 
-    static func execute(_ command: Command, completion: ((Result<Data, CommandLineError>) -> Void)? = nil) {
-        execute(command, completion: completion ?? { _ in })
+    static func executeJSON<T: Decodable>(_ command: Command) async throws -> T {
+        let data = try await executeData(command)
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw CommandLineError.missingOutput
+        }
     }
 
-    static func executeJSON<T: Decodable>(_ command: Command) -> AnyPublisher<T, CommandLineError> {
-        executeAndDecode(command, decoder: JSONDecoder())
-    }
-
-    static func executePropertyList<T: Decodable>(_ command: Command) -> AnyPublisher<T, CommandLineError> {
-        executeAndDecode(command, decoder: PropertyListDecoder())
-    }
-
-    private static func executeAndDecode<Item, Decoder>(_ command: Command, decoder: Decoder) -> AnyPublisher<Item, CommandLineError> where Item: Decodable, Decoder: TopLevelDecoder, Decoder.Input == Data {
-        executeSubject(command)
-            .decode(type: Item.self, decoder: decoder)
-            .mapError { error -> CommandLineError in
-                if error is DecodingError {
-                    return .missingOutput
-                } else if let command = error as? CommandLineError {
-                    return command
-                } else {
-                    return .unknown(error)
-                }
-            }
-            .eraseToAnyPublisher()
+    static func executePropertyList<T: Decodable>(_ command: Command) async throws -> T {
+        let data = try await executeData(command)
+        do {
+            return try PropertyListDecoder().decode(T.self, from: data)
+        } catch {
+            throw CommandLineError.missingOutput
+        }
     }
 }

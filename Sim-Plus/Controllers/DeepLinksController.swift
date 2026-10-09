@@ -1,9 +1,10 @@
 import Foundation
 
 /// Loads, manages, and saves the user's collection of deep links
-class DeepLinksController: ObservableObject {
+@Observable
+class DeepLinksController {
     /// The list of links the user has created, sorted however they want.
-    @Published private(set) var links: [DeepLink]
+    private(set) var links: [DeepLink]
 
     /// The UserDefaults key where we save our links.
     private let defaultsKey = "CRDeepLinks"

@@ -1,21 +1,22 @@
 import ScrechKit
 
 /// Handles all screenshotting and video creation.
-class CaptureController: ObservableObject {
+@Observable
+class CaptureController {
     /// The user's settings for capturing
-  @AppStorage("captureSettings") var settings = CaptureSettings(imageFormat: .png, videoFormat: .h264, display: .internal, mask: .ignored, saveURL: .desktop)
+  @ObservationIgnored @AppStorage("captureSettings") var settings = CaptureSettings(imageFormat: .png, videoFormat: .h264, display: .internal, mask: .ignored, saveURL: .desktop)
 
     /// The currently active recording process, if it exists. We don't need to monitor this, just keep it alive.
-    @Published var recordingProcess: Process?
+    var recordingProcess: Process?
 
     /// The name of the file we're writing to, used at first in a temporary directory then on the desktop.
-    @Published var recordingFilename = ""
+    var recordingFilename = ""
 
     /// The export format description to be shown while exporting
-    @Published var exportDescription = ""
+    var exportDescription = ""
 
     /// Converting MP4 to GIF takes time, so this tracks the progress of the operation
-    @Published var exportProgress: CGFloat = 1.0
+    var exportProgress: CGFloat = 1.0
 
     private var videoFormat = SimCtl.IO.VideoFormat.h264
 

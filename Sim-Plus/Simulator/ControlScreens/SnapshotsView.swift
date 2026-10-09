@@ -2,15 +2,14 @@ import ScrechKit
 
 struct SnapshotsView: View {
 	let simulator: Simulator
-	@ObservedObject var controller: SimulatorsController
+	@Environment(SimulatorsController.self) var controller
 
     @State private var snapshotAction: SnapshotAction?
     @State private var newName: String
     @State private var selectedSnapshotName: String
 
-    init(simulator: Simulator, controller: SimulatorsController) {
+    init(simulator: Simulator) {
         self.simulator = simulator
-        self.controller = controller
         self._newName = State(initialValue: simulator.name)
         self._selectedSnapshotName = State(initialValue: simulator.name)
     }

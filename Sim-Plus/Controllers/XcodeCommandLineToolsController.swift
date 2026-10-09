@@ -1,19 +1,17 @@
 import Foundation
-import Combine
 
 struct XcodeCommandLineToolsController {
-    static func selectedCommandLineTool() -> AnyPublisher<DeveloperTool, Never> {
-        Publishers.CombineLatest(SystemProfiler.listDeveloperTools(), XcodeSelect.printPath())
-            .replaceError(with: ([], ""))
-            .map { devTools, xcodeSelectResult -> DeveloperTool in
-                for devTool in devTools {
-                    if xcodeSelectResult.contains(devTool.path), devTool.version >= "11.4" {
-                        return devTool
-                    }
-                }
-                return .empty
-            }
-            .eraseToAnyPublisher()
+    static func selectedCommandLineTool() async -> DeveloperTool {
+        do {
+            async let tools = SystemProfiler.listDeveloperTools()
+            async let path = XcodeSelect.printPath()
+            let (developerTools, selectedPath) = try await (tools, path)
+            return developerTools.first {
+                selectedPath.contains($0.path) && $0.version >= "11.4"
+            } ?? .empty
+        } catch {
+            return .empty
+        }
     }
 
 }
@@ -23,10 +21,9 @@ private enum XcodeSelect: CommandLineCommandExecuter {
 
     static var launchPath = "/usr/bin/xcode-select"
 
-    static func printPath() -> AnyPublisher<String, XcodeSelect.Error> {
-        XcodeSelect.executeSubject(.printPath())
-            .compactMap { String(data: $0, encoding: .utf8) }
-            .eraseToAnyPublisher()
+    static func printPath() async throws -> String {
+        let data = try await XcodeSelect.executeData(.printPath())
+        return String(data: data, encoding: .utf8) ?? ""
     }
 }
 
@@ -51,11 +48,9 @@ private enum SystemProfiler: CommandLineCommandExecuter {
 
     static var launchPath = "/usr/sbin/system_profiler"
 
-    static func listDeveloperTools() -> AnyPublisher<[DeveloperTool], SystemProfiler.Error> {
-        let publisher: AnyPublisher<SystemProfiler.DeveloperToolsList, SystemProfiler.Error> = SystemProfiler.executeJSON(.listDeveloperTools())
-        return publisher
-            .map(\.list)
-            .eraseToAnyPublisher()
+    static func listDeveloperTools() async throws -> [DeveloperTool] {
+        let tools: DeveloperToolsList = try await executeJSON(.listDeveloperTools())
+        return tools.list
     }
 }
 

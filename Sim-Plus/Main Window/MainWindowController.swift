@@ -9,7 +9,7 @@ class MainWindowController: NSWindowController {
     lazy var preferences: Preferences = Preferences()
     lazy var controller: SimulatorsController = SimulatorsController(preferences: preferences)
 
-    private var cancellables = Set<AnyCancellable>()
+    private var preferencesObservation: AnyCancellable?
 
     init() {
         super.init(window: nil)
@@ -20,9 +20,11 @@ class MainWindowController: NSWindowController {
     }
 
     private func windowContent() -> some View {
-        MainView(controller: controller)
+        MainView()
+            .environment(controller)
+            .environment(DeepLinksController())
             .environmentObject(preferences)
-            .environmentObject(UIState.shared)
+            .environment(UIState.shared)
     }
 
     override func loadWindow() {
@@ -41,11 +43,11 @@ class MainWindowController: NSWindowController {
 
         self.window = window
         adjustWindowLevel()
-
-        // note this is a DID change publisher, not a WILL change publisher
-        preferences.objectDidChange.sink(receiveValue: { [weak self] in
-            self?.adjustWindowLevel()
-        }).store(in: &cancellables)
+        preferencesObservation = preferences.objectWillChange.sink { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.adjustWindowLevel()
+            }
+        }
     }
 
     private func adjustWindowLevel() {

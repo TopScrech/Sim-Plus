@@ -19,15 +19,16 @@ struct ControlRoomApp: App {
     """
 
     @StateObject var preferences: Preferences
-    @StateObject var controller: SimulatorsController
-    @StateObject var deepLinks = DeepLinksController()
+    @State var controller: SimulatorsController
+    @State var deepLinks = DeepLinksController()
 
     var body: some Scene {
         Window("Control Room", id: "main") {
-            MainView(controller: controller)
+            MainView()
+                .environment(controller)
                 .environmentObject(preferences)
-                .environmentObject(UIState.shared)
-                .environmentObject(deepLinks)
+                .environment(UIState.shared)
+                .environment(deepLinks)
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
@@ -84,7 +85,7 @@ struct ControlRoomApp: App {
     init() {
         let preferences = Preferences()
         _preferences = StateObject(wrappedValue: preferences)
-        _controller =  StateObject(wrappedValue: SimulatorsController(preferences: preferences))
+        _controller =  State(initialValue: SimulatorsController(preferences: preferences))
     }
 
     func resendLastPushNotification() {

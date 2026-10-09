@@ -1,7 +1,7 @@
 import ScrechKit
 
 struct DeepLinkEditorView: View {
-    @EnvironmentObject var deepLinks: DeepLinksController
+    @Environment(DeepLinksController.self) var deepLinks
     @Environment(\.dismiss) var dismiss
 
     /// The link name the user is currently adding.
@@ -110,7 +110,7 @@ struct DeepLinkEditorView: View {
 
 private extension DeepLinkEditorView {
     struct EditDeepLinkView: View {
-        @EnvironmentObject private var deepLinks: DeepLinksController
+        @Environment(DeepLinksController.self) private var deepLinks
         @Environment(\.dismiss) private var dismiss
 
         @Binding var deepLink: DeepLink.ID?

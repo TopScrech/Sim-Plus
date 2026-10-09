@@ -4,15 +4,14 @@ import CoreLocation
 
 /// Map view to change simulated user's position
 struct LocationView: View {
-    @ObservedObject var controller: SimulatorsController
     let simulator: Simulator
     static let defaultLat = 37.323056
     static let defaultLong = -122.031944
 
     /// Saved locations controller.
-    @StateObject private var locationsController = LocationsController()
+    @State private var locationsController = LocationsController()
     /// Local search controller.
-    @StateObject private var localSearchController = LocalSearchController()
+    @State private var localSearchController = LocalSearchController()
     /// Current table selection binding.
     @State private var previouslyPickedLocation: Location.ID?
 
@@ -68,7 +67,7 @@ struct LocationView: View {
                         ZStack(alignment: .topLeading) {
                             VStack {
                                 SearchField(placeholder, text: $query, onClear: { onSearchClear() })
-                                    .onReceive(query.publisher) { _ in
+                                    .onChange(of: query) {
                                         performLocalSearch()
                                     }
                                 ZStack {
