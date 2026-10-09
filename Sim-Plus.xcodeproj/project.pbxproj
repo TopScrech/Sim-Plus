@@ -1,0 +1,562 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B852E2EB2DA39225003F5FD6 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B07F585323F9F83800256D5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 511BA57123F3FFEA00E3E660 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 511BA57823F3FFEA00E3E660;
+			remoteInfo = ControlRoom;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		511BA57923F3FFEA00E3E660 /* Control Room.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Control Room.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555A145923F70A5100313BC5 /* CoreSimulator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSimulator.framework; path = /Library/Developer/PrivateFrameworks/CoreSimulator.framework; sourceTree = "<absolute>"; };
+		7C2F128A2DC3B586004E4912 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7C40DEF22DB93D9F004C24BB /* .editorconfig */ = {isa = PBXFileReference; lastKnownFileType = text; path = .editorconfig; sourceTree = "<group>"; };
+		B07F584E23F9F83800256D5D /* Sim-PlusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sim-PlusTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AAB100000000000000000001 /* Exceptions for "Sim-Plus" folder in "Sim-Plus" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Helpers/Defaults.swift,
+				Info.plist,
+			);
+			target = 511BA57823F3FFEA00E3E660 /* Sim-Plus */;
+		};
+		F3EEE6C03078E707007830AC /* Exceptions for "UnitTests" folder in "Sim-PlusTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Controllers/SimCtl+SubCommandsTests.swift",
+			);
+			target = B07F584D23F9F83800256D5D /* Sim-PlusTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		511BA57B23F3FFEA00E3E660 /* Sim-Plus */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AAB100000000000000000001 /* Exceptions for "Sim-Plus" folder in "Sim-Plus" target */,
+			);
+			path = "Sim-Plus";
+			sourceTree = "<group>";
+		};
+		F3EEE6BE3078E706007830AC /* UnitTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F3EEE6C03078E707007830AC /* Exceptions for "UnitTests" folder in "Sim-PlusTests" target */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		511BA57623F3FFEA00E3E660 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				B852E2EB2DA39225003F5FD6 /* KeyboardShortcuts in Frameworks */,
+			);
+		};
+		B07F584B23F9F83800256D5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		511BA57023F3FFEA00E3E660 = {
+			isa = PBXGroup;
+			children = (
+				511BA57B23F3FFEA00E3E660 /* Sim-Plus */,
+				F3EEE6BE3078E706007830AC /* UnitTests */,
+				511BA57A23F3FFEA00E3E660 /* Products */,
+				555A145823F70A5100313BC5 /* Frameworks */,
+				7C40DEF22DB93D9F004C24BB /* .editorconfig */,
+				7C2F128A2DC3B586004E4912 /* .swiftlint.yml */,
+			);
+			sourceTree = "<group>";
+		};
+		511BA57A23F3FFEA00E3E660 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				511BA57923F3FFEA00E3E660 /* Control Room.app */,
+				B07F584E23F9F83800256D5D /* Sim-PlusTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		555A145823F70A5100313BC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				555A145923F70A5100313BC5 /* CoreSimulator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		511BA57823F3FFEA00E3E660 /* Sim-Plus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 511BA58C23F3FFEB00E3E660 /* Build configuration list for PBXNativeTarget "Sim-Plus" */;
+			buildPhases = (
+				551F8CFA23F4CB770006D1BD /* SwiftLint */,
+				511BA57523F3FFEA00E3E660 /* Sources */,
+				511BA57623F3FFEA00E3E660 /* Frameworks */,
+				5534157B23FE0373005C0A41 /* Get Contributors */,
+				511BA57723F3FFEA00E3E660 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				511BA57B23F3FFEA00E3E660 /* Sim-Plus */,
+			);
+			name = "Sim-Plus";
+			packageProductDependencies = (
+				B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */,
+			);
+			productName = ControlRoom;
+			productReference = 511BA57923F3FFEA00E3E660 /* Control Room.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B07F584D23F9F83800256D5D /* Sim-PlusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B07F585723F9F83800256D5D /* Build configuration list for PBXNativeTarget "Sim-PlusTests" */;
+			buildPhases = (
+				B07F584A23F9F83800256D5D /* Sources */,
+				B07F584B23F9F83800256D5D /* Frameworks */,
+				B07F584C23F9F83800256D5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B07F585423F9F83800256D5D /* PBXTargetDependency */,
+			);
+			name = "Sim-PlusTests";
+			productName = ControlRoomTests;
+			productReference = B07F584E23F9F83800256D5D /* Sim-PlusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		511BA57123F3FFEA00E3E660 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 2710;
+				ORGANIZATIONNAME = "";
+				TargetAttributes = {
+					511BA57823F3FFEA00E3E660 = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
+					};
+					B07F584D23F9F83800256D5D = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 511BA57823F3FFEA00E3E660;
+					};
+				};
+			};
+			buildConfigurationList = 511BA57423F3FFEA00E3E660 /* Build configuration list for PBXProject "Sim-Plus" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ar,
+			);
+			mainGroup = 511BA57023F3FFEA00E3E660;
+			packageReferences = (
+				B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
+			preferredProjectObjectVersion = 110;
+			productRefGroup = 511BA57A23F3FFEA00E3E660 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				511BA57823F3FFEA00E3E660 /* Sim-Plus */,
+				B07F584D23F9F83800256D5D /* Sim-PlusTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		511BA57723F3FFEA00E3E660 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		B07F584C23F9F83800256D5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		551F8CFA23F4CB770006D1BD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = SwiftLint;
+			shellPath = /bin/sh;
+			shellScript = (
+				"if test -d \"/opt/homebrew/bin/\"; then",
+				"  PATH=\"/opt/homebrew/bin/:${PATH}\"",
+				"fi",
+				"",
+				"export PATH",
+				"",
+				"if which swiftlint >/dev/null; then",
+				"  swiftlint",
+				"else",
+				"  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"",
+				"fi",
+				"",
+			);
+		};
+		5534157B23FE0373005C0A41 /* Get Contributors */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = "Get Contributors";
+			shellPath = /bin/sh;
+			shellScript = (
+				"export RESOURCES_DIR=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"",
+				"export CONTRIBUTORS_FILE=\"${RESOURCES_DIR}/contributors.json\"",
+				"if [ ! -f \"${CONTRIBUTORS_FILE}\" ]; then",
+				"    curl \"https://api.github.com/repos/twostraws/ControlRoom/stats/contributors\" -H \"Accept: application/vnd.github.v3+json\" > \"${CONTRIBUTORS_FILE}\"",
+				"fi",
+				"",
+			);
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		511BA57523F3FFEA00E3E660 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		B07F584A23F9F83800256D5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B07F585423F9F83800256D5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 511BA57823F3FFEA00E3E660 /* Sim-Plus */;
+			targetProxy = B07F585323F9F83800256D5D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		511BA58A23F3FFEB00E3E660 /* Debug configuration for PBXProject "Sim-Plus" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 8FQUA2F388;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		511BA58B23F3FFEB00E3E660 /* Release configuration for PBXProject "Sim-Plus" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 8FQUA2F388;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		511BA58D23F3FFEB00E3E660 /* Debug configuration for PBXNativeTarget "Sim-Plus" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sim-Plus/Sim-Plus.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=xros*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Library/Developer/PrivateFrameworks,
+				);
+				INFOPLIST_FILE = "Sim-Plus/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.topscrech.Sim-Plus";
+				PRODUCT_NAME = "Control Room";
+				SUPPORTED_PLATFORMS = "macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 27;
+			};
+			name = Debug;
+		};
+		511BA58E23F3FFEB00E3E660 /* Release configuration for PBXNativeTarget "Sim-Plus" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Sim-Plus/Sim-Plus.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=xros*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Library/Developer/PrivateFrameworks,
+				);
+				INFOPLIST_FILE = "Sim-Plus/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.topscrech.Sim-Plus";
+				PRODUCT_NAME = "Control Room";
+				SUPPORTED_PLATFORMS = "macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 27;
+			};
+			name = Release;
+		};
+		B07F585523F9F83800256D5D /* Debug configuration for PBXNativeTarget "Sim-PlusTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.topscrech.Sim-Plus";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Control Room.app/Contents/MacOS/Control Room";
+			};
+			name = Debug;
+		};
+		B07F585623F9F83800256D5D /* Release configuration for PBXNativeTarget "Sim-PlusTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				INFOPLIST_FILE = UnitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.topscrech.Sim-Plus";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Control Room.app/Contents/MacOS/Control Room";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		511BA57423F3FFEA00E3E660 /* Build configuration list for PBXProject "Sim-Plus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				511BA58A23F3FFEB00E3E660 /* Debug configuration for PBXProject "Sim-Plus" */,
+				511BA58B23F3FFEB00E3E660 /* Release configuration for PBXProject "Sim-Plus" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		511BA58C23F3FFEB00E3E660 /* Build configuration list for PBXNativeTarget "Sim-Plus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				511BA58D23F3FFEB00E3E660 /* Debug configuration for PBXNativeTarget "Sim-Plus" */,
+				511BA58E23F3FFEB00E3E660 /* Release configuration for PBXNativeTarget "Sim-Plus" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		B07F585723F9F83800256D5D /* Build configuration list for PBXNativeTarget "Sim-PlusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B07F585523F9F83800256D5D /* Debug configuration for PBXNativeTarget "Sim-PlusTests" */,
+				B07F585623F9F83800256D5D /* Release configuration for PBXNativeTarget "Sim-PlusTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B852E2EA2DA39225003F5FD6 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B852E2E92DA39225003F5FD6 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 511BA57123F3FFEA00E3E660 /* Project object */;
+}
