@@ -1,11 +1,3 @@
-//
-//  ChromeRendererTypes.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 15/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 /// This file contains all the Decodable types required to work with Apple's property list and JSON
 /// files that handle simulator device and chrome data.
 

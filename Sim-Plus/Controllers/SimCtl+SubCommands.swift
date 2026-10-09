@@ -1,11 +1,3 @@
-//
-//  SimCtl+SubCommands.swift
-//  ControlRoom
-//
-//  Created by Patrick Luddy on 2/16/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import AppKit
 
 // swiftlint:disable file_length

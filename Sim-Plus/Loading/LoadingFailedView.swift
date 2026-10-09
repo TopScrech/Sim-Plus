@@ -1,11 +1,3 @@
-//
-//  LoadingFailedView.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 12/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// Shown when loading the simulator data from simctl has failed.

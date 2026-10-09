@@ -1,11 +1,3 @@
-//
-//  LocationsController.swift
-//  ControlRoom
-//
-//  Created by Alexander Chekel on 17.11.2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 /// Loads, manages, and saves the user's collection of saved locations.

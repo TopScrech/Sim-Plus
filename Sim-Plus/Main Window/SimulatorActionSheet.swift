@@ -1,11 +1,3 @@
-//
-//  SimulatorActionSheet.swift
-//  ControlRoom
-//
-//  Created by Dave DeLong on 2/15/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 struct SimulatorActionSheet<Content: View>: View {

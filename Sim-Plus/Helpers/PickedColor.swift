@@ -1,11 +1,3 @@
-//
-//  PickedColor.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 16/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// A color struct that can be saved easily and also identified uniquely in SwiftUI.

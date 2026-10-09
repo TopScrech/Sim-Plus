@@ -1,11 +1,3 @@
-//
-//  ControlRoomApp.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 12/02/2020.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import KeyboardShortcuts
 import SwiftUI
 

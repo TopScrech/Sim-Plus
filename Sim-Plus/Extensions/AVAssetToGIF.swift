@@ -1,12 +1,3 @@
-//
-//  AVAssetToGIF.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 29/01/2021.
-//  Copyright © 2021 Daniel Farrelly, Nathan Lawrence, and Christian Selig.
-//  All rights reserved.
-//
-
 import AVFoundation
 import Foundation
 import UniformTypeIdentifiers

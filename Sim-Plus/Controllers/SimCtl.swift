@@ -1,11 +1,3 @@
-//
-//  SimCtl.swift
-//  ControlRoom
-//
-//  Created by Dave DeLong on 2/13/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import Combine
 import Foundation
 

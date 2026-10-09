@@ -1,11 +1,3 @@
-//
-//  SimulatorAction.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 28/01/2021.
-//  Copyright © 2021 Paul Hudson. All rights reserved.
-//
-
 import struct SwiftUI.LocalizedStringKey
 
 enum Action: Int, Identifiable {

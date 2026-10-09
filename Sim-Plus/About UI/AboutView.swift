@@ -1,11 +1,3 @@
-//
-//  AboutView.swift
-//  ControlRoom
-//
-//  Created by Dave DeLong on 2/19/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 struct AboutView: View {

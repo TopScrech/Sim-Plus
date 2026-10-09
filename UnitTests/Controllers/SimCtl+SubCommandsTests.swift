@@ -1,11 +1,3 @@
-//
-//  ControlRoomTests.swift
-//  ControlRoomTests
-//
-//  Created by Patrick Luddy on 2/16/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 @testable import Control_Room
 import XCTest
 

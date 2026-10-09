@@ -1,11 +1,3 @@
-//
-//  PushNotification.swift
-//  ControlRoom
-//
-//  Created by Mario Iannotta on 29/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 struct PushNotification: Codable {

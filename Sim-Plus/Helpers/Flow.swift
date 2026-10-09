@@ -1,11 +1,3 @@
-//
-//  Flow.swift
-//  ControlRoom
-//
-//  Created by Dave DeLong on 2/19/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 // Thank you @Zef! https://gist.github.com/zef/e48e44a3a673c36b5a0c3d0eefb676ce
 
 import SwiftUI

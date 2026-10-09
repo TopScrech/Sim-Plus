@@ -1,11 +1,3 @@
-//
-//  CaptureController.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 10/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// Handles all screenshotting and video creation.

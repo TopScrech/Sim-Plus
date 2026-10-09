@@ -1,11 +1,3 @@
-//
-//  FFMPEGConverter.swift
-//  ControlRoom
-//
-//  Created by Nikolay Volosatov on 2.04.21.
-//  Copyright © 2021 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 enum FFMPEGConverter: CommandLineCommandExecuter {

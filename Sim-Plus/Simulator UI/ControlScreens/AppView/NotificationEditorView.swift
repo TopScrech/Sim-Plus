@@ -1,11 +1,3 @@
-//
-//  NotificationEditorView.swift
-//  ControlRoom
-//
-//  Created by Mario Iannotta on 01/03/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 struct NotificationEditorView: View {

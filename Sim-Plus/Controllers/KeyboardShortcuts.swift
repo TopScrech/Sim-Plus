@@ -1,11 +1,3 @@
-//
-//  KeyboardShortcuts.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 28/01/2021.
-//  Copyright © 2021 Paul Hudson. All rights reserved.
-//
-
 import KeyboardShortcuts
 
 extension KeyboardShortcuts.Name {

@@ -1,11 +1,3 @@
-//
-//  XcodeHelper.swift
-//  ControlRoom
-//
-//  Created by Stuart Isaac on 7/6/23.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 enum XcodeHelper {

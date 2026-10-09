@@ -1,11 +1,3 @@
-//
-//  XcodeColorSet.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 17/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 // This file describes the file format used by Xcode asset catalog

@@ -1,11 +1,3 @@
-//
-//  MainView.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 12/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// Hosts a LoadingView followed by the main ControlView, or a LoadingFailedView if simctl failed.

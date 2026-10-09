@@ -1,11 +1,3 @@
-//
-//  StatusBarView.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 12/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// Controls WiFi and cellular data state for the whole device.

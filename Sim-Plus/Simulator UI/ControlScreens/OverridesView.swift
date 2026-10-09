@@ -1,11 +1,3 @@
-//
-//  OverridesView.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 07/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 struct OverridesView: View {

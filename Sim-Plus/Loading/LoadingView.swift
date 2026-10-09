@@ -1,11 +1,3 @@
-//
-//  LoadingView.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 12/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// Shown when the app launches, while simulator data is being fetched from simctl.

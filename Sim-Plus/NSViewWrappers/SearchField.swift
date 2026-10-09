@@ -1,11 +1,3 @@
-//
-//  FilterField.swift
-//  ControlRoom
-//
-//  Created by Dave DeLong on 2/12/20.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 /// A wrapper around NSSearchField so we get a macOS-native search box

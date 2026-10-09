@@ -1,11 +1,3 @@
-//
-//  PathToTerminalTextFieldView.swift
-//  ControlRoom
-//
-//  Created by Elliot Knight on 11/05/2024.
-//  Copyright © 2024 Paul Hudson. All rights reserved.
-//
-
 import SwiftUI
 
 struct PathToTerminalTextFieldView: View {

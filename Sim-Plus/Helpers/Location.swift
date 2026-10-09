@@ -1,11 +1,3 @@
-//
-//  Location.swift
-//  ControlRoom
-//
-//  Created by Alexander Chekel on 17.11.2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 import CoreLocation
 import MapKit

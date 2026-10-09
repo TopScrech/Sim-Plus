@@ -1,11 +1,3 @@
-//
-//  Screenshot.swift
-//  ControlRoom
-//
-//  Created by Paul Hudson on 08/05/2023.
-//  Copyright © 2023 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 
 /// Store settings for video and screenshots

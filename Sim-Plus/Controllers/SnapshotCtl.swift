@@ -1,11 +1,3 @@
-//
-//  SnapshotCtl.swift
-//  ControlRoom
-//
-//  Created by Marcel Mendes on 12/12/24.
-//  Copyright © 2024 Paul Hudson. All rights reserved.
-//
-
 import Foundation
 import Combine
 

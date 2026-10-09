@@ -1,11 +1,3 @@
-//
-//  LocationView.swift
-//  ControlRoom
-//
-//  Created by Stefano Mondino on 13/02/2020.
-//  Copyright © 2020 Paul Hudson. All rights reserved.
-//
-
 import MapKit
 import SwiftUI
 import CoreLocation
