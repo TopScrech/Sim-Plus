@@ -735,7 +735,7 @@ extension SimCtl {
             case three
 
             var symbolVariable: Double {
-                Double(self.rawValue) / Double(Self.allCases.count)
+                Double(self.rawValue) / Double(Self.allCases.count - 1)
             }
         }
 
@@ -754,7 +754,7 @@ extension SimCtl {
             case four
 
             var symbolVariable: Double {
-                Double(self.rawValue) / Double(Self.allCases.count)
+                Double(self.rawValue) / Double(Self.allCases.count - 1)
             }
         }
 

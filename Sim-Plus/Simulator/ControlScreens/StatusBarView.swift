@@ -28,104 +28,124 @@ struct StatusBarView: View {
     @State private var batteryLevel = 100.0
 
     /// The current battery state of the device; must be "Charging", "Charged", or "Discharging"
-    /// Note: "Charged" looks the same as "Discharging", so it's not included in this screen.
     @State private var batteryState: SimCtl.StatusBar.BatteryState = .charged
 
     var body: some View {
-        ScrollView {
-            Form {
-                Section {
-                    HStack {
-                        DatePicker("Time:", selection: $time)
-                        Button("Set", action: setTime)
-                        Button("Set to 9:41", action: setAppleTime)
-                        Spacer()
-                        Button("Clear overrides", action: clearOverrides)
+        Form {
+            Section {
+                DatePicker("Time", selection: $time, displayedComponents: .hourAndMinute)
+
+                HStack {
+                    Spacer()
+                    Button("Set to 9:41", action: setAppleTime)
+                    Button("Apply", action: setTime)
+                        .keyboardShortcut(.defaultAction)
+                }
+            } header: {
+                Label("Time", systemImage: "clock")
+            }
+
+            Section {
+                TextField("Operator", text: $carrierName)
+                    .onSubmit(updateCellularData)
+
+                Picker("Network type", selection: $dataNetwork.onChange(updateWiFiData)) {
+                    ForEach(SimCtl.StatusBar.DataNetwork.allCases, id: \.self) { network in
+                        Text(network.displayName)
+                    }
+                }
+            } header: {
+                Label("Network", systemImage: "antenna.radiowaves.left.and.right")
+            }
+
+            Section {
+                Picker("Mode", selection: $wiFiMode.onChange(updateWiFiData)) {
+                    ForEach(SimCtl.StatusBar.WifiMode.allCases, id: \.self) { mode in
+                        Text(mode.displayName)
                     }
                 }
 
-                Spacer()
-                    .frame(height: 40)
-
-                Section {
-                    TextField("Operator", text: $carrierName, onCommit: updateCellularData)
-
-                    Picker("Network type:", selection: $dataNetwork.onChange(updateWiFiData)) {
-                        ForEach(SimCtl.StatusBar.DataNetwork.allCases, id: \.self) { network in
-                            Text(network.displayName)
-                        }
+                Picker("Signal", selection: $wiFiBar.onChange(updateWiFiData)) {
+                    ForEach(SimCtl.StatusBar.WifiBars.allCases, id: \.self) { bars in
+                        Image(systemName: "wifi", variableValue: bars.symbolVariable)
+                            .help("\(bars.rawValue) of \(SimCtl.StatusBar.WifiBars.allCases.count - 1) bars")
                     }
-                    .pickerStyle(.menu)
-
-                    Divider()
-
-                    Picker("Wi-Fi mode:", selection: $wiFiMode.onChange(updateWiFiData)) {
-                        ForEach(SimCtl.StatusBar.WifiMode.allCases, id: \.self) { mode in
-                            Text(mode.displayName)
-                        }
-                    }
-                    .pickerStyle(.menu)
-
-                    Picker("Wi-Fi bars:", selection: $wiFiBar.onChange(updateWiFiData)) {
-                        ForEach(SimCtl.StatusBar.WifiBars.allCases, id: \.self) { bars in
-                            Image(systemName: "wifi", variableValue: bars.symbolVariable)
-                                .tag(bars.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-
-                    Divider()
-
-                    Picker("Cellular mode:", selection: $cellularMode.onChange(updateCellularData)) {
-                        ForEach(SimCtl.StatusBar.CellularMode.allCases, id: \.self) { mode in
-                            Text(mode.displayName)
-                        }
-                    }
-                    .pickerStyle(.menu)
-
-                    Picker("Cellular bars:", selection: $cellularBar.onChange(updateCellularData)) {
-                        ForEach(SimCtl.StatusBar.CellularBars.allCases, id: \.self) { bars in
-                            Image(systemName: "cellularbars", variableValue: bars.symbolVariable)
-                                .tag(bars.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
                 }
-
-                Spacer()
-                    .frame(height: 40)
-
-                Section {
-                    Picker("Battery state:", selection: $batteryState.onChange(updateBattery)) {
-                        ForEach(SimCtl.StatusBar.BatteryState.allCases, id: \.self) { state in
-                            Text(state.displayName)
-                        }
-                    }
-                    .pickerStyle(.radioGroup)
-
-                    VStack(spacing: 0) {
-						Text("Current battery percentage: \(Int(round(batteryLevel)))%")
-							.callout()
-							.monospacedDigit()
-
-						Slider(
-							value: $batteryLevel,
-							in: 0...100,
-							onEditingChanged: levelChanged,
-							minimumValueLabel: Text("0%"),
-							maximumValueLabel: Text("100%")
-						) {
-                            Text("Level:")
-                        }
-                    }
-                    .padding(.top, 5)
+                .pickerStyle(.segmented)
+            } header: {
+                Label("Wi-Fi", systemImage: "wifi")
+            } footer: {
+                if dataNetwork != .wifi {
+                    Text("Wi-Fi is only shown when the network type is Wi-Fi.")
+                        .caption()
+                        .secondary()
                 }
             }
-            .padding()
+            .disabled(dataNetwork != .wifi)
+
+            Section {
+                Picker("Mode", selection: $cellularMode.onChange(updateCellularData)) {
+                    ForEach(SimCtl.StatusBar.CellularMode.allCases, id: \.self) { mode in
+                        Text(mode.displayName)
+                    }
+                }
+
+                Picker("Signal", selection: $cellularBar.onChange(updateCellularData)) {
+                    ForEach(SimCtl.StatusBar.CellularBars.allCases, id: \.self) { bars in
+                        Image(systemName: "cellularbars", variableValue: bars.symbolVariable)
+                            .help("\(bars.rawValue) of \(SimCtl.StatusBar.CellularBars.allCases.count - 1) bars")
+                    }
+                }
+                .pickerStyle(.segmented)
+            } header: {
+                Label("Cellular", systemImage: "cellularbars")
+            }
+
+            Section {
+                Picker("State", selection: $batteryState.onChange(updateBattery)) {
+                    ForEach(SimCtl.StatusBar.BatteryState.allCases, id: \.self) { state in
+                        Text(state.displayName)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                LabeledContent("Level") {
+                    HStack {
+                        Slider(value: $batteryLevel, in: 0...100, step: 1, onEditingChanged: levelChanged)
+
+                        Text("\(Int(batteryLevel))%")
+                            .monospacedDigit()
+                            .frame(width: 40, alignment: .trailing)
+                    }
+                }
+            } header: {
+                Label("Battery", systemImage: batterySymbol)
+            }
+
+            Section {
+                HStack {
+                    Spacer()
+                    Button("Clear Overrides", role: .destructive, action: clearOverrides)
+                }
+            }
         }
+        .formStyle(.grouped)
         .tabItem {
             Text("Status Bar")
         }
+    }
+
+    /// An SF Symbol reflecting the selected battery level and state.
+    private var batterySymbol: String {
+        let percent = switch batteryLevel {
+        case ..<13: 0
+        case ..<38: 25
+        case ..<63: 50
+        case ..<88: 75
+        default: 100
+        }
+
+        return batteryState == .charging && percent == 100 ? "battery.100percent.bolt" : "battery.\(percent)percent"
     }
 
     // MARK: Private methods
@@ -135,7 +155,7 @@ struct StatusBarView: View {
         SimCtl.overrideStatusBarTime(simulator.udid, time: time)
     }
 
-	private func setAppleTime() {
+    private func setAppleTime() {
         let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date.now)
         components.hour = 9
@@ -150,7 +170,9 @@ struct StatusBarView: View {
 
     private func clearOverrides() {
         SimCtl.clearStatusBarOverrides(simulator.udid)
+        time = .now
         dataNetwork = .wifi
+        wiFiMode = .active
         wiFiBar = .three
         cellularMode = .active
         cellularBar = .four
@@ -161,31 +183,31 @@ struct StatusBarView: View {
 
     /// Sends status bar updates all at once; simctl gets unhappy if we send them individually, but
     /// also for whatever reason prefers cellular data sent separately from WiFi.
-	private func updateWiFiData() {
-		SimCtl.overrideStatusBarWiFi(
-			simulator.udid,
-			network: dataNetwork,
-			wifiMode: wiFiMode,
-			wifiBars: wiFiBar
-		)
+    private func updateWiFiData() {
+        SimCtl.overrideStatusBarWiFi(
+            simulator.udid,
+            network: dataNetwork,
+            wifiMode: wiFiMode,
+            wifiBars: wiFiBar
+        )
     }
 
     private func updateCellularData() {
-		SimCtl.overrideStatusBarCellular(
-			simulator.udid,
-			cellMode: cellularMode,
-			cellBars: cellularBar,
-			carrier: carrierName
-		)
+        SimCtl.overrideStatusBarCellular(
+            simulator.udid,
+            cellMode: cellularMode,
+            cellBars: cellularBar,
+            carrier: carrierName
+        )
     }
 
     /// Sends battery updates all at once; simctl gets unhappy if we send them individually.
     private func updateBattery() {
-		SimCtl.overrideStatusBarBattery(
-			simulator.udid,
-			level: Int(batteryLevel),
-			state: batteryState
-		)
+        SimCtl.overrideStatusBarBattery(
+            simulator.udid,
+            level: Int(batteryLevel),
+            state: batteryState
+        )
     }
 
     /// Triggered when the user adjusts the battery level.
