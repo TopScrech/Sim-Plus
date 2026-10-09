@@ -541,7 +541,7 @@ extension SimCtl {
         }
 
         init(rawValue: String) {
-          if let url = URL(string: rawValue) {
+          if rawValue != "Desktop", let url = URL(string: rawValue) {
             self = .other(url)
           } else {
             self = .desktop

@@ -8,14 +8,29 @@ struct ColorPickerView: View {
     @AppStorage("CRColorPickerAccuracy") var colorPickerAccuracy = 2
 
     var body: some View {
-        VStack {
-            Toggle("Uppercase Hex Strings", isOn: $uppercaseHex)
-                .padding(.bottom)
+        Form {
+            Section {
+                Toggle(isOn: $uppercaseHex) {
+                    Text("Uppercase hex strings")
+                    Text(uppercaseHex ? "#FF9F0A" : "#ff9f0a")
+                        .monospaced()
+                }
 
-            Text("Set the maximum number of decimal places to use when generating code for picked simulator colors. The default is 2.")
-            Stepper("Decimal Places: \(colorPickerAccuracy)", value: $colorPickerAccuracy, in: 0...5)
-                .pickerStyle(.segmented)
+                Stepper(value: $colorPickerAccuracy, in: 0...5) {
+                    Text("Decimal places: \(colorPickerAccuracy)")
+                        .monospacedDigit()
+                    Text("0.623529 → \(0.623529.formatted(.number.precision(.fractionLength(colorPickerAccuracy))))")
+                        .monospaced()
+                }
+            } header: {
+                Label("Generated Code", systemImage: "chevron.left.forwardslash.chevron.right")
+            } footer: {
+                Text("Used when generating code for colors picked from the simulator. The default is 2 decimal places.")
+                    .caption()
+                    .secondary()
+            }
         }
+        .toggleStyle(.switch)
     }
 }
 

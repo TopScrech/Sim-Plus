@@ -11,55 +11,90 @@ struct PickersFormView: View {
 
     var body: some View {
         Form {
-            Picker("Screenshot Format:", selection: $captureSettings.imageFormat) {
-                ForEach(SimCtl.IO.ImageFormat.allCases, id: \.self) { type in
-                    Text(type.rawValue.uppercased()).tag(type)
-                }
-            }
-
-            Picker("Video Format:", selection: $captureSettings.videoFormat) {
-                ForEach(SimCtl.IO.VideoFormat.all, id: \.self) { item in
-                    if item == .divider {
-                        Divider()
-                    } else {
-                        Text(item.name).tag(item)
+            Section {
+                Picker("Screenshot format", selection: $captureSettings.imageFormat) {
+                    ForEach(SimCtl.IO.ImageFormat.allCases, id: \.self) { type in
+                        Text(type.rawValue.uppercased()).tag(type)
                     }
                 }
-            }
 
-            Picker("Display:", selection: $captureSettings.display) {
-                ForEach(SimCtl.IO.Display.allCases, id: \.self) { display in
-                    Text(display.rawValue.capitalized).tag(display)
+                Picker("Video format", selection: $captureSettings.videoFormat) {
+                    ForEach(SimCtl.IO.VideoFormat.all, id: \.self) { item in
+                        if item == .divider {
+                            Divider()
+                        } else {
+                            Text(item.name).tag(item)
+                        }
+                    }
                 }
+            } header: {
+                Label("Format", systemImage: "photo")
             }
 
-            Picker("Mask:", selection: $captureSettings.mask) {
-                ForEach(SimCtl.IO.Mask.allCases, id: \.self) { mask in
-                    Text(mask.rawValue.capitalized).tag(mask)
+            Section {
+                Picker("Display", selection: $captureSettings.display) {
+                    ForEach(SimCtl.IO.Display.allCases, id: \.self) { display in
+                        Text(display.rawValue.capitalized).tag(display)
+                    }
                 }
-            }
-            .disabled(renderChrome)
+                .pickerStyle(.segmented)
 
-          Button("Save to: \(captureSettings.saveURL.rawValue)") {
-            showFileImporter = true
-          }
+                Picker("Mask", selection: $captureSettings.mask) {
+                    ForEach(SimCtl.IO.Mask.allCases, id: \.self) { mask in
+                        Text(mask.rawValue.capitalized).tag(mask)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .disabled(renderChrome)
 
-            Toggle(isOn: $renderChrome.onChange(updateChromeSettings)) {
-                VStack(alignment: .leading) {
+                Toggle(isOn: $renderChrome.onChange(updateChromeSettings)) {
                     Text("Add device chrome to screenshots")
-                    Text("This is an experimental feature and may not function properly yet.")
-                        .caption()
+                    Text("Experimental. Requires the alpha mask.")
                 }
+            } header: {
+                Label("Capture", systemImage: "iphone")
+            }
+
+            Section {
+                LabeledContent("Save to") {
+                    HStack {
+                        Label {
+                            Text(saveFolderName)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                        } icon: {
+                            Image(nsImage: NSWorkspace.shared.icon(forFile: captureSettings.saveURL.url.path))
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                        }
+                        .help(captureSettings.saveURL.url.path)
+
+                        Button("Choose…") {
+                            showFileImporter = true
+                        }
+
+                        if case .other = captureSettings.saveURL {
+                            Button("Reset to Desktop") {
+                                captureSettings.saveURL = .desktop
+                            }
+                        }
+                    }
+                }
+            } header: {
+                Label("Location", systemImage: "folder")
             }
         }
+        .toggleStyle(.switch)
         .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.directory]) { result in
-          switch result {
-          case .success(let success):
-            captureSettings.saveURL = .other(success)
-          case .failure:
-            captureSettings.saveURL = .desktop
-          }
+            if case .success(let url) = result {
+                captureSettings.saveURL = .other(url)
+            }
         }
+    }
+
+    /// A friendly name for the folder captures are saved to.
+    private var saveFolderName: String {
+        FileManager.default.displayName(atPath: captureSettings.saveURL.url.path)
     }
 
     private func updateChromeSettings() {

@@ -75,13 +75,10 @@ struct OverridesView: View {
             }
 
             Section {
-                Picker("Text size", selection: $contentSize) {
+                Picker("Text size", selection: $contentSize.onChange(updateContentSize)) {
                     ForEach(SimCtl.UI.ContentSizes.allCases, id: \.self) { size in
                         Text(size.rawValue)
                     }
-                }
-                .onChange(of: contentSize) { _ in
-                    updateContentSize()
                 }
 
                 Toggle("Bold Text", isOn: $enhanceTextLegibility.onChange(setEnhanceTextLegibility))
