@@ -41,6 +41,8 @@ class SimulatorsController {
     @ObservationIgnored private var snapshotsTask: Task<Void, Never>?
 
     @ObservationIgnored @AppStorage("CRSidebar_FilterText") private var filterText = ""
+    @ObservationIgnored @AppStorage("CRLastSimulatorUDID") private var lastSimulatorUDID = ""
+    private var hasRestoredSelection = false
 
     /// The simulators the user has selected to work with. If this has one item then
     /// they are working with a simulator; if more than one they are probably about
@@ -48,6 +50,9 @@ class SimulatorsController {
     var selectedSimulatorIDs = Set<String>() {
         didSet {
             guard selectedSimulatorIDs != oldValue else { return }
+            if selectedSimulatorIDs.count == 1, let simulatorID = selectedSimulatorIDs.first {
+                lastSimulatorUDID = simulatorID
+            }
             loadApplications()
             loadSnapshots()
         }
@@ -149,6 +154,12 @@ class SimulatorsController {
         allSimulators = final
         let previousSelection = selectedSimulatorIDs
         filterSimulators()
+        if !hasRestoredSelection {
+            hasRestoredSelection = true
+            if simulators.contains(where: { $0.udid == lastSimulatorUDID }) {
+                selectedSimulatorIDs = [lastSimulatorUDID]
+            }
+        }
         if selectedSimulatorIDs == previousSelection {
             loadApplications()
             loadSnapshots()

@@ -6,7 +6,6 @@ struct SidebarView: View {
     @Environment(SimulatorsController.self) var controller
 
     @AppStorage("CRSidebar_FilterText") private var filterText = ""
-    @AppStorage("CRLastSimulatorUDID") private var lastSimulatorUDID = "booted"
 
     @State private var shouldShowDeleteAlert = false
 
@@ -26,7 +25,7 @@ struct SidebarView: View {
         @Bindable var controller = controller
 
         VStack(spacing: 0) {
-            List(selection: $controller.selectedSimulatorIDs.onChange(updateSelectedSimulators)) {
+            List(selection: $controller.selectedSimulatorIDs) {
                 if controller.simulators.isEmpty {
                     Text("No simulators")
                 } else {
@@ -98,15 +97,6 @@ struct SidebarView: View {
     func deleteSelectedSimulators() {
         guard controller.selectedSimulatorIDs.isNotEmpty else { return }
         SimCtl.delete(controller.selectedSimulatorIDs)
-    }
-
-    /// Called whenever the user adjusts their selection of simulator.
-    func updateSelectedSimulators() {
-        // If we selected exactly one simulator, stash its UDID away so we can
-        // quickly use it elsewhere in the app, e.g. in the menu bar icon.
-        if controller.selectedSimulatorIDs.count == 1 {
-            lastSimulatorUDID = controller.selectedSimulators.first!.udid
-        }
     }
 }
 
