@@ -83,8 +83,8 @@ struct DeepLinkEditorView: View {
         .sheet($showingEditSheet, content: {
             EditDeepLinkView(deepLink: $selection)
         })
-        .onChange(of: sortOrder) { newOrder in
-            deepLinks.sort(using: newOrder)
+        .onChange(of: sortOrder) {
+            deepLinks.sort(using: sortOrder)
         }
     }
 

@@ -35,6 +35,12 @@ struct LocationView: View {
     @State private var longitudeText = "\(defaultLong)"
     /// The location that is being simulated
     @State private var currentLocation = Location(id: UUID(), name: "", latitude: defaultLat, longitude: defaultLong)
+    @State private var mapPosition: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: defaultLat, longitude: defaultLong),
+            span: MKCoordinateSpan(latitudeDelta: 15, longitudeDelta: 15)
+        )
+    )
     @State private var pinnedLocation: CLLocationCoordinate2D?
 
     /// A randomly generated location offset from the currentLocation.
@@ -42,14 +48,6 @@ struct LocationView: View {
     @State private var jitteredLocation: CLLocationCoordinate2D?
 
     @State private var isJittering: Bool = false
-
-    var annotations: [CLLocationCoordinate2D] {
-        if let pinnedLocation = pinnedLocation {
-            return [pinnedLocation]
-        } else {
-            return []
-        }
-    }
 
     /// User-facing text describing `currentLocation`
     var locationText: String {
@@ -71,8 +69,18 @@ struct LocationView: View {
                                         performLocalSearch()
                                     }
                                 ZStack {
-                                    Map(coordinateRegion: $currentLocation.region, annotationItems: annotations) { location in
-                                        MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), tint: .red)
+                                    Map(position: $mapPosition) {
+                                        if let pinnedLocation {
+                                            Marker("Simulated location", coordinate: pinnedLocation)
+                                                .tint(.red)
+                                                .annotationTitles(.hidden)
+                                        }
+                                    }
+                                    .onMapCameraChange(frequency: .continuous) {
+                                        currentLocation.region = $0.region
+                                    }
+                                    .onChange(of: currentLocation.id) {
+                                        mapPosition = .region(currentLocation.region)
                                     }
                                     .clipShape(.rect(cornerRadius: 5))
 

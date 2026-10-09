@@ -40,7 +40,7 @@ struct LocalSearchRowView: View {
         .background(isHovered ? .blue : .clear)
         .clipShape(.rect(cornerRadius: 8))
         .onChange(of: lastHoverId) {
-            isHovered = $0 == result.id
+            isHovered = lastHoverId == result.id
         }
     }
 }
