@@ -37,72 +37,91 @@ struct OverridesView: View {
     }()
 
     var body: some View {
-        ScrollView {
-            Form {
-                Group {
-                    Picker("Appearance:", selection: $appearance.onChange(updateAppearance)) {
-                        ForEach(SimCtl.UI.Appearance.allCases, id: \.self) {
-                            Text($0.displayName)
-                        }
+        Form {
+            Section {
+                Picker("Appearance", selection: $appearance.onChange(updateAppearance)) {
+                    ForEach(SimCtl.UI.Appearance.allCases, id: \.self) {
+                        Text($0.displayName)
+                    }
+                }
+                .pickerStyle(.segmented)
+            } header: {
+                Label("Appearance", systemImage: "circle.lefthalf.filled")
+            }
+
+            Section {
+                Picker("Language", selection: $language.onChange(selectDefaultLocale)) {
+                    ForEach(languages, id: \.self) {
+                        Text(NSLocale.current.localizedString(forLanguageCode: $0) ?? "")
                     }
                 }
 
-                Spacer()
-                    .frame(height: 40)
-
-                Group {
-                    Picker("Language:", selection: $language) {
-                        ForEach(languages, id: \.self) {
-                            Text(NSLocale.current.localizedString(forLanguageCode: $0) ?? "")
-                        }
-                    }
-                    Picker("Locale:", selection: $locale) {
-                        ForEach(locales(for: language), id: \.self) {
-                            Text(NSLocale.current.localizedString(forIdentifier: $0) ?? "")
-                        }
-                    }
-                    HStack {
-                        Button("Set Language/Locale", action: updateLanguage)
-                        Text("(Requires Reboot)").caption().secondary()
+                Picker("Region", selection: $locale) {
+                    ForEach(locales(for: language), id: \.self) {
+                        Text(NSLocale.current.localizedString(forIdentifier: $0) ?? "")
                     }
                 }
 
-                Spacer()
-                    .frame(height: 40)
+                HStack {
+                    Spacer()
+                    Button("Apply & Reboot", action: updateLanguage)
+                }
+            } header: {
+                Label("Language & Region", systemImage: "globe")
+            } footer: {
+                Text("Changing the language or region reboots the simulator.")
+                    .caption()
+                    .secondary()
+            }
 
-                Section(header:
-                    Text("Accessibility overrides")
-                        .headline()
-                ) {
-                    Picker("Content size:", selection: $contentSize) {
-                        ForEach(SimCtl.UI.ContentSizes.allCases, id: \.self) { size in
-                            HStack {
-                                Text(size.rawValue)
-                            }
-                        }
+            Section {
+                Picker("Text size", selection: $contentSize) {
+                    ForEach(SimCtl.UI.ContentSizes.allCases, id: \.self) { size in
+                        Text(size.rawValue)
                     }
-                    .onChange(of: contentSize) { _ in
-                        updateContentSize()
-                    }
-
-                    Toggle("Bold Text", isOn: $enhanceTextLegibility.onChange(setEnhanceTextLegibility))
-                    Toggle("Button Shapes", isOn: $showButtonShapes.onChange(setShowButtonShapes))
-                    Toggle("On/Off Labels", isOn: $showOnOffLabels.onChange(setShowOnOffLabels))
-                    Toggle("Reduce Transparency", isOn: $reduceTransparency.onChange(setReduceTransparency))
-                    Toggle("Increase Contrast", isOn: $increaseContrast.onChange(setIncreaseContrast))
-                    Toggle("Differentiate Without Color", isOn: $differentiateWithoutColor.onChange(setDifferentiateWithoutColor))
-                    Toggle("Smart Invert", isOn: $smartInvert.onChange(setSmartInvert))
+                }
+                .onChange(of: contentSize) { _ in
+                    updateContentSize()
                 }
 
+                Toggle("Bold Text", isOn: $enhanceTextLegibility.onChange(setEnhanceTextLegibility))
+            } header: {
+                Label("Text", systemImage: "textformat.size")
+            }
+
+            Section {
+                Toggle("Button Shapes", isOn: $showButtonShapes.onChange(setShowButtonShapes))
+                Toggle("On/Off Labels", isOn: $showOnOffLabels.onChange(setShowOnOffLabels))
+                Toggle("Reduce Transparency", isOn: $reduceTransparency.onChange(setReduceTransparency))
+                Toggle("Increase Contrast", isOn: $increaseContrast.onChange(setIncreaseContrast))
+                Toggle("Differentiate Without Color", isOn: $differentiateWithoutColor.onChange(setDifferentiateWithoutColor))
+                Toggle("Smart Invert", isOn: $smartInvert.onChange(setSmartInvert))
+            } header: {
+                Label("Display", systemImage: "accessibility")
+            }
+
+            Section {
                 Toggle("Reduce Motion", isOn: $reduceMotion.onChange(setReduceMotion))
 
                 Toggle("Prefer Cross-Fade Transitions", isOn: $preferCrossFadeTransitions.onChange(setPreferCrossFadeTransitions))
                     .disabled(reduceMotion == false)
+            } header: {
+                Label("Motion", systemImage: "figure.walk.motion")
             }
-            .padding()
         }
+        .formStyle(.grouped)
+        .toggleStyle(.switch)
         .tabItem {
             Text("Overrides")
+        }
+    }
+
+    /// Keeps the region valid when the language changes, falling back to the first region for that language.
+    private func selectDefaultLocale() {
+        let available = locales(for: language)
+
+        if available.contains(locale) == false {
+            locale = available.first ?? language
         }
     }
 
@@ -120,7 +139,7 @@ struct OverridesView: View {
 
     private func locales(for language: String) -> [String] {
         NSLocale.availableLocaleIdentifiers
-            .filter { $0.hasPrefix(language) }
+            .filter { $0 == language || $0.hasPrefix(language + "_") }
             .sorted { (lhs, rhs) -> Bool in
                 let lhsString = NSLocale.current.localizedString(forIdentifier: lhs) ?? ""
                 let rhsString = NSLocale.current.localizedString(forIdentifier: rhs) ?? ""
