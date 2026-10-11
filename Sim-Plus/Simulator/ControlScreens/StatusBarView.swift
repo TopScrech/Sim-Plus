@@ -113,9 +113,9 @@ struct StatusBarView: View {
                     HStack {
                         Slider(value: $batteryLevel, in: 0...100, step: 1, onEditingChanged: levelChanged)
 
-                        Text("\(Int(batteryLevel))%")
+                        Text(batteryLevel / 100, format: .percent.precision(.fractionLength(0)))
                             .monospacedDigit()
-                            .frame(width: 40, alignment: .trailing)
+                            .fixedSize()
                     }
                 }
             } header: {
