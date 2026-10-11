@@ -4,7 +4,7 @@ import ScrechKit
 struct StatusBarView: View {
     let simulator: Simulator
 
-    /// The current time to show in the device.
+    /// The date and time to show in the device
     @State private var time = Date.now
 
     /// The active data network; can be one of "WiFi", "3G", "4G", "5G", "5G+", "5G-UWB", "LTE", "LTE-A", or "LTE+".
@@ -33,16 +33,16 @@ struct StatusBarView: View {
     var body: some View {
         Form {
             Section {
-                DatePicker("Time", selection: $time, displayedComponents: .hourAndMinute)
+                DatePicker("Date & Time", selection: $time, displayedComponents: [.date, .hourAndMinute])
 
                 HStack {
                     Spacer()
-                    Button("Set to 9:41", action: setAppleTime)
+                    Button("Set to 1 April at 9:41", action: setAppleDateAndTime)
                     Button("Apply", action: setTime)
                         .keyboardShortcut(.defaultAction)
                 }
             } header: {
-                Label("Time", systemImage: "clock")
+                Label("Date & Time", systemImage: "calendar.badge.clock")
             }
 
             Section {
@@ -150,22 +150,25 @@ struct StatusBarView: View {
 
     // MARK: Private methods
 
-    /// Changes the system clock to a new value.
+    /// Updates the status bar date and time
     private func setTime() {
         SimCtl.overrideStatusBarTime(simulator.udid, time: time)
     }
 
-    private func setAppleTime() {
+    private func setAppleDateAndTime() {
         let calendar = Calendar.current
-        var components = calendar.dateComponents([.year, .month, .day], from: Date.now)
+        var components = DateComponents()
+        components.year = calendar.component(.year, from: .now)
+        components.month = 4
+        components.day = 1
         components.hour = 9
         components.minute = 41
         components.second = 0
 
-        let appleTime = calendar.date(from: components) ?? Date.now
-        SimCtl.overrideStatusBarTime(simulator.udid, time: appleTime)
+        guard let appleDate = calendar.date(from: components) else { return }
 
-        time = appleTime
+        time = appleDate
+        setTime()
     }
 
     private func clearOverrides() {

@@ -200,6 +200,17 @@ extension SimCtl {
             Command("status_bar", arguments: [deviceId] + operation.arguments)
         }
 
+        static func statusBarTime(deviceId: String, time: Date, timeZone: TimeZone = .current) -> Command {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.calendar = Calendar(identifier: .gregorian)
+            formatter.timeZone = timeZone
+            // simctl requires milliseconds and a numeric offset, including +00:00 instead of Z
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+
+            return statusBar(deviceId: deviceId, operation: .override([.time(formatter.string(from: time))]))
+        }
+
         /// Get or Set UI options
         static func ui(deviceId: String, option: UI.Option) -> Command {
             Command("ui", arguments: [deviceId] + option.arguments)

@@ -42,6 +42,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Controllers/SimCtl+SubCommandsTests.swift",
+				Controllers/StatusBarTimeTests.swift,
 			);
 			target = B07F584D23F9F83800256D5D /* Sim-PlusTests */;
 		};
