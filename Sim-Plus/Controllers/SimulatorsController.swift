@@ -33,12 +33,13 @@ class SimulatorsController {
     var snapshots = [Snapshot]()
 
     /// An array of all simulators that were loaded from simctl.
-    private var allSimulators = [Simulator]()
+    private(set) var allSimulators = [Simulator]()
 
     private(set) var deviceTypes = [DeviceType]()
     private(set) var runtimes = [Runtime]()
     @ObservationIgnored private var applicationsTask: Task<Void, Never>?
     @ObservationIgnored private var snapshotsTask: Task<Void, Never>?
+    @ObservationIgnored private var watchTask: Task<Void, Never>?
 
     @ObservationIgnored @AppStorage("CRSidebar_FilterText") private var filterText = ""
     @ObservationIgnored @AppStorage("CRLastSimulatorUDID") private var lastSimulatorUDID = ""
@@ -73,8 +74,17 @@ class SimulatorsController {
         self.preferences = preferences
     }
 
-    /// Refreshes simulator data until the hosting view disappears
-    func watchSimulators() async {
+    /// Starts refreshing simulator data for the lifetime of the app, so both the main window
+    /// and the menu bar extra stay up to date. Calling this again while already watching does nothing.
+    func startWatching() {
+        guard watchTask == nil else { return }
+        watchTask = Task { [weak self] in
+            await self?.watchSimulators()
+        }
+    }
+
+    /// Refreshes simulator data until the task is cancelled
+    private func watchSimulators() async {
         defer {
             applicationsTask?.cancel()
             snapshotsTask?.cancel()
@@ -240,5 +250,6 @@ class SimulatorsController {
     deinit {
         applicationsTask?.cancel()
         snapshotsTask?.cancel()
+        watchTask?.cancel()
     }
 }

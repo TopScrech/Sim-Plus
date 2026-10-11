@@ -27,8 +27,8 @@ struct MainView: View {
 				LoadingView()
 			}
         }
-        .task {
-            await controller.watchSimulators()
+        .onAppear {
+            controller.startWatching()
         }
         .onChange(of: [preferences.showDefaultSimulator,
                        preferences.showBootedDevicesFirst,

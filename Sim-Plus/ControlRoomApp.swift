@@ -4,19 +4,6 @@ import ScrechKit
 @main
 struct ControlRoomApp: App {
     @AppStorage("CRWantsMenuBarIcon") private var wantsMenuBarIcon = true
-    @AppStorage("CRApps_LastOpenURL") private var lastOpenURL = ""
-    @AppStorage("CRApps_LastBundleID") private var lastBundleID = ""
-    @AppStorage("CRLastSimulatorUDID") private var lastSimulatorUDID = "booted"
-    @AppStorage("CRApps_PushPayload") private var pushPayload = """
-    {
-        "aps": {
-            "alert": {
-                "body": "Hello, World!",
-                "title": "From Control Room"
-            }
-        }
-    }
-    """
 
     @StateObject var preferences: Preferences
     @State var controller: SimulatorsController
@@ -57,50 +44,26 @@ struct ControlRoomApp: App {
                 .environmentObject(preferences)
         }
 
-        MenuBarExtra(isInserted: .constant(preferences.wantsMenuBarIcon)) {
-            if deepLinks.links.isEmpty == false {
-                Menu("Saved deep links") {
-                    ForEach(deepLinks.links) { link in
-                        Button(link.name) {
-                            open(link)
-                        }
-                    }
-                }
-
-                Divider()
-            }
-
-            Button("Resend last push notification", action: resendLastPushNotification)
-                .keyboardShortcut("p", modifiers: [.control, .option, .command])
-            Button("Restart last selected app", action: restartLastSelectedApp)
-                .keyboardShortcut("r", modifiers: [.control, .option, .command])
-            Button("Reopen last URL", action: reopenLastURL)
-                .keyboardShortcut("u", modifiers: [.control, .option, .command])
-        } label: {
-            Label("Control Room", systemImage: "gear")
-
+        MenuBarExtra("Sim+", systemImage: "iphone", isInserted: $wantsMenuBarIcon) {
+            MenuBarContent()
+                .environment(controller)
+                .environment(deepLinks)
         }
     }
 
     init() {
         let preferences = Preferences()
+        let controller = SimulatorsController(preferences: preferences)
         _preferences = StateObject(wrappedValue: preferences)
-        _controller =  State(initialValue: SimulatorsController(preferences: preferences))
+        _controller = State(initialValue: controller)
+
+        controller.startWatching()
+        registerGlobalShortcuts()
     }
 
-    func resendLastPushNotification() {
-        SimCtl.sendPushNotification(lastSimulatorUDID, appID: lastBundleID, jsonPayload: pushPayload)
-    }
-
-    func restartLastSelectedApp() {
-        SimCtl.restart(lastSimulatorUDID, appID: lastBundleID)
-    }
-
-    func reopenLastURL() {
-        SimCtl.openURL(lastSimulatorUDID, URL: lastOpenURL)
-    }
-
-    func open(_ link: DeepLink) {
-        SimCtl.openURL(lastSimulatorUDID, URL: link.url.absoluteString)
+    private func registerGlobalShortcuts() {
+        KeyboardShortcuts.onKeyUp(for: .resendLastPushNotification, action: QuickActions.resendLastPushNotification)
+        KeyboardShortcuts.onKeyUp(for: .restartLastSelectedApp, action: QuickActions.restartLastSelectedApp)
+        KeyboardShortcuts.onKeyUp(for: .reopenLastURL, action: QuickActions.reopenLastURL)
     }
 }
