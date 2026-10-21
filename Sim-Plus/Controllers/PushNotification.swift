@@ -6,14 +6,14 @@ struct PushNotification: Codable {
 
 struct PushNotificationAPS: Codable {
     private enum CodingKeys: String, CodingKey {
-        case alert
-        case badge
-        case sound
-        case threadID = "thread-id"
-        case category
-        case isContentAvailable = "content-available"
-        case isMutableContent = "mutable-content"
-        case targetContentID = "target-content-id"
+        case alert,
+             badge,
+             sound,
+             threadID = "thread-id",
+             category,
+             isContentAvailable = "content-available",
+             isMutableContent = "mutable-content",
+             targetContentID = "target-content-id"
     }
 
     /**
@@ -123,16 +123,16 @@ struct PushNotificationAPS: Codable {
 extension PushNotificationAPS {
     struct Alert: Codable {
         private enum CodingKeys: String, CodingKey {
-            case title
-            case subtitle
-            case body
-            case launchImage = "launch-image"
-            case titleLocKey = "title-loc-key"
-            case titleLocArgs = "title-loc-args"
-            case subtitleLocKey = "subtitle-loc-key"
-            case subtitleLocArgs = "subtitle-loc-args"
-            case locKey = "loc-key"
-            case locArgs = "loc-args"
+            case title,
+                 subtitle,
+                 body,
+                 launchImage = "launch-image",
+                 titleLocKey = "title-loc-key",
+                 titleLocArgs = "title-loc-args",
+                 subtitleLocKey = "subtitle-loc-key",
+                 subtitleLocArgs = "subtitle-loc-args",
+                 locKey = "loc-key",
+                 locArgs = "loc-args"
         }
         /**
          If true, `titleLocKey` and `titleLocArgs` will be used instead of` title`, `subtitleLocKey` and `subtitleLocArgs` instead of `subtitle` and  `locKey` and `locArgs` instead of `body`.
@@ -240,9 +240,9 @@ extension PushNotificationAPS {
 extension PushNotificationAPS {
     struct Sound: Codable {
         private enum CodingKeys: String, CodingKey {
-            case isCritical = "critical"
-            case name
-            case volume
+            case isCritical = "critical",
+                 name,
+                 volume
         }
 
         /**

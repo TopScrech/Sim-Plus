@@ -31,8 +31,6 @@ struct LocationView: View {
     /// Keeps track of which search item is being currently hovered over
     @State private var lastHoverId: UUID?
 
-    @State private var latitudeText = "\(defaultLat)"
-    @State private var longitudeText = "\(defaultLong)"
     /// The location that is being simulated
     @State private var currentLocation = Location(id: UUID(), name: "", latitude: defaultLat, longitude: defaultLong)
     @State private var mapPosition: MapCameraPosition = .region(

@@ -3,7 +3,6 @@ import CoreServices
 import UniformTypeIdentifiers
 
 struct TypeIdentifier: Hashable {
-    static let anyDevice = TypeIdentifier("public.device")
     static let phone = TypeIdentifier("com.apple.iphone")
     static let pad = TypeIdentifier("com.apple.ipad")
     static let watch = TypeIdentifier("com.apple.watch")

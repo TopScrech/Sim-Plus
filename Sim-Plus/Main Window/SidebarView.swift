@@ -9,18 +9,6 @@ struct SidebarView: View {
 
     @State private var shouldShowDeleteAlert = false
 
-    private var selectedSimulatorsSummary: String {
-        guard controller.selectedSimulators.count > 0 else { return "" }
-
-        switch controller.selectedSimulators.count {
-        case 1:
-            return controller.selectedSimulators[0].summary
-        default:
-            let simulatorsSummaries = controller.selectedSimulators.map { "• \($0.summary)" }.joined(separator: "\n")
-            return "the following simulators? \n\n\(simulatorsSummaries)"
-        }
-    }
-
     var body: some View {
         @Bindable var controller = controller
 

@@ -1,36 +1,26 @@
 import Foundation
 
 extension SimCtl {
-    enum Platform {
-        case iOS
-        case tvOS
-        case watchOS
-        case visionOS
-    }
-
     enum DeviceFamily: CaseIterable {
-        case iPhone
-        case iPad
-        case tv
-        case watch
-        case visionPro
+        case iPhone, iPad, tv, watch, visionPro
 
         var displayName: String {
             switch self {
-            case .iPhone: return "iPhone"
-            case .iPad: return "iPad"
-            case .watch: return "Apple Watch"
-            case .tv: return "Apple TV"
-            case .visionPro: return "Apple Vision Pro"
+            case .iPhone: "iPhone"
+            case .iPad: "iPad"
+            case .watch: "Apple Watch"
+            case .tv: "Apple TV"
+            case .visionPro: "Apple Vision Pro"
             }
         }
 
         var snapshotUnavailableIcon: String {
             switch self {
-            case .iPad, .iPhone: return "iphone.slash"
-            case .watch: return "applewatch.slash"
-            case .tv: return "tv.slash"
-            case .visionPro: return "visionpro.slash"
+            case .iPhone: "iphone.slash"
+            case .iPad: "ipad.gen2.slash"
+            case .watch: "applewatch.slash"
+            case .tv: "tv.slash"
+            case .visionPro: "visionpro.slash"
             }
         }
     }
@@ -156,13 +146,12 @@ extension SimCtl {
 }
 
 extension SimCtl.Application {
-
     private enum CodingKeys: String, CodingKey {
-        case type = "ApplicationType"
-        case bundleIdentifier = "CFBundleIdentifier"
-        case displayName = "CFBundleDisplayName"
-        case bundlePath = "Bundle"
-        case dataFolderPath = "DataContainer"
-        case appGroupsFolderPaths = "GroupContainers"
+        case type = "ApplicationType",
+             bundleIdentifier = "CFBundleIdentifier",
+             displayName = "CFBundleDisplayName",
+             bundlePath = "Bundle",
+             dataFolderPath = "DataContainer",
+             appGroupsFolderPaths = "GroupContainers"
     }
 }

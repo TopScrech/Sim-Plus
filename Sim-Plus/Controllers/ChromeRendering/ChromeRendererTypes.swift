@@ -55,12 +55,6 @@ struct SimulatorImagePadding: Decodable {
     var right: Double
 }
 
-struct SimulatorPath: Decodable {
-    var insets: SimulatorImagePadding
-    var cornerRadiusX: Double
-    var cornerRadiusY: Double
-}
-
 struct SimulatorImageInput: Decodable {
     var image: String
     var onTop: Bool

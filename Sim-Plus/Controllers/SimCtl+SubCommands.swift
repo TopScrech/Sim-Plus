@@ -29,29 +29,9 @@ extension SimCtl {
             Command("clone", arguments: [deviceId, name])
         }
 
-        /// Upgrade a device to a newer runtime.
-        static func upgrade(deviceId: String, runtimeId: String) -> Command {
-            Command("upgrade", arguments: [deviceId, runtimeId])
-        }
-
         /// Delete spcified devices, unavailable devices, or all devices.
         static func delete(_ delete: Delete) -> Command {
             Command("delete", arguments: delete.arguments)
-        }
-
-        /// Create a new watch and phone pair.
-        static func pair(watch: String, phone: String) -> Command {
-            Command("pair", arguments: [watch, phone])
-        }
-
-        /// Unpair a watch and phone pair.
-        static func unpair(pairId: String) -> Command {
-            Command("unpair", arguments: [pairId])
-        }
-
-        /// Set a given pair as active.
-        static func pairActivate(pairId: String) -> Command {
-            Command("pair_activate", arguments: [pairId])
         }
 
         /// Erase a device's contents and settings.
@@ -78,11 +58,6 @@ extension SimCtl {
         /// Rename a device.
         static func rename(deviceId: String, name: String) -> Command {
             Command("rename", arguments: [deviceId, name])
-        }
-
-        /// Print an environment variable from a running device.
-        static func getEnvironmentVariable(deviceId: String, variable: String) -> Command {
-            Command("getenv", arguments: [deviceId, variable])
         }
 
         /// Open a URL in a device.
@@ -246,9 +221,9 @@ extension SimCtl {
 
     // swiftlint:disable nesting
     enum Delete {
-        case devices([String])
-        case unavailable
-        case all
+        case devices([String]),
+             unavailable,
+             all
 
         var arguments: [String] {
             switch self {
@@ -263,58 +238,50 @@ extension SimCtl {
     }
 
     enum Erase {
-        case devices([String])
-        case all
+        case devices([String]),
+             all
 
         var arguments: [String] {
             switch self {
-            case .devices(let devices):
-                return devices
-            case .all:
-                return ["all"]
+            case .devices(let devices): devices
+            case .all: ["all"]
             }
         }
     }
 
     enum ShutDown {
-        case devices([String])
-        case all
+        case devices([String]),
+             all
 
         var arguments: [String] {
             switch self {
-            case .devices(let devices):
-                return devices
-            case .all:
-                return ["all"]
+            case .devices(let devices): devices
+            case .all: ["all"]
             }
         }
     }
 
     enum Container {
-        case app
-        case data
-        case groups
-        case group(String)
+        case app,
+             data,
+             groups,
+             group(String)
 
         var arguments: [String] {
             switch self {
-            case .app:
-                return ["app"]
-            case .data:
-                return ["data"]
-            case .groups:
-                return ["groups"]
-            case .group(let groupId):
-                return [groupId]
+            case .app: ["app"]
+            case .data: ["data"]
+            case .groups: ["groups"]
+            case .group(let groupId): [groupId]
             }
         }
     }
 
     struct Launch {
         enum Output {
-            case console
-            case consolePTY
-            case std(outPath: String?, errPath: String?)
+            case console,
+                 consolePTY,
+                 std(outPath: String?, errPath: String?)
 
             var arguments: [String] {
                 switch self {
@@ -343,18 +310,15 @@ extension SimCtl {
 
     enum Spawn {
         enum Option {
-            case waitForDebugger
-            case standalone
-            case arch(String)
+            case waitForDebugger,
+                 standalone,
+                 arch(String)
 
             var arguments: [String] {
                 switch self {
-                case .waitForDebugger:
-                    return ["-w"]
-                case .standalone:
-                    return ["-s"]
-                case .arch(let arch):
-                    return ["--arch=\(arch)"]
+                case .waitForDebugger: ["-w"]
+                case .standalone: ["-s"]
+                case .arch(let arch): ["--arch=\(arch)"]
                 }
             }
         }
@@ -362,10 +326,10 @@ extension SimCtl {
 
     enum List {
         enum Filter: String {
-            case devices
-            case devicetypes
-            case runtimes
-            case pairs
+            case devices,
+                 devicetypes,
+                 runtimes,
+                 pairs
 
             var arguments: [String] {
                 [rawValue]
@@ -373,22 +337,20 @@ extension SimCtl {
         }
 
         enum Search {
-            case string(String)
-            case available
+            case string(String),
+                 available
 
             var arguments: [String] {
                 switch self {
-                case .string(let string):
-                    return [string]
-                case .available:
-                    return ["available"]
+                case .string(let string): [string]
+                case .available: ["available"]
                 }
             }
         }
 
         enum Flag: String {
-            case json = "-j"
-            case verbose = "-v"
+            case json = "-j",
+                 verbose = "-v"
 
             var arguments: [String] {
                 [rawValue]
@@ -398,22 +360,20 @@ extension SimCtl {
 
     enum Pasteboard {
         enum Device {
-            case deviceId(String)
-            case host
+            case deviceId(String),
+                 host
 
             var arguments: [String] {
                 switch self {
-                case .deviceId(let device):
-                    return [device]
-                case .host:
-                    return ["host"]
+                case .deviceId(let device): [device]
+                case .host: ["host"]
                 }
             }
         }
 
         enum Flag: String {
-            case verbose = "-v"
-            case promise = "-p"
+            case verbose = "-v",
+                 promise = "-p"
 
             var arguments: [String] {
                 [rawValue]
@@ -423,53 +383,12 @@ extension SimCtl {
 
     // swiftlint:disable type_name
     enum IO {
-    // swiftlint:enable type_name
+        // swiftlint:enable type_name
         enum Operation {
-            case enumerate(poll: Bool = false)
-            case poll
-            case recordVideo(codec: Codec? = nil, display: Display? = nil, mask: Mask? = nil, force: Bool = false, url: String)
-            case screenshot(type: ImageFormat? = nil, display: Display? = nil, mask: Mask? = nil, url: String)
-
-            struct RecordVideo {
-                enum Flags {
-                    case codec(Codec)
-                    case display(Display)
-                    case mask(Mask)
-                    case force
-
-                    var arguments: [String] {
-                        switch self {
-                        case .codec(let codec):
-                            return codec.arguments
-                        case .display(let display):
-                            return display.arguments
-                        case .mask(let mask):
-                            return mask.arguments
-                        case .force:
-                            return ["--force"]
-                        }
-                    }
-                }
-            }
-
-            struct Screenshot {
-                enum Flags {
-                    case type(ImageFormat)
-                    case display(Display)
-                    case mask(Mask)
-
-                    var arguments: [String] {
-                        switch self {
-                        case .type(let type):
-                            return type.arguments
-                        case .display(let display):
-                            return display.arguments
-                        case .mask(let mask):
-                            return mask.arguments
-                        }
-                    }
-                }
-            }
+            case enumerate(poll: Bool = false),
+                 poll,
+                 recordVideo(codec: Codec? = nil, display: Display? = nil, mask: Mask? = nil, force: Bool = false, url: String),
+                 screenshot(type: ImageFormat? = nil, display: Display? = nil, mask: Mask? = nil, url: String)
 
             var arguments: [String] {
                 switch self {
@@ -514,8 +433,7 @@ extension SimCtl {
         }
 
         enum Codec: String {
-            case h264
-            case hevc
+            case h264, hevc
 
             var arguments: [String] {
                 ["--codec=\(rawValue)"]
@@ -525,8 +443,7 @@ extension SimCtl {
         }
 
         enum Display: String, CaseIterable {
-            case `internal`
-            case external
+            case `internal`, external
 
             var arguments: [String] {
                 ["--display=\(rawValue)"]
@@ -534,49 +451,47 @@ extension SimCtl {
         }
 
         enum Mask: String, CaseIterable {
-            case ignored
-            case alpha
-            case black
+            case ignored,
+                 alpha,
+                 black
 
             var arguments: [String] {
                 ["--mask=\(rawValue)"]
             }
         }
 
-      enum SaveLocation: RawRepresentable {
-        case desktop
-        case other(URL)
+        enum SaveLocation: RawRepresentable {
+            case desktop,
+                 other(URL)
 
-        private var desktopURL: URL {
-          FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0]
-        }
+            private var desktopURL: URL {
+                FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)[0]
+            }
 
-        init(rawValue: String) {
-          if rawValue != "Desktop", let url = URL(string: rawValue) {
-            self = .other(url)
-          } else {
-            self = .desktop
-          }
-        }
+            init(rawValue: String) {
+                if rawValue != "Desktop", let url = URL(string: rawValue) {
+                    self = .other(url)
+                } else {
+                    self = .desktop
+                }
+            }
 
-        var rawValue: String {
-          switch self {
-          case .desktop:
-              return "Desktop"
-          case .other(let url):
-              return url.absoluteString
-          }
-        }
+            var rawValue: String {
+                switch self {
+                case .desktop: "Desktop"
+                case .other(let url): url.absoluteString
+                }
+            }
 
-        var url: URL {
-          switch self {
-          case .desktop:
-            return desktopURL
-          case .other(let url):
-            return url
-          }
+            var url: URL {
+                switch self {
+                case .desktop:
+                    return desktopURL
+                case .other(let url):
+                    return url
+                }
+            }
         }
-      }
 
         enum ImageFormat: String, CaseIterable {
             case png
@@ -782,7 +697,7 @@ extension SimCtl {
 
     // swiftlint:disable type_name
     public enum UI {
-    // swiftlint:enable type_name
+        // swiftlint:enable type_name
         enum Option {
             case appearance(Appearance)
             case contentSize(ContentSizes)
@@ -860,9 +775,9 @@ extension SimCtl {
 
     enum Privacy {
         enum Action: String {
-            case grant
-            case revoke
-            case reset
+            case grant,
+                 revoke,
+                 reset
 
             var arguments: [String] {
                 [rawValue]
@@ -870,20 +785,20 @@ extension SimCtl {
         }
 
         enum Permission: String, CaseIterable {
-            case all
-            case calendar
-            case camera
-            case contactsLimited = "contacts-limited"
-            case contacts
-            case location
-            case locationAlways = "location-always"
-            case photosAdd
-            case photos
-            case mediaLibrary = "media-library"
-            case microphone
-            case motion
-            case reminders
-            case siri
+            case all,
+                 calendar,
+                 camera,
+                 contactsLimited = "contacts-limited",
+                 contacts,
+                 location,
+                 locationAlways = "location-always",
+                 photosAdd,
+                 photos,
+                 mediaLibrary = "media-library",
+                 microphone,
+                 motion,
+                 reminders,
+                 siri
 
             var arguments: [String] {
                 [rawValue]
@@ -893,18 +808,15 @@ extension SimCtl {
 
     enum Keychain {
         enum Action {
-            case addRootCert(path: String)
-            case addCert(path: String)
-            case reset
+            case addRootCert(path: String),
+                 addCert(path: String),
+                 reset
 
             var arguments: [String] {
                 switch self {
-                case .addRootCert(path: let path):
-                    return ["add-root-cert", path]
-                case .addCert(path: let path):
-                    return ["add-cert", path]
-                case .reset:
-                    return ["reset"]
+                case .addRootCert(path: let path): ["add-root-cert", path]
+                case .addCert(path: let path): ["add-cert", path]
+                case .reset: ["reset"]
                 }
             }
         }

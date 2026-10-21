@@ -107,9 +107,6 @@ struct NotificationEditorView: View {
         UIState.shared.currentSheet = .none
     }
 
-    private func copyFullJsonToClipboard() {
-        NSPasteboard.general.setString(fullJson, forType: .string)
-    }
 }
 
 private struct APSFormView: View {

@@ -1,10 +1,6 @@
 import ScrechKit
 
 struct AboutView: View {
-    var appName: String {
-        (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? "Control Room"
-    }
-
     var appVersion: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "1.0"
     }

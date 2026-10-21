@@ -33,7 +33,6 @@
 		AAB100000000000000000001 /* Exceptions for "Sim-Plus" folder in "Sim-Plus" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Helpers/Defaults.swift,
 				Info.plist,
 			);
 			target = 511BA57823F3FFEA00E3E660 /* Sim-Plus */;
