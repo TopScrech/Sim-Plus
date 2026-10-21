@@ -210,25 +210,4 @@ enum SimCtl: CommandLineCommandExecuter {
         execute(.privacy(deviceId: simulator, action: .reset, service: permission, appBundleId: appID))
     }
 
-    static func getAppContainer(_ simulator: String, appID: String, completion: @escaping (URL?) -> Void) {
-        execute(.getAppContainer(deviceId: simulator, appBundleID: appID)) { result in
-            let url: URL?
-
-            switch result {
-            case .success(let data):
-                if let path = String(data: data, encoding: .utf8) {
-                    let trimmed = path.trimmingCharacters(in: .whitespacesAndNewlines)
-                    url = URL(fileURLWithPath: trimmed)
-                } else {
-                    url = nil
-                }
-            case .failure:
-                url = nil
-            }
-
-            DispatchQueue.main.async {
-                completion(url)
-            }
-        }
-    }
 }

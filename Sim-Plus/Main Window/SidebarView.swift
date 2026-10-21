@@ -88,15 +88,7 @@ struct SidebarView: View {
     }
 }
 
-private extension Simulator {
-    var summary: String {
-        [name, runtime?.name].compactMap { $0 }.joined(separator: " - ")
-    }
-}
-
 struct SidebarView_Previews: PreviewProvider {
-    @State static var selected: Simulator?
-
     static var previews: some View {
         let preferences = Preferences()
         return SidebarView()

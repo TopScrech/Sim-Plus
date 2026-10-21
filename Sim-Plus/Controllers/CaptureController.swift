@@ -12,12 +12,6 @@ class CaptureController {
     /// The name of the file we're writing to, used at first in a temporary directory then on the desktop.
     var recordingFilename = ""
 
-    /// The export format description to be shown while exporting
-    var exportDescription = ""
-
-    /// Converting MP4 to GIF takes time, so this tracks the progress of the operation
-    var exportProgress: CGFloat = 1.0
-
     private var videoFormat = SimCtl.IO.VideoFormat.h264
 
     var imageFormatString: String {
@@ -122,13 +116,9 @@ class CaptureController {
 
         let gifExtension = savePath.replacingOccurrences(of: ".mp4", with: ".gif")
 
-        exportDescription = "GIF"
-
-        Task { [weak self] in
+        Task {
             do {
-                let result = try await sourceURL.convertToGIF(maxSize: size) { [weak self] progress in
-                    self?.exportProgress = progress
-                }
+                let result = try await sourceURL.convertToGIF(maxSize: size) { _ in }
 
                 switch result {
                 case .success(let gifURL):
@@ -151,10 +141,7 @@ class CaptureController {
         }
 
         let convertPath = sourceURL.path.appending("-compressed.mp4")
-        exportDescription = "Compressed Video"
-        exportProgress = 0.0
-        FFMPEGConverter.convert(input: sourceURL.path, output: convertPath) { [weak self] result in
-            self?.exportProgress = 1.0
+        FFMPEGConverter.convert(input: sourceURL.path, output: convertPath) { result in
             switch result {
             case .success:
                 try? FileManager.default.moveItem(atPath: convertPath, toPath: savePath)

@@ -19,11 +19,6 @@ extension SimCtl {
         static func setLogging(deviceTypeId: String, enableLogging: Bool) -> Command {
             Command("logverbose", arguments: [deviceTypeId, String(describing: enableLogging)])
         }
-        /// Get logs.
-        static func getLogs(deviceTypeId: String) -> Command {
-            Command("diagnose", arguments: [])
-        }
-
         /// Clone an existing device.
         static func clone(deviceId: String, name: String) -> Command {
             Command("clone", arguments: [deviceId, name])
@@ -65,28 +60,14 @@ extension SimCtl {
             Command("openurl", arguments: [deviceId, url])
         }
 
-        static func addRootCert(deviceId: String, filePath: String) -> Command {
-            Command("keychain", arguments: [deviceId, filePath])
-        }
-
         /// Add photos, live photos, videos, or contacts to the library of a device.
         static func addMedia(deviceId: String, mediaPaths: [String]) -> Command {
             Command("addmedia", arguments: [deviceId] + mediaPaths)
         }
 
-        /// Install an app on a device.
-        static func install(deviceId: String, path: String) -> Command {
-            Command("install", arguments: [deviceId, path])
-        }
-
         /// Uninstall an app from a device.
         static func uninstall(deviceId: String, appBundleId: String) -> Command {
             Command("uninstall", arguments: [deviceId, appBundleId])
-        }
-
-        /// Print the path of the installed app's container
-        static func getAppContainer(deviceId: String, appBundleID: String, container: Container? = nil) -> Command {
-            Command("get_app_container", arguments: [deviceId, appBundleID] + (container?.arguments ?? []))
         }
 
         /// Launch an application by identifier on a device.
@@ -134,40 +115,14 @@ extension SimCtl {
             Command("pbsync", arguments: source.arguments + destination.arguments + flags.flatMap(\.arguments))
         }
 
-        /// Copy standard input onto the device pasteboard.
-        static func pbcopy(device: Pasteboard.Device, flags: [Pasteboard.Flag] = []) -> Command {
-            Command("pbcopy", arguments: device.arguments + flags.flatMap(\.arguments))
-        }
-
-        /// Print the contents of the device's pasteboard to standard output.
-        static func pbpaste(device: Pasteboard.Device, flags: [Pasteboard.Flag] = []) -> Command {
-            Command("pbpaste", arguments: device.arguments + flags.flatMap(\.arguments))
-        }
-
         /// Set up a device IO operation.
         static func io(deviceId: String, operation: IO.Operation) -> Command {
             Command("io", arguments: [deviceId] + operation.arguments)
         }
 
-        /// Collect diagnostic information and logs.
-        static func diagnose(flags: [Diagnose.Flag]) -> Command {
-            Command("diagnose", arguments: flags.flatMap(\.arguments))
-        }
-
         /// Set the user's current locaiton
         static func location(deviceId: String, latitude: Double, longitude: Double) -> Command {
             Command("location", arguments: [deviceId, "set", "\(latitude),\(longitude)"])
-        }
-
-        /// enable or disable verbose logging for a device
-        static func logverbose(deviceId: String?, isEnabled: Bool = false) -> Command {
-            var arguments = [String]()
-
-            if let deviceId {
-                arguments.append(deviceId)
-            }
-
-            return Command("logverbose", arguments: arguments + [(isEnabled ? "enabled" : "disabled")])
         }
 
         /// Set or clear status bar overrides
@@ -257,22 +212,6 @@ extension SimCtl {
             switch self {
             case .devices(let devices): devices
             case .all: ["all"]
-            }
-        }
-    }
-
-    enum Container {
-        case app,
-             data,
-             groups,
-             group(String)
-
-        var arguments: [String] {
-            switch self {
-            case .app: ["app"]
-            case .data: ["data"]
-            case .groups: ["groups"]
-            case .group(let groupId): [groupId]
             }
         }
     }
@@ -550,37 +489,6 @@ extension SimCtl {
             }
         }
 
-    }
-
-    enum Diagnose {
-        enum Flag {
-            case noShowInFinder
-            case noTimeout
-            case timeout(TimeInterval)
-            case noArchive
-            case allLogs
-            case dataContainers
-            case udid([String])
-
-            var arguments: [String] {
-                switch self {
-                case .noShowInFinder:
-                    return ["-b"]
-                case .noTimeout:
-                    return ["-X"]
-                case .timeout(let timeout):
-                    return ["--timeout=\(timeout)"]
-                case .noArchive:
-                    return ["--no-archive"]
-                case .allLogs:
-                    return ["--all-logs"]
-                case .dataContainers:
-                    return ["--data-containers"]
-                case .udid(let udids):
-                    return ["--udid="] + udids
-                }
-            }
-        }
     }
 
     enum StatusBar {

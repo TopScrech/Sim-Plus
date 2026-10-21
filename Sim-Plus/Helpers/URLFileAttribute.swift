@@ -3,7 +3,6 @@ import Foundation
 struct URLFileAttribute {
     private(set) var folderSize: Int?
     private(set) var creationDate: Date?
-    private(set) var modificationDate: Date?
 
     init(url: URL) {
         let path = url.path
@@ -15,11 +14,6 @@ struct URLFileAttribute {
         if dictionary.keys.contains(FileAttributeKey.creationDate),
             let value = dictionary[FileAttributeKey.creationDate] as? Date {
             self.creationDate = value
-        }
-
-        if dictionary.keys.contains(FileAttributeKey.modificationDate),
-            let value = dictionary[FileAttributeKey.modificationDate] as? Date {
-            self.modificationDate = value
         }
 
         folderSize = getFolderSize(url: url)
