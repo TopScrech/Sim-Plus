@@ -109,7 +109,7 @@ enum SimCtl: CommandLineCommandExecuter {
         execute(.shutdown(.devices([simulator.udid])))
         execute(.boot(simulator: simulator))
     }
-    static func getLogs(_ simulator: String) {
+    static func getLogs() {
         let source = """
                             tell application "Terminal"
                                 activate

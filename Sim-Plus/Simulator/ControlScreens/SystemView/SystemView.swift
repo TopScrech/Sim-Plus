@@ -225,7 +225,7 @@ struct SystemView: View {
     }
     /// Get logs.
     func getLogs() {
-        SimCtl.getLogs(simulator.udid)
+        SimCtl.getLogs()
     }
 
     /// Copies the simulator's pasteboard to the Mac.

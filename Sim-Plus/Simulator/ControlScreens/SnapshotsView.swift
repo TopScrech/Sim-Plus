@@ -125,6 +125,4 @@ struct SnapshotsView: View {
         }
     }
 
-	func placeholder() {}
-
 }

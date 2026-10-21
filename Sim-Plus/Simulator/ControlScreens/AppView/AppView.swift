@@ -2,8 +2,6 @@ import ScrechKit
 
 /// Controls features relating to one specific app.
 struct AppView: View {
-    @EnvironmentObject var preferences: Preferences
-
     @AppStorage("CRApps_ShowSystemApps") private var shouldShowSystemApps = true
     @AppStorage("CRApps_LastBundleID") private var lastBundleID = ""
     @AppStorage("CRApps_PushPayload") private var pushPayload = """

@@ -1,8 +1,6 @@
 import ScrechKit
 
 struct NotificationEditorView: View {
-    @EnvironmentObject var preferences: Preferences
-
     @State private var notificationAps = PushNotificationAPS()
     @State private var userInfo = ""
     @State private var shouldDismissConfirmationAlert: Bool = false

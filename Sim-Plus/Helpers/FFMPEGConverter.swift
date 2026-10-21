@@ -8,7 +8,6 @@ enum FFMPEGConverter: CommandLineCommandExecuter {
         var outPath: String
 
         var fps = 60
-        var videoQuality = VideoQuality.default
         var videoBitrate = "2.0M"
 
         var arguments: [String] {
@@ -17,7 +16,7 @@ enum FFMPEGConverter: CommandLineCommandExecuter {
                 "-codec:v", "libx264",          // Video Codec: H.264
                 "-b:v", videoBitrate,           // Limit video bitrate
                 "-filter:v", "fps=\(fps)",      // Set video FPS
-                "-crf", "\(videoQuality.crf)",  // Set H.264 compression quality (0 - 51, smaller better)
+                "-crf", "23",  // Set H.264 compression quality (0 - 51, smaller better)
                 "-c:a", "copy",                 // Copy audio as is
                 outPath                         // Output file
             ]
@@ -53,33 +52,5 @@ enum FFMPEGConverter: CommandLineCommandExecuter {
         }
         let sizeMb = Double(size) / 1024 / 1024
         return String(format: "%0.3f Mb", sizeMb)
-    }
-}
-
-extension FFMPEGConverter {
-    enum VideoQuality {
-        case loseless
-        case high
-        case `default`
-        case low
-        case worstPossible
-        case custom(Int)
-
-        var crf: Int {
-            switch self {
-            case .loseless:
-                return 0
-            case .high:
-                return 18
-            case .default:
-                return 23
-            case .low:
-                return 28
-            case .worstPossible:
-                return 51
-            case .custom(let val):
-                return val
-            }
-        }
     }
 }

@@ -71,8 +71,8 @@ extension SimCtl {
         }
 
         /// Launch an application by identifier on a device.
-        static func launch(deviceId: String, appBundleId: String, waitForDebugger: Bool = false, output: Launch.Output? = nil) -> Command {
-            Command("launch", arguments: [deviceId, appBundleId] + (waitForDebugger ? ["-w"] : []) + (output?.arguments ?? []))
+        static func launch(deviceId: String, appBundleId: String) -> Command {
+            Command("launch", arguments: [deviceId, appBundleId])
         }
 
         /// Terminate an application by identifier on a device.
@@ -85,7 +85,7 @@ extension SimCtl {
             Command("spawn", arguments: options.flatMap(\.arguments) + [deviceId, pathToExecutable])
         }
 
-        /// List available devices, device types, runtimes, or device pairs.
+        /// List available devices, device types, or runtimes
         static func list(filter: List.Filter? = nil, search: List.Search? = nil, flags: [List.Flag] = []) -> Command {
             var arguments: [String] = []
 
@@ -111,8 +111,8 @@ extension SimCtl {
         }
 
         /// Sync the pasteboard content from one pasteboard to another.
-        static func pbsync(source: Pasteboard.Device, destination: Pasteboard.Device, flags: [Pasteboard.Flag] = []) -> Command {
-            Command("pbsync", arguments: source.arguments + destination.arguments + flags.flatMap(\.arguments))
+        static func pbsync(source: Pasteboard.Device, destination: Pasteboard.Device) -> Command {
+            Command("pbsync", arguments: source.arguments + destination.arguments)
         }
 
         /// Set up a device IO operation.
@@ -177,87 +177,43 @@ extension SimCtl {
     // swiftlint:disable nesting
     enum Delete {
         case devices([String]),
-             unavailable,
-             all
+             unavailable
 
         var arguments: [String] {
             switch self {
-            case .devices(let devices):
-                return devices
-            case .unavailable:
-                return ["unavailable"]
-            case .all:
-                return ["all"]
+            case .devices(let devices): devices
+            case .unavailable: ["unavailable"]
             }
         }
     }
 
     enum Erase {
-        case devices([String]),
-             all
+        case devices([String])
 
         var arguments: [String] {
             switch self {
             case .devices(let devices): devices
-            case .all: ["all"]
             }
         }
     }
 
     enum ShutDown {
-        case devices([String]),
-             all
+        case devices([String])
 
         var arguments: [String] {
             switch self {
             case .devices(let devices): devices
-            case .all: ["all"]
-            }
-        }
-    }
-
-    struct Launch {
-        enum Output {
-            case console,
-                 consolePTY,
-                 std(outPath: String?, errPath: String?)
-
-            var arguments: [String] {
-                switch self {
-                case .console:
-                    return ["--console"]
-
-                case .consolePTY:
-                    return ["--consolePTY"]
-
-                case .std(outPath: let out, errPath: let err):
-                    var arguments = [String]()
-
-                    if let out {
-                        arguments.append("--stdout=\"\(out)\"")
-                    }
-
-                    if let err {
-                        arguments.append("--stderr=\"\(err)\"")
-                    }
-
-                    return arguments
-                }
             }
         }
     }
 
     enum Spawn {
         enum Option {
-            case waitForDebugger,
-                 standalone,
-                 arch(String)
+            case waitForDebugger
 
             var arguments: [String] {
                 switch self {
                 case .waitForDebugger: ["-w"]
-                case .standalone: ["-s"]
-                case .arch(let arch): ["--arch=\(arch)"]
                 }
             }
         }
@@ -265,10 +221,7 @@ extension SimCtl {
 
     enum List {
         enum Filter: String {
-            case devices,
-                 devicetypes,
-                 runtimes,
-                 pairs
+            case devices, devicetypes, runtimes
 
             var arguments: [String] {
                 [rawValue]
@@ -288,8 +241,7 @@ extension SimCtl {
         }
 
         enum Flag: String {
-            case json = "-j",
-                 verbose = "-v"
+            case json = "-j"
 
             var arguments: [String] {
                 [rawValue]
@@ -310,31 +262,17 @@ extension SimCtl {
             }
         }
 
-        enum Flag: String {
-            case verbose = "-v",
-                 promise = "-p"
-
-            var arguments: [String] {
-                [rawValue]
-            }
-        }
     }
 
     // swiftlint:disable type_name
     enum IO {
         // swiftlint:enable type_name
         enum Operation {
-            case enumerate(poll: Bool = false),
-                 poll,
-                 recordVideo(codec: Codec? = nil, display: Display? = nil, mask: Mask? = nil, force: Bool = false, url: String),
+            case recordVideo(codec: Codec? = nil, display: Display? = nil, mask: Mask? = nil, force: Bool = false, url: String),
                  screenshot(type: ImageFormat? = nil, display: Display? = nil, mask: Mask? = nil, url: String)
 
             var arguments: [String] {
                 switch self {
-                case .enumerate(poll: let poll):
-                    return ["enumerate"] + (poll ? ["--poll"] : [])
-                case .poll:
-                    return ["poll"]
                 case .recordVideo(let codec, let display, let mask, let force, let url):
                     var arguments = [String]()
 
@@ -372,13 +310,11 @@ extension SimCtl {
         }
 
         enum Codec: String {
-            case h264, hevc
+            case h264
 
             var arguments: [String] {
                 ["--codec=\(rawValue)"]
             }
-
-            static let all = [Self.h264, .hevc]
         }
 
         enum Display: String, CaseIterable {
@@ -493,14 +429,11 @@ extension SimCtl {
 
     enum StatusBar {
         enum Operation {
-            case list
             case clear
             case override([Override])
 
             var arguments: [String] {
                 switch self {
-                case .list:
-                    return ["list"]
                 case .clear:
                     return ["clear"]
                 case .override(let overrides):
@@ -668,14 +601,11 @@ extension SimCtl {
     enum Push {
         enum JSON {
             case path(String)
-            case stdin
 
             var arguments: [String] {
                 switch self {
                 case .path(let path):
                     return [path]
-                case .stdin:
-                    return ["-"]
                 }
             }
         }
@@ -717,13 +647,11 @@ extension SimCtl {
     enum Keychain {
         enum Action {
             case addRootCert(path: String),
-                 addCert(path: String),
                  reset
 
             var arguments: [String] {
                 switch self {
                 case .addRootCert(path: let path): ["add-root-cert", path]
-                case .addCert(path: let path): ["add-cert", path]
                 case .reset: ["reset"]
                 }
             }

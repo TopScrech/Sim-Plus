@@ -69,16 +69,12 @@ struct MainView: View {
         SimCtl.delete(controller.selectedSimulatorIDs)
     }
 
-    private func alert(for alert: UIState.Alert) -> Alert {
-        if alert == .confirmDeleteUnavailable {
-            let confirmButton = Alert.Button.default(Text("Confirm")) {
-                SimCtl.execute(.delete(.unavailable))
-            }
-
-            return Alert(title: Text("Are you sure you want to delete all unavailable simulators?"), primaryButton: confirmButton, secondaryButton: .cancel())
-        } else {
-            return Alert(title: Text("Unknown Alert"))
+    private func alert(for _: UIState.Alert) -> Alert {
+        let confirmButton = Alert.Button.default(Text("Confirm")) {
+            SimCtl.execute(.delete(.unavailable))
         }
+
+        return Alert(title: Text("Are you sure you want to delete all unavailable simulators?"), primaryButton: confirmButton, secondaryButton: .cancel())
     }
 }
 
