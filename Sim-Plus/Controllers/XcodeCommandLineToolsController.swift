@@ -17,7 +17,6 @@ struct XcodeCommandLineToolsController {
 }
 
 private enum XcodeSelect: CommandLineCommandExecuter {
-    typealias Error = CommandLineError
 
     static var launchPath = "/usr/bin/xcode-select"
 
@@ -44,7 +43,6 @@ private extension XcodeSelect {
 }
 
 private enum SystemProfiler: CommandLineCommandExecuter {
-    typealias Error = CommandLineError
 
     static var launchPath = "/usr/sbin/system_profiler"
 

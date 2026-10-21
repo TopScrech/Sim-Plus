@@ -2,7 +2,6 @@ import Foundation
 
 /// A container for all the functionality for talking to simctl.
 enum SimCtl: CommandLineCommandExecuter {
-    typealias Error = CommandLineError
 
     static let launchPath = "/usr/bin/xcrun"
 

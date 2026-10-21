@@ -11,7 +11,7 @@ enum GIFError: Error {
 
 extension URL {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    func convertToGIF(maxSize cappedResolution: CGFloat?, updateProgress: @escaping (CGFloat) -> Void) async throws -> Result<URL, GIFError> {
+    func convertToGIF(maxSize cappedResolution: CGFloat?) async throws -> Result<URL, GIFError> {
         let asset = AVURLAsset(url: self)
 
         guard let reader = try? AVAssetReader(asset: asset) else {
@@ -97,8 +97,6 @@ extension URL {
 
         CGImageDestinationSetProperties(destination, fileProperties as CFDictionary)
 
-        var framesCompleted = 0
-
         // Refers index refers to the frame index in the actual video/pixel buffer,
         // rather than the frames we may actually be deciding to use for the GIF.
         var currentFrameIndex = 0
@@ -125,8 +123,6 @@ extension URL {
                 // (see https://twitter.com/ChristianSelig/status/1241572433095770114)
                 var cgImage: CGImage? = self.cgImageFromSampleBuffer(newSample)
 
-                framesCompleted += 1
-
                 if let cgImage {
                     let frameProperties: [String: Any] = [
                         kCGImagePropertyGIFDictionary as String: [
@@ -138,13 +134,6 @@ extension URL {
                 }
 
                 cgImage = nil
-
-                let progress = CGFloat(framesCompleted) / CGFloat(totalFrames)
-
-                // GIF progress is a little fudged so it works with downloading progress reports
-                Task { @MainActor in
-                    updateProgress(progress)
-                }
             }
 
             sample = readerOutput.copyNextSampleBuffer()

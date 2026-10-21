@@ -111,10 +111,6 @@ struct Simulator: Identifiable, Comparable {
         self.image = typeIdentifier.icon
     }
 
-    mutating func update(state: State) {
-        self.state = state
-    }
-
     func open(_ filePath: FilePathKind) {
         NSWorkspace.shared.activateFileViewerSelecting([urlForFilePath(filePath)])
     }

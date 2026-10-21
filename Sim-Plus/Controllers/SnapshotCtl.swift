@@ -1,7 +1,6 @@
 import Foundation
 
 enum SnapshotCtl: CommandLineCommandExecuter {
-    typealias Error = CommandLineError
 
     static var launchPath = ""
     static var snapshotsPath = ""

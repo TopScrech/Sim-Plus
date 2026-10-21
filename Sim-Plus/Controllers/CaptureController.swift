@@ -118,7 +118,7 @@ class CaptureController {
 
         Task {
             do {
-                let result = try await sourceURL.convertToGIF(maxSize: size) { _ in }
+                let result = try await sourceURL.convertToGIF(maxSize: size)
 
                 switch result {
                 case .success(let gifURL):
