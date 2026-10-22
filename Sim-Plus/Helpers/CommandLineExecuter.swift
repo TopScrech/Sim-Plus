@@ -75,7 +75,7 @@ extension CommandLineCommandExecuter {
     }
 
     static func execute(_ command: Command, completion: ((Result<Data, CommandLineError>) -> Void)? = nil) {
-        Task { @MainActor in
+        Task {
             do {
                 let data = try await executeData(command)
                 completion?(.success(data))

@@ -1,7 +1,7 @@
 import Foundation
 
 /// A named URL with a unique identifier to make them work well with SwiftUI.
-struct DeepLink: Identifiable, Codable {
+nonisolated struct DeepLink: Identifiable, Codable, Sendable {
     var id: UUID
     var name: String
     var url: URL

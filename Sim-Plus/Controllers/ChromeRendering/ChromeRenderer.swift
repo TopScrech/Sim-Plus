@@ -109,7 +109,6 @@ class ChromeRenderer {
 
     /// This does all the actual work of loading and rendering the various image components to produce
     /// a final image of the screenshot in simulator chrome.
-    @MainActor
     func makeImage() -> NSImage? {
         let renderer = ImageRenderer(content:
             Canvas { [self] context, size in

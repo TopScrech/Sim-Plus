@@ -2,7 +2,6 @@ import Foundation
 
 /// Actions that work on the last used simulator, app and URL.
 /// Shared by the menu bar extra and the global keyboard shortcuts.
-@MainActor
 enum QuickActions {
     static let defaultPushPayload = """
     {

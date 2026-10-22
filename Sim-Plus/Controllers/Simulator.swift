@@ -151,13 +151,15 @@ struct Simulator: Identifiable, Comparable {
     }
 
     func copyFilesFromProviders(_ providers: [NSItemProvider], toFilePath filePath: FilePathKind) -> Bool {
+        let destinationURL = urlForFilePath(filePath)
+
         for provider in providers {
             provider.loadItem(forTypeIdentifier: "public.file-url", options: nil) { (urlData, error) in
                 if let urlData = urlData as? Data {
                     let sourceURL = NSURL(absoluteURLWithDataRepresentation: urlData, relativeTo: nil) as URL
 
                     do {
-                        try FileManager.default.copyItem(at: sourceURL, to: urlForFilePath(filePath).appendingPathComponent(sourceURL.lastPathComponent))
+                        try FileManager.default.copyItem(at: sourceURL, to: destinationURL.appendingPathComponent(sourceURL.lastPathComponent))
                         NSSound(named: "Glass")?.play()
                     } catch {
                         NSSound(named: "Sosumi")?.play()

@@ -2,7 +2,6 @@ import Foundation
 import ScrechKit
 
 /// A centralized class that loads simulator data and handles filtering.
-@MainActor
 @Observable
 class SimulatorsController {
     /// Tracks the state of fetching simulator data from simctl.

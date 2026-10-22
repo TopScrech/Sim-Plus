@@ -1,7 +1,6 @@
 import Foundation
 import MapKit
 
-@MainActor
 @Observable
 class LocalSearchController: NSObject {
     /// Prevents duplicate queries from being made
@@ -106,19 +105,17 @@ class LocalSearchController: NSObject {
 }
 
 /// Adds `MKLocalSearchCompleterDelegate` conformance so the controller can use the delegate's callback methods
-extension LocalSearchController: MKLocalSearchCompleterDelegate {
+extension LocalSearchController: @MainActor MKLocalSearchCompleterDelegate {
     /// Called if `MKLocalSearchCompleter` return valid results from a query string
-    nonisolated func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         let results = completer.results.map {
             LocalSearchResult(result: $0)
         }
-        Task { @MainActor [weak self] in
-            self?.callback?(results)
-        }
+        callback?(results)
     }
 
     /// Called if `MKLocalSearchCompleter` encounters an error
-    nonisolated func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
         print(error)
     }
 }

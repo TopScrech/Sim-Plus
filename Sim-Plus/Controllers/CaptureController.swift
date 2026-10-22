@@ -22,7 +22,6 @@ class CaptureController {
         settings.videoFormat.name
     }
 
-    @MainActor
     /// Takes a screenshot of the device's current screen and saves it to the desktop.
     func takeScreenshot(of simulator: Simulator, format: SimCtl.IO.ImageFormat? = nil) {
         guard simulator.state == .booted else { return }
@@ -38,12 +37,13 @@ class CaptureController {
 
             if UserDefaults.standard.bool(forKey: "renderChrome") {
                 if let image = NSImage(contentsOf: filename) {
-                    Task { @MainActor in
+                    Task {
                         if let renderer = try? ChromeRenderer(deviceName: simulator.name, screenshot: image) {
                             let result = renderer.makeImage()
 
                             if let tiff = result?.tiffRepresentation {
                                 let bitmap = NSBitmapImageRep(data: tiff)
+
                                 if let compressedBitmap = bitmap?.representation(using: resolvedFormat.nsFileType, properties: [:]) {
                                     do {
                                         try compressedBitmap.write(to: filename, options: .atomic)
