@@ -28,6 +28,7 @@
     },
   ],
   "files": [
+    { "path": "README.md" },
     {
       "kind": "folder",
       "path": "Sim-Plus",
