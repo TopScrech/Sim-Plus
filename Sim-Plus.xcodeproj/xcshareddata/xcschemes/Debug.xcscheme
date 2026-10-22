@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "511BA57823F3FFEA00E3E660"
                BuildableName = "Control Room.app"
-               BlueprintName = "ControlRoom"
+               BlueprintName = "macOS"
                ReferencedContainer = "container:Sim-Plus.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B07F584D23F9F83800256D5D"
-               BuildableName = "Sim-PlusTests.xctest"
-               BlueprintName = "ControlRoomTests"
+               BuildableName = "Unit Tests.xctest"
+               BlueprintName = "Unit Tests"
                ReferencedContainer = "container:Sim-Plus.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,7 +56,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "511BA57823F3FFEA00E3E660"
             BuildableName = "Control Room.app"
-            BlueprintName = "ControlRoom"
+            BlueprintName = "macOS"
             ReferencedContainer = "container:Sim-Plus.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -73,7 +73,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "511BA57823F3FFEA00E3E660"
             BuildableName = "Control Room.app"
-            BlueprintName = "ControlRoom"
+            BlueprintName = "macOS"
             ReferencedContainer = "container:Sim-Plus.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
