@@ -89,7 +89,7 @@ struct ControlView_Previews: PreviewProvider {
         ControlView(simulator: .example,
                     applications: [])
             .environment(SimulatorsController(preferences: Preferences()))
-            .environmentObject(Preferences())
+            .environment(Preferences())
             .environment(DeepLinksController())
     }
 }

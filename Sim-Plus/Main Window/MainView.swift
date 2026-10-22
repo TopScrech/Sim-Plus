@@ -4,7 +4,7 @@ import ScrechKit
 struct MainView: View {
     @Environment(SimulatorsController.self) var controller
     @Environment(UIState.self) var uiState
-    @EnvironmentObject private var preferences: Preferences
+    @Environment(Preferences.self) private var preferences
 
     var body: some View {
         @Bindable var uiState = uiState
@@ -83,7 +83,7 @@ struct MainView_Previews: PreviewProvider {
         let preferences = Preferences()
         MainView()
             .environment(SimulatorsController(preferences: preferences))
-            .environmentObject(preferences)
+            .environment(preferences)
             .environment(DeepLinksController())
             .environment(UIState.shared)
     }

@@ -1,6 +1,5 @@
 import ScrechKit
 import Cocoa
-import Combine
 
 class MainWindowController: NSWindowController {
     // Without this, AppKit won't call -loadWindow
@@ -8,8 +7,6 @@ class MainWindowController: NSWindowController {
 
     lazy var preferences: Preferences = Preferences()
     lazy var controller: SimulatorsController = SimulatorsController(preferences: preferences)
-
-    private var preferencesObservation: AnyCancellable?
 
     init() {
         super.init(window: nil)
@@ -23,7 +20,7 @@ class MainWindowController: NSWindowController {
         MainView()
             .environment(controller)
             .environment(DeepLinksController())
-            .environmentObject(preferences)
+            .environment(preferences)
             .environment(UIState.shared)
     }
 
@@ -43,15 +40,16 @@ class MainWindowController: NSWindowController {
 
         self.window = window
         adjustWindowLevel()
-        preferencesObservation = preferences.objectWillChange.sink { [weak self] in
+    }
+
+    private func adjustWindowLevel() {
+        withObservationTracking {
+            window?.level = preferences.wantsFloatingWindow ? .floating : .normal
+        } onChange: { [weak self] in
             Task { @MainActor [weak self] in
                 self?.adjustWindowLevel()
             }
         }
-    }
-
-    private func adjustWindowLevel() {
-        window?.level = preferences.wantsFloatingWindow ? .floating : .normal
     }
 
     @IBAction func toggleFloatingWindow(_ sender: Any) {

@@ -5,7 +5,7 @@ import ScrechKit
 struct ControlRoomApp: App {
     @AppStorage("CRWantsMenuBarIcon") private var wantsMenuBarIcon = true
 
-    @StateObject var preferences: Preferences
+    @State var preferences: Preferences
     @State var controller: SimulatorsController
     @State var deepLinks = DeepLinksController()
 
@@ -13,7 +13,7 @@ struct ControlRoomApp: App {
         Window("Control Room", id: "main") {
             MainView()
                 .environment(controller)
-                .environmentObject(preferences)
+                .environment(preferences)
                 .environment(UIState.shared)
                 .environment(deepLinks)
         }
@@ -41,7 +41,7 @@ struct ControlRoomApp: App {
 
         Settings {
             SettingsView()
-                .environmentObject(preferences)
+                .environment(preferences)
         }
 
         MenuBarExtra("Sim+", systemImage: "iphone", isInserted: $wantsMenuBarIcon) {
@@ -54,7 +54,7 @@ struct ControlRoomApp: App {
     init() {
         let preferences = Preferences()
         let controller = SimulatorsController(preferences: preferences)
-        _preferences = StateObject(wrappedValue: preferences)
+        _preferences = State(initialValue: preferences)
         _controller = State(initialValue: controller)
 
         controller.startWatching()

@@ -1,13 +1,15 @@
 import ScrechKit
 
 struct PathToTerminalTextFieldView: View {
-    @EnvironmentObject var preferences: Preferences
+    @Environment(Preferences.self) var preferences
 
     @State private var showFileImporter = false
 
     private static let defaultTerminalPath = "/System/Applications/Utilities/Terminal.app"
 
     var body: some View {
+        @Bindable var preferences = preferences
+
         Form {
             Section {
                 LabeledContent("Terminal app") {
@@ -65,5 +67,5 @@ struct PathToTerminalTextFieldView: View {
 
 #Preview {
     PathToTerminalTextFieldView()
-        .environmentObject(Preferences())
+        .environment(Preferences())
 }

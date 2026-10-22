@@ -202,6 +202,6 @@ struct OverridesView: View {
 struct OverridesView_Previews: PreviewProvider {
     static var previews: some View {
         OverridesView(simulator: .example)
-            .environmentObject(Preferences())
+            .environment(Preferences())
     }
 }

@@ -2,7 +2,7 @@ import ScrechKit
 
 /// Shows the list of available simulators, allowing selection, filtering, and deletion.
 struct SidebarView: View {
-    @EnvironmentObject var preferences: Preferences
+    @Environment(Preferences.self) var preferences
     @Environment(SimulatorsController.self) var controller
 
     @AppStorage("CRSidebar_FilterText") private var filterText = ""
@@ -93,6 +93,6 @@ struct SidebarView_Previews: PreviewProvider {
         let preferences = Preferences()
         return SidebarView()
             .environment(SimulatorsController(preferences: preferences))
-            .environmentObject(preferences)
+            .environment(preferences)
     }
 }

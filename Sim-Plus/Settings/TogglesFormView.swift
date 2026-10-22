@@ -1,9 +1,11 @@
 import ScrechKit
 
 struct TogglesFormView: View {
-    @EnvironmentObject private var preferences: Preferences
+    @Environment(Preferences.self) private var preferences
 
     var body: some View {
+        @Bindable var preferences = preferences
+
         Form {
             Section {
                 Toggle("Keep window on top", isOn: $preferences.wantsFloatingWindow)
@@ -25,5 +27,5 @@ struct TogglesFormView: View {
 
 #Preview {
     TogglesFormView()
-        .environmentObject(Preferences())
+        .environment(Preferences())
 }

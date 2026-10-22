@@ -5,7 +5,7 @@ import ScrechKit
 struct SystemView: View {
     let simulator: Simulator
 
-    @EnvironmentObject var preferences: Preferences
+    @Environment(Preferences.self) var preferences
     @Environment(DeepLinksController.self) var deepLinks
 
     @AppStorage("CRApps_LastOpenURL") private var lastOpenURL = ""
@@ -296,7 +296,7 @@ struct SystemView_Previews: PreviewProvider {
         let preferences = Preferences()
 
         SystemView(simulator: .example)
-            .environmentObject(preferences)
+            .environment(preferences)
     }
 }
 

@@ -226,7 +226,7 @@ struct StatusBarView: View {
 struct StatusBarViewView_Previews: PreviewProvider {
     static var previews: some View {
         StatusBarView(simulator: .example)
-            .environmentObject(Preferences())
+            .environment(Preferences())
     }
 }
 

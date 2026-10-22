@@ -36,5 +36,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
-        .environmentObject(Preferences())
+        .environment(Preferences())
 }
