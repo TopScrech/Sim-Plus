@@ -1,5 +1,4 @@
-import Foundation
-import AppKit
+import SwiftUI
 
 struct Application: Hashable, Comparable {
     let url: URL?

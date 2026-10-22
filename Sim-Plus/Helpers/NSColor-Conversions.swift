@@ -1,4 +1,4 @@
-import AppKit
+import SwiftUI
 
 extension NSColor {
     /// The red color component rounded to a range of 0-255.

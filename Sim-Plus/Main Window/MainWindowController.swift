@@ -1,6 +1,6 @@
+import ScrechKit
 import Cocoa
 import Combine
-import ScrechKit
 
 class MainWindowController: NSWindowController {
     // Without this, AppKit won't call -loadWindow

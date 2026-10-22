@@ -1,4 +1,4 @@
-import AppKit
+import SwiftUI
 
 // swiftlint:disable file_length
 extension SimCtl {

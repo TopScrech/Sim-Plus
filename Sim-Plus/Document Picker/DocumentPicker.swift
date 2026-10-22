@@ -1,5 +1,4 @@
-import Foundation
-import AppKit
+import SwiftUI
 
 /// Basic implementation to open Finder and select file/s
 struct DocumentPicker {
