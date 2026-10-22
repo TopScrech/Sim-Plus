@@ -7,26 +7,21 @@ typealias DeviceType = SimCtl.DeviceType
 /// Stores one simulator and its identifier.
 struct Simulator: Identifiable, Comparable {
     enum State {
-        case unknown
-        case creating
-        case booting
-        case booted
-        case shuttingDown
-        case shutdown
+        case unknown,
+             creating,
+             booting,
+             booted,
+             shuttingDown,
+             shutdown
 
         init(deviceState: String?) {
-            if deviceState == "Creating" {
-                self = .creating
-            } else if deviceState == "Booting" {
-                self = .booting
-            } else if deviceState == "Booted" {
-                self = .booted
-            } else if deviceState == "ShuttingDown" {
-                self = .shuttingDown
-            } else if deviceState == "Shutdown" {
-                self = .shutdown
-            } else {
-                self = .unknown
+            switch deviceState {
+            case "Creating": self = .creating
+            case "Booting": self = .booting
+            case "Booted": self = .booted
+            case "ShuttingDown": self = .shuttingDown
+            case "Shutdown": self = .shutdown
+            default: self = .unknown
             }
         }
 
@@ -116,7 +111,6 @@ struct Simulator: Identifiable, Comparable {
     }
 
     func urlForFilePath(_ filePath: FilePathKind) -> URL {
-
         if filePath == .root {
             return URL(fileURLWithPath: dataPath)
         }
@@ -151,6 +145,7 @@ struct Simulator: Identifiable, Comparable {
                 }
             }
         }
+
         print("could not find folder of type '\(filePath)' in '\(containerPath)'")
         return URL(fileURLWithPath: "")
     }
@@ -159,9 +154,10 @@ struct Simulator: Identifiable, Comparable {
         for provider in providers {
             provider.loadItem(forTypeIdentifier: "public.file-url", options: nil) { (urlData, error) in
                 if let urlData = urlData as? Data {
-                    let sourceUrl = NSURL(absoluteURLWithDataRepresentation: urlData, relativeTo: nil) as URL
+                    let sourceURL = NSURL(absoluteURLWithDataRepresentation: urlData, relativeTo: nil) as URL
+
                     do {
-                        try FileManager.default.copyItem(at: sourceUrl, to: urlForFilePath(filePath).appendingPathComponent(sourceUrl.lastPathComponent))
+                        try FileManager.default.copyItem(at: sourceURL, to: urlForFilePath(filePath).appendingPathComponent(sourceURL.lastPathComponent))
                         NSSound(named: "Glass")?.play()
                     } catch {
                         NSSound(named: "Sosumi")?.play()
@@ -170,9 +166,11 @@ struct Simulator: Identifiable, Comparable {
                 } else {
                     NSSound(named: "Sosumi")?.play()
                 }
+
                 sleep(1)	// if multiple files are dropped, allow user to distinguish success/error sounds
             }
         }
+
         return true
     }
 
@@ -184,6 +182,7 @@ struct Simulator: Identifiable, Comparable {
             case .root:
                 print("Storage type is not applicable to the root path")
                 return ""
+
             case .files:
                 return "LocalStorage"
             }
@@ -194,11 +193,10 @@ struct Simulator: Identifiable, Comparable {
 extension Simulator: Hashable {
     /// Sort simulators alphabetically, and then by OS version.
     static func < (lhs: Simulator, rhs: Simulator) -> Bool {
-        if lhs.name == rhs.name,
-           let lhsRuntime = lhs.runtime,
-           let rhsRuntime = rhs.runtime {
+        if lhs.name == rhs.name, let lhsRuntime = lhs.runtime, let rhsRuntime = rhs.runtime {
             return lhsRuntime.buildversion < rhsRuntime.buildversion
         }
+
         return lhs.name < rhs.name
     }
 }
