@@ -65,11 +65,12 @@ struct SnapshotsView: View {
                 .padding()
             } else {
                 VStack(spacing: 10) {
-                    Spacer()
                     Image(systemName: simulator.deviceFamily.snapshotUnavailableIcon)
+
                     Text("No snapshots yet")
                 }
                 .title()
+                .containerRelativeFrame(.vertical)
 			}
 		}
         .tabItem {
