@@ -24,43 +24,50 @@ struct ControlView: View {
 
         }
         .navigationSubtitle("\(simulator.name) – \(simulator.runtime?.name ?? "Unknown OS")")
-        .toolbar {
-            Menu("Save \(captureController.imageFormatString)") {
-                Button("Save as PNG") {
-                    captureController.takeScreenshot(of: simulator, format: .png)
-                }
-
-                Button("Save as JPEG") {
-                    captureController.takeScreenshot(of: simulator, format: .jpeg)
-                }
-
-                Button("Save as TIFF") {
-                    captureController.takeScreenshot(of: simulator, format: .tiff)
-                }
-
-                Button("Save as BMP") {
-                    captureController.takeScreenshot(of: simulator, format: .bmp)
-                }
-            } primaryAction: {
-                captureController.takeScreenshot(of: simulator)
+        .onChange(of: simulator.state) {
+            if simulator.state != .booted, captureController.recordingProcess != nil {
+                captureController.stopRecordingVideo()
             }
+        }
+        .toolbar {
+            if simulator.state == .booted {
+                Menu("Save \(captureController.imageFormatString)") {
+                    Button("Save as PNG") {
+                        captureController.takeScreenshot(of: simulator, format: .png)
+                    }
 
-            if captureController.recordingProcess == nil {
-                Menu("Record \(captureController.videoFormatString)") {
-                    ForEach(SimCtl.IO.VideoFormat.all, id: \.self) { item in
-                        if item == .divider {
-                            Divider()
-                        } else {
-                            Button("Save as \(item.name)") {
-                                captureController.startRecordingVideo(of: simulator, format: item)
-                            }
-                        }
+                    Button("Save as JPEG") {
+                        captureController.takeScreenshot(of: simulator, format: .jpeg)
+                    }
+
+                    Button("Save as TIFF") {
+                        captureController.takeScreenshot(of: simulator, format: .tiff)
+                    }
+
+                    Button("Save as BMP") {
+                        captureController.takeScreenshot(of: simulator, format: .bmp)
                     }
                 } primaryAction: {
-                    captureController.startRecordingVideo(of: simulator)
+                    captureController.takeScreenshot(of: simulator)
                 }
-            } else {
-                Button("Stop Recording", action: captureController.stopRecordingVideo)
+
+                if captureController.recordingProcess == nil {
+                    Menu("Record \(captureController.videoFormatString)") {
+                        ForEach(SimCtl.IO.VideoFormat.all, id: \.self) { item in
+                            if item == .divider {
+                                Divider()
+                            } else {
+                                Button("Save as \(item.name)") {
+                                    captureController.startRecordingVideo(of: simulator, format: item)
+                                }
+                            }
+                        }
+                    } primaryAction: {
+                        captureController.startRecordingVideo(of: simulator)
+                    }
+                } else {
+                    Button("Stop Recording", action: captureController.stopRecordingVideo)
+                }
             }
 
             if simulator.state != .booted {

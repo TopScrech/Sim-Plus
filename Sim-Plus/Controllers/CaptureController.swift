@@ -25,6 +25,8 @@ class CaptureController {
     @MainActor
     /// Takes a screenshot of the device's current screen and saves it to the desktop.
     func takeScreenshot(of simulator: Simulator, format: SimCtl.IO.ImageFormat? = nil) {
+        guard simulator.state == .booted else { return }
+
         // If the user asked for a specific format then use it, otherwise
         // use whatever is our default.
         let resolvedFormat = format ?? settings.imageFormat
@@ -69,6 +71,8 @@ class CaptureController {
 
     /// Starts recording video of the device, saving it to the desktop.
     func startRecordingVideo(of simulator: Simulator, format: SimCtl.IO.VideoFormat? = nil) {
+        guard simulator.state == .booted else { return }
+
         // Store the format we've been asked to record in, so we can export to GIF
         // correctly later on.
         videoFormat = format ?? settings.videoFormat
