@@ -2,14 +2,6 @@
     <img src="Working/logo.png" alt="Sim-Plus logo" width="400" />
 </p>
 
-<p align="center">
-    <img src="https://img.shields.io/badge/macOS-13+-blue.svg" />
-    <img src="https://img.shields.io/badge/Swift-5.8-brightgreen.svg" />
-    <a href="https://twitter.com/twostraws">
-        <img src="https://img.shields.io/badge/Contact-@twostraws-lightgrey.svg?style=flat" alt="Twitter: @twostraws" />
-    </a>
-</p>
-
 Control Room is a macOS app that lets you control the simulators for iOS, tvOS, and watchOS – their UI appearance, status bar configuration, and more. It wraps Apple’s own **simctl** command-line tool, so you’ll need Xcode installed.
 
 You’ll need Xcode 14.0 or later to build and use Control Room on your Mac.
