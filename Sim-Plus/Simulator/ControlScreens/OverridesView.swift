@@ -23,6 +23,7 @@ struct OverridesView: View {
     @State private var differentiateWithoutColor = false
     @State private var smartInvert = false
 
+    @State private var showSlowAnimations = false
     @State private var reduceMotion = false
     @State private var preferCrossFadeTransitions = false
 
@@ -98,6 +99,11 @@ struct OverridesView: View {
             }
 
             Section {
+                Toggle("Show Slow Animations", isOn: $showSlowAnimations)
+                    .onChange(of: showSlowAnimations) {
+                        SimCtl.setSlowAnimations(simulator.id, enabled: showSlowAnimations)
+                    }
+
                 Toggle("Reduce Motion", isOn: $reduceMotion.onChange(setReduceMotion))
 
                 Toggle("Prefer Cross-Fade Transitions", isOn: $preferCrossFadeTransitions.onChange(setPreferCrossFadeTransitions))

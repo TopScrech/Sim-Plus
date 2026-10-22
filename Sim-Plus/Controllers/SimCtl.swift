@@ -37,6 +37,12 @@ enum SimCtl: CommandLineCommandExecuter {
         }
     }
 
+    static func setSlowAnimations(_ simulator: String, enabled: Bool) {
+        let notification = "com.apple.UIKit.SimulatorSlowMotionAnimationState"
+        _ = Process.execute(launchPath, arguments: ["simctl", "spawn", simulator, "notifyutil", "-s", notification, enabled ? "1" : "0"])
+        _ = Process.execute(launchPath, arguments: ["simctl", "spawn", simulator, "notifyutil", "-p", notification])
+    }
+
     static func setContentSize(_ simulator: String, contentSize: UI.ContentSizes) {
         execute(.ui(deviceId: simulator, option: .contentSize(contentSize)))
     }
