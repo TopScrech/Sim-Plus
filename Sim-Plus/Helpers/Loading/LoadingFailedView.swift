@@ -19,8 +19,6 @@ struct LoadingFailedView: View {
     }
 }
 
-struct LoadingFailed_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingFailedView(title: "Lorem ipsum", text: "Dolor sit amet")
-    }
+#Preview {
+    LoadingFailedView(title: "Lorem ipsum", text: "Dolor sit amet")
 }

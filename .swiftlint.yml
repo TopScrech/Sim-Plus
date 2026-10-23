@@ -9,3 +9,13 @@ line_length:
 disabled_rules:
   - non_optional_string_data_conversion
   - optional_data_string_conversion
+
+custom_rules:
+  preview_provider:
+    name: "PreviewProvider"
+    regex: '\bPreviewProvider\b'
+    match_kinds:
+      - identifier
+      - typeidentifier
+    message: "Use #Preview macros instead of PreviewProvider"
+    severity: warning

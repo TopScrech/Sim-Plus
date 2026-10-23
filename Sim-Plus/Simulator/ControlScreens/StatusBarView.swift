@@ -223,11 +223,9 @@ struct StatusBarView: View {
 
 // MARK: Preview
 
-struct StatusBarViewView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusBarView(simulator: .example)
-            .environment(Preferences())
-    }
+#Preview {
+    StatusBarView(simulator: .example)
+        .environment(Preferences())
 }
 
 // MARK: Extensions

@@ -48,11 +48,9 @@ struct SplitLayoutView: View {
 	}
 }
 
-struct SplitLayoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        let preferences = Preferences()
-        SplitLayoutView()
-            .environment(SimulatorsController(preferences: preferences))
-            .environment(preferences)
-    }
+#Preview {
+    let preferences = Preferences()
+    SplitLayoutView()
+        .environment(SimulatorsController(preferences: preferences))
+        .environment(preferences)
 }

@@ -153,8 +153,6 @@ private extension DeepLinkEditorView {
     }
 }
 
-struct DeepLinkEditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        DeepLinkEditorView()
-    }
+#Preview {
+    DeepLinkEditorView()
 }

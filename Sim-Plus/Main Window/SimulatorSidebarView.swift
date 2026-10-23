@@ -143,8 +143,6 @@ struct SimulatorSidebarView: View {
     }
 }
 
-struct SimulatorSidebarView_Previews: PreviewProvider {
-    static var previews: some View {
-        SimulatorSidebarView(simulator: .example, canShowContextualMenu: true)
-    }
+#Preview {
+    SimulatorSidebarView(simulator: .example, canShowContextualMenu: true)
 }

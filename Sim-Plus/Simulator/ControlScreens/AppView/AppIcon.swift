@@ -22,8 +22,6 @@ struct AppIcon: View {
     }
 }
 
-struct AppIcon_Previews: PreviewProvider {
-    static var previews: some View {
-        AppIcon(application: Application.default, width: 100)
-    }
+#Preview {
+    AppIcon(application: Application.default, width: 100)
 }

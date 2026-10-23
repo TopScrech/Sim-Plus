@@ -88,11 +88,9 @@ struct SidebarView: View {
     }
 }
 
-struct SidebarView_Previews: PreviewProvider {
-    static var previews: some View {
-        let preferences = Preferences()
-        return SidebarView()
-            .environment(SimulatorsController(preferences: preferences))
-            .environment(preferences)
-    }
+#Preview {
+    let preferences = Preferences()
+    SidebarView()
+        .environment(SimulatorsController(preferences: preferences))
+        .environment(preferences)
 }

@@ -19,8 +19,6 @@ struct AppSummaryView: View {
     }
 }
 
-struct AppSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppSummaryView(application: Application.default)
-    }
+#Preview {
+    AppSummaryView(application: Application.default)
 }

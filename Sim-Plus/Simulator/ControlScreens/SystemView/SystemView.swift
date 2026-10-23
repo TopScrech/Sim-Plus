@@ -291,13 +291,11 @@ struct SystemView: View {
     }
 }
 
-struct SystemView_Previews: PreviewProvider {
-    static var previews: some View {
-        let preferences = Preferences()
+#Preview {
+    let preferences = Preferences()
 
-        SystemView(simulator: .example)
-            .environment(preferences)
-    }
+    SystemView(simulator: .example)
+        .environment(preferences)
 }
 
 extension SimCtl.UI.Appearance {

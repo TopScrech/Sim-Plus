@@ -48,8 +48,6 @@ struct AboutView: View {
     }
 }
 
-struct AboutView_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutView(authors: [])
-    }
+#Preview {
+    AboutView(authors: [])
 }

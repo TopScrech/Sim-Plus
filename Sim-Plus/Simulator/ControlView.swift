@@ -90,11 +90,9 @@ struct ControlView: View {
     }
 }
 
-struct ControlView_Previews: PreviewProvider {
-    static var previews: some View {
-        ControlView(simulator: .example, applications: [])
-            .environment(SimulatorsController(preferences: Preferences()))
-            .environment(Preferences())
-            .environment(DeepLinksController())
-    }
+#Preview {
+    ControlView(simulator: .example, applications: [])
+        .environment(SimulatorsController(preferences: Preferences()))
+        .environment(Preferences())
+        .environment(DeepLinksController())
 }

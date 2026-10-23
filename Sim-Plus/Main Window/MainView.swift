@@ -78,13 +78,11 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        let preferences = Preferences()
-        MainView()
-            .environment(SimulatorsController(preferences: preferences))
-            .environment(preferences)
-            .environment(DeepLinksController())
-            .environment(UIState.shared)
-    }
+#Preview {
+    let preferences = Preferences()
+    MainView()
+        .environment(SimulatorsController(preferences: preferences))
+        .environment(preferences)
+        .environment(DeepLinksController())
+        .environment(UIState.shared)
 }
