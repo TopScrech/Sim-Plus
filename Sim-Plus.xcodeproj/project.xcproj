@@ -25,6 +25,12 @@
       "version": {
         "up-to-next-major-version": "1.0.13",
       },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "version": {
+        "up-to-next-major-version": "0.65.1",
+      },
     },
   ],
   "files": [
@@ -80,28 +86,10 @@
       "product": "Products/Control Room.app",
       "product-type": "application",
       "last-swift-migration": "11.3",
+      "dependencies": [
+        { "kind": "package", "package": "SwiftLintPlugins", "product-name": "SwiftLintBuildToolPlugin", "product-type": "build-tool-plugin" },
+      ],
       "build-phases": [
-        {
-          "kind": "script",
-          "name": "SwiftLint",
-          "log-environment-variables": true,
-          "run-on-every-build": true,
-          "shell": "/bin/sh",
-          "script": [
-            "if test -d \"/opt/homebrew/bin/\"; then",
-            "  PATH=\"/opt/homebrew/bin/:${PATH}\"",
-            "fi",
-            "",
-            "export PATH",
-            "",
-            "if which swiftlint >/dev/null; then",
-            "  swiftlint",
-            "else",
-            "  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"",
-            "fi",
-            "",
-          ],
-        },
         "compile-sources",
         "frameworks",
         {
