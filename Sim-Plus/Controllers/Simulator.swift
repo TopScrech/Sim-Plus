@@ -4,7 +4,7 @@ import CoreServices
 typealias Runtime = SimCtl.Runtime
 typealias DeviceType = SimCtl.DeviceType
 
-/// Stores one simulator and its identifier.
+/// Stores one simulator and its identifier
 struct Simulator: Identifiable, Comparable {
     enum State {
         case unknown,
@@ -48,13 +48,13 @@ struct Simulator: Identifiable, Comparable {
         }
     }
 
-    /// The user-facing name for this simulator, e.g. iPhone 11 Pro Max.
+    /// The user-facing name for this simulator, e.g. iPhone 11 Pro Max
     let name: String
 
-    /// The internal identifier that represents this device.
+    /// The internal identifier that represents this device
     let udid: String
 
-    /// Sends back the UDID for Identifiable.
+    /// Sends back the UDID for Identifiable
     var id: String { udid }
 
     /// The uniform type identifier of the simulator device
@@ -193,7 +193,7 @@ struct Simulator: Identifiable, Comparable {
 }
 
 extension Simulator: Hashable {
-    /// Sort simulators alphabetically, and then by OS version.
+    /// Sort simulators alphabetically, and then by OS version
     static func < (lhs: Simulator, rhs: Simulator) -> Bool {
         if lhs.name == rhs.name, let lhsRuntime = lhs.runtime, let rhsRuntime = rhs.runtime {
             return lhsRuntime.buildversion < rhsRuntime.buildversion
@@ -209,6 +209,6 @@ extension Simulator {
     static let example = Simulator(name: "iPhone 11 Pro max", udid: UUID().uuidString, state: .booted, runtime: .unknown, deviceType: nil, dataPath: "<example data path>")
 
     /// Users whichever simulator simctl feels like; if there's only one active it will be used,
-    /// but if there's more than one simctl just picks one.
+    /// but if there's more than one simctl just picks one
     static let `default` = Simulator(name: "Default", udid: "booted", state: .booted, runtime: nil, deviceType: nil, dataPath: "<default data path>")
 }

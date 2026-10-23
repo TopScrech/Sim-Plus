@@ -1,7 +1,7 @@
 import KeyboardShortcuts
 import ScrechKit
 
-/// The contents of the menu bar extra: quick access to simulators and the last used app actions.
+/// The contents of the menu bar extra: quick access to simulators and the last used app actions
 struct MenuBarContent: View {
     @Environment(SimulatorsController.self) private var controller
     @Environment(DeepLinksController.self) private var deepLinks

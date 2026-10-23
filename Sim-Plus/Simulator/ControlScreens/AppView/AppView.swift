@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// Controls features relating to one specific app.
+/// Controls features relating to one specific app
 struct AppView: View {
     @AppStorage("CRApps_ShowSystemApps") private var shouldShowSystemApps = true
     @AppStorage("CRApps_LastBundleID") private var lastBundleID = ""
@@ -18,16 +18,16 @@ struct AppView: View {
     let simulator: Simulator
     let applications: [Application]
 
-    /// The selected application we want to manipulate.
+    /// The selected application we want to manipulate
     private var selectedApplication: Application {
         applications.first(where: { $0.bundleIdentifier == lastBundleID })
             ?? .default
     }
 
-    /// The current permission option the user has selected to grant, reset, or revoke.
+    /// The current permission option the user has selected to grant, reset, or revoke
     @State private var resetPermission: SimCtl.Privacy.Permission = .all
 
-    /// If true shows the uninstall confirmation alert.
+    /// If true shows the uninstall confirmation alert
     @State private var shouldShowUninstallConfirmationAlert: Bool = false
 
     init(simulator: Simulator, applications: [Application]) {
@@ -143,34 +143,34 @@ struct AppView: View {
         }
     }
 
-    /// Launches the currently selected app.
+    /// Launches the currently selected app
     func launchApp() {
         SimCtl.launch(simulator.udid, appID: lastBundleID)
     }
 
-    /// Terminates the currently selected app.
+    /// Terminates the currently selected app
     func terminateApp() {
         SimCtl.terminate(simulator.udid, appID: lastBundleID)
     }
 
-    /// Terminates the currently selected app, then restarts it immediately.
+    /// Terminates the currently selected app, then restarts it immediately
     func restartApp() {
         SimCtl.restart(simulator.udid, appID: lastBundleID)
     }
 
-    /// Reveals the app's container directory in Finder.
+    /// Reveals the app's container directory in Finder
     func openDataFolder() {
         guard let dataFolderURL = selectedApplication.dataFolderURL else { return }
         NSWorkspace.shared.activateFileViewerSelecting([dataFolderURL])
     }
 
-    /// Reveals the first app group's container directory in Finder.
+    /// Reveals the first app group's container directory in Finder
     func openFirstAppGroupFolder() {
         guard let firstAppGroupFolderURL = selectedApplication.firstAppGroupFolderURL else { return }
         NSWorkspace.shared.activateFileViewerSelecting([firstAppGroupFolderURL])
     }
 
-    /// Reveals the app's bundle directory in Finder.
+    /// Reveals the app's bundle directory in Finder
     func openAppBundle() {
         guard
             let infoPropertyListURL = selectedApplication.bundleURL?.appendingPathComponent("Info.plist")
@@ -188,7 +188,7 @@ struct AppView: View {
         try? FileManager.default.removeItem(at: savedAppState)
     }
 
-    /// Shows a confirmation alert asking the user if they are sure they want to delete the selected app.
+    /// Shows a confirmation alert asking the user if they are sure they want to delete the selected app
     func confirmDeleteApp() {
         shouldShowUninstallConfirmationAlert = true
     }
@@ -211,12 +211,12 @@ struct AppView: View {
         SimCtl.sendPushNotification(simulator.udid, appID: lastBundleID, jsonPayload: pushPayload)
     }
 
-    /// Removes the identified app from the device.
+    /// Removes the identified app from the device
     func uninstallApp() {
         SimCtl.uninstall(simulator.udid, appID: selectedApplication.bundleIdentifier)
     }
 
-    /// Opens the app's UserDefaults plist file in Xcode.
+    /// Opens the app's UserDefaults plist file in Xcode
     func editUserDefaults() {
         guard let dataFolderURL = selectedApplication.dataFolderURL else { return }
         let preferencesURL = dataFolderURL.appendingPathComponent("Library/Preferences")
@@ -225,17 +225,17 @@ struct AppView: View {
         NSWorkspace.shared.open(plist)
     }
 
-    /// Grants some type of permission to the app.
+    /// Grants some type of permission to the app
     func grantPrivacy() {
         SimCtl.grantPermission(simulator.udid, appID: selectedApplication.bundleIdentifier, permission: resetPermission)
     }
 
-    /// Revokes some type of permission from the app.
+    /// Revokes some type of permission from the app
     func revokePrivacy() {
         SimCtl.revokePermission(simulator.udid, appID: selectedApplication.bundleIdentifier, permission: resetPermission)
     }
 
-    /// Resets some type of permission to the app, so it will be asked for again.
+    /// Resets some type of permission to the app, so it will be asked for again
     func resetPrivacy() {
         SimCtl.resetPermission(simulator.udid, appID: selectedApplication.bundleIdentifier, permission: resetPermission)
     }

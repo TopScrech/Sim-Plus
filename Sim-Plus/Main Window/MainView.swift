@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// Hosts a LoadingView followed by the main ControlView, or a LoadingFailedView if simctl failed.
+/// Hosts a LoadingView followed by the main ControlView, or a LoadingFailedView if simctl failed
 struct MainView: View {
     @Environment(SimulatorsController.self) var controller
     @Environment(UIState.self) var uiState
@@ -63,7 +63,7 @@ struct MainView: View {
 			}
         }
     }
-    /// Deletes all simulators that are currently selected.
+    /// Deletes all simulators that are currently selected
     func deleteSelectedSimulators() {
         guard controller.selectedSimulatorIDs.isNotEmpty else { return }
         SimCtl.delete(controller.selectedSimulatorIDs)

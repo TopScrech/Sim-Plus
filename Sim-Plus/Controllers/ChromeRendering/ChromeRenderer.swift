@@ -49,28 +49,28 @@ import ScrechKit
 // Note: all the Decodable types for rendering are stored
 // in ChromeRendererTypes.swift.
 
-/// Renders a screenshot to an image using a specific device name.
+/// Renders a screenshot to an image using a specific device name
 class ChromeRenderer {
-    /// The screenshot we want to place inside our device chrome.
+    /// The screenshot we want to place inside our device chrome
     let screenshot: NSImage
 
-    /// The base URL where we can find the JSON and images for this chrome.
+    /// The base URL where we can find the JSON and images for this chrome
     let baseURL: URL
 
-    /// Describes the chrome type and screen scale for this simulator.
+    /// Describes the chrome type and screen scale for this simulator
     let device: SimulatorDevice
 
-    /// Describes the images and placements for this chrome.
+    /// Describes the images and placements for this chrome
     let chrome: SimulatorChrome
 
-    /// The final width of the rendered image.
+    /// The final width of the rendered image
     let width: Double
 
-    /// The final height of the rendered image.
+    /// The final height of the rendered image
     let height: Double
 
     /// Creates an instance of ChromeRenderer from a raw device name
-    /// (eg "iPhone 14 Pro") and the screenshot the user just took.
+    /// (eg "iPhone 14 Pro") and the screenshot the user just took
     init(deviceName: String, screenshot: NSImage) throws {
         self.screenshot = screenshot
 
@@ -108,7 +108,7 @@ class ChromeRenderer {
     }
 
     /// This does all the actual work of loading and rendering the various image components to produce
-    /// a final image of the screenshot in simulator chrome.
+    /// a final image of the screenshot in simulator chrome
     func makeImage() -> NSImage? {
         let renderer = ImageRenderer(content:
             Canvas { [self] context, size in
@@ -207,7 +207,7 @@ class ChromeRenderer {
     /// bad code lives, neatly isolated from the regular bad code that exists
     /// in the rest of this file. This was mostly produced through trial and error
     /// while trying to stay awake, so you can expect redundancy, extensive guesswork
-    /// and a fair number of comedy mistakes too.
+    /// and a fair number of comedy mistakes too
     func draw(inputs: [SimulatorImageInput], in context: GraphicsContext, canvasSize size: CGSize, screenshotSize: CGSize, edges: SimulatorImagePadding) {
         for input in inputs {
             let image = image(named: input.image)
@@ -264,7 +264,7 @@ class ChromeRenderer {
         }
     }
 
-    /// Loads an image by combining our base URL with a particular PDF name.
+    /// Loads an image by combining our base URL with a particular PDF name
     func image(named name: String) -> NSImage {
         let url = baseURL.appending(path: "\(name).pdf")
         return NSImage(contentsOf: url) ?? NSImage(systemSymbolName: "exclamationmark.triangle", accessibilityDescription: "Missing image")!

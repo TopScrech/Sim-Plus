@@ -1,6 +1,6 @@
 import Foundation
 
-/// A container for all the functionality for talking to simctl.
+/// A container for all the functionality for talking to simctl
 enum SimCtl: CommandLineCommandExecuter {
 
     static let launchPath = "/usr/bin/xcrun"

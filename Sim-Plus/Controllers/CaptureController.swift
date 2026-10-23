@@ -1,15 +1,15 @@
 import ScrechKit
 
-/// Handles all screenshotting and video creation.
+/// Handles all screenshotting and video creation
 @Observable
 class CaptureController {
     /// The user's settings for capturing
   @ObservationIgnored @AppStorage("captureSettings") var settings = CaptureSettings(imageFormat: .png, videoFormat: .h264, display: .internal, mask: .ignored, saveURL: .desktop)
 
-    /// The currently active recording process, if it exists. We don't need to monitor this, just keep it alive.
+    /// The currently active recording process, if it exists. We don't need to monitor this, just keep it alive
     var recordingProcess: Process?
 
-    /// The name of the file we're writing to, used at first in a temporary directory then on the desktop.
+    /// The name of the file we're writing to, used at first in a temporary directory then on the desktop
     var recordingFilename = ""
 
     private var videoFormat = SimCtl.IO.VideoFormat.h264
@@ -22,7 +22,7 @@ class CaptureController {
         settings.videoFormat.name
     }
 
-    /// Takes a screenshot of the device's current screen and saves it to the desktop.
+    /// Takes a screenshot of the device's current screen and saves it to the desktop
     func takeScreenshot(of simulator: Simulator, format: SimCtl.IO.ImageFormat? = nil) {
         guard simulator.state == .booted else { return }
 
@@ -69,7 +69,7 @@ class CaptureController {
       return settings.saveURL.url.appending(path: "ControlRoom-\(dateString).\(format.rawValue)")
     }
 
-    /// Starts recording video of the device, saving it to the desktop.
+    /// Starts recording video of the device, saving it to the desktop
     func startRecordingVideo(of simulator: Simulator, format: SimCtl.IO.VideoFormat? = nil) {
         guard simulator.state == .booted else { return }
 

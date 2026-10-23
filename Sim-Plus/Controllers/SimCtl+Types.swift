@@ -97,7 +97,7 @@ extension SimCtl {
             }
         }
 
-        /// The user-visible description of the runtime.
+        /// The user-visible description of the runtime
         var description: String {
             if buildversion.isNotEmpty {
                 return "\(name) (\(buildversion))"
@@ -106,7 +106,7 @@ extension SimCtl {
             }
         }
 
-        /// Creates a Runtime when we know all its data.
+        /// Creates a Runtime when we know all its data
         init(buildversion: String, identifier: String, version: String, isAvailable: Bool, name: String) {
             self.buildversion = buildversion
             self.identifier = identifier
@@ -115,7 +115,7 @@ extension SimCtl {
             self.name = name
         }
 
-        /// Creates a Runtime when we know only its identifier; we try to extrapolate properties from that string.
+        /// Creates a Runtime when we know only its identifier; we try to extrapolate properties from that string
         init?(runtimeIdentifier: String) {
             guard let match = Runtime.runtimeRegex?.firstMatch(in: runtimeIdentifier, options: [.anchored], range: NSRange(location: 0, length: runtimeIdentifier.utf16.count)) else {
                 return nil

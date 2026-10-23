@@ -11,30 +11,30 @@ extension SimCtl {
             self.environmentOverrides = environmentOverrides
         }
 
-        /// Create a new device.
+        /// Create a new device
         static func create(name: String, deviceTypeId: String, runtimeId: String? = nil) -> Command {
             Command("create", arguments: [name, deviceTypeId])
         }
-        /// Set logging.
+        /// Set logging
         static func setLogging(deviceTypeId: String, enableLogging: Bool) -> Command {
             Command("logverbose", arguments: [deviceTypeId, String(describing: enableLogging)])
         }
-        /// Clone an existing device.
+        /// Clone an existing device
         static func clone(deviceId: String, name: String) -> Command {
             Command("clone", arguments: [deviceId, name])
         }
 
-        /// Delete spcified devices, unavailable devices, or all devices.
+        /// Delete spcified devices, unavailable devices, or all devices
         static func delete(_ delete: Delete) -> Command {
             Command("delete", arguments: delete.arguments)
         }
 
-        /// Erase a device's contents and settings.
+        /// Erase a device's contents and settings
         static func erase(_ erase: Erase) -> Command {
             Command("erase", arguments: erase.arguments)
         }
 
-        /// Boot a device.
+        /// Boot a device
         static func boot(simulator: Simulator) -> Command {
             if let buildVersion = simulator.runtime?.buildversion, buildVersion.compare("16.0", options: .numeric) == .orderedDescending {
                 // Workaround to make status_bar overrides work for simulators > 16.1.
@@ -45,42 +45,42 @@ extension SimCtl {
             }
         }
 
-        /// Shutdown a device.
+        /// Shutdown a device
         static func shutdown(_ shutdown: ShutDown) -> Command {
             Command("shutdown", arguments: shutdown.arguments)
         }
 
-        /// Rename a device.
+        /// Rename a device
         static func rename(deviceId: String, name: String) -> Command {
             Command("rename", arguments: [deviceId, name])
         }
 
-        /// Open a URL in a device.
+        /// Open a URL in a device
         static func openURL(deviceId: String, url: String) -> Command {
             Command("openurl", arguments: [deviceId, url])
         }
 
-        /// Add photos, live photos, videos, or contacts to the library of a device.
+        /// Add photos, live photos, videos, or contacts to the library of a device
         static func addMedia(deviceId: String, mediaPaths: [String]) -> Command {
             Command("addmedia", arguments: [deviceId] + mediaPaths)
         }
 
-        /// Uninstall an app from a device.
+        /// Uninstall an app from a device
         static func uninstall(deviceId: String, appBundleId: String) -> Command {
             Command("uninstall", arguments: [deviceId, appBundleId])
         }
 
-        /// Launch an application by identifier on a device.
+        /// Launch an application by identifier on a device
         static func launch(deviceId: String, appBundleId: String) -> Command {
             Command("launch", arguments: [deviceId, appBundleId])
         }
 
-        /// Terminate an application by identifier on a device.
+        /// Terminate an application by identifier on a device
         static func terminate(deviceId: String, appBundleId: String) -> Command {
             Command("terminate", arguments: [deviceId, appBundleId])
         }
 
-        /// Spawn a process by executing a given executable on a device.
+        /// Spawn a process by executing a given executable on a device
         static func spawn(deviceId: String, pathToExecutable: String, options: [Spawn.Option] = []) -> Command {
             Command("spawn", arguments: options.flatMap(\.arguments) + [deviceId, pathToExecutable])
         }
@@ -100,22 +100,22 @@ extension SimCtl {
             return Command("list", arguments: arguments + flags.flatMap(\.arguments))
         }
 
-        /// Show the installed applications.
+        /// Show the installed applications
         static func listApps(deviceId: String, flags: [List.Flag] = []) -> Command {
             Command("listapps", arguments: [deviceId] + flags.flatMap(\.arguments))
         }
 
-        /// Trigger iCloud sync on a device.
+        /// Trigger iCloud sync on a device
         static func icloudSync(deviceId: String) -> Command {
             Command("icloud_sync", arguments: [deviceId])
         }
 
-        /// Sync the pasteboard content from one pasteboard to another.
+        /// Sync the pasteboard content from one pasteboard to another
         static func pbsync(source: Pasteboard.Device, destination: Pasteboard.Device) -> Command {
             Command("pbsync", arguments: source.arguments + destination.arguments)
         }
 
-        /// Set up a device IO operation.
+        /// Set up a device IO operation
         static func io(deviceId: String, operation: IO.Operation) -> Command {
             Command("io", arguments: [deviceId] + operation.arguments)
         }

@@ -1,10 +1,10 @@
 import Foundation
 import ScrechKit
 
-/// A centralized class that loads simulator data and handles filtering.
+/// A centralized class that loads simulator data and handles filtering
 @Observable
 class SimulatorsController {
-    /// Tracks the state of fetching simulator data from simctl.
+    /// Tracks the state of fetching simulator data from simctl
     enum LoadingStatus {
         /// Loading is in progress
         case loading
@@ -22,16 +22,16 @@ class SimulatorsController {
     /// The current loading state; defaults to .loading
     var loadingStatus: LoadingStatus = .loading
 
-    /// An array of all simulators that match the user's current filter.
+    /// An array of all simulators that match the user's current filter
     var simulators = [Simulator]()
 
-    /// An array of all the applications installed on the selected simulator.
+    /// An array of all the applications installed on the selected simulator
     var applications = [Application]()
 
-    /// An array of all the snapshots of the selected simulator.
+    /// An array of all the snapshots of the selected simulator
     var snapshots = [Snapshot]()
 
-    /// An array of all simulators that were loaded from simctl.
+    /// An array of all simulators that were loaded from simctl
     private(set) var allSimulators = [Simulator]()
 
     private(set) var deviceTypes = [DeviceType]()
@@ -46,7 +46,7 @@ class SimulatorsController {
 
     /// The simulators the user has selected to work with. If this has one item then
     /// they are working with a simulator; if more than one they are probably about
-    /// to delete several at a time.
+    /// to delete several at a time
     var selectedSimulatorIDs = Set<String>() {
         didSet {
             guard selectedSimulatorIDs != oldValue else { return }
@@ -74,7 +74,7 @@ class SimulatorsController {
     }
 
     /// Starts refreshing simulator data for the lifetime of the app, so both the main window
-    /// and the menu bar extra stay up to date. Calling this again while already watching does nothing.
+    /// and the menu bar extra stay up to date. Calling this again while already watching does nothing
     func startWatching() {
         guard watchTask == nil else { return }
         watchTask = Task { [weak self] in
@@ -175,7 +175,7 @@ class SimulatorsController {
         }
     }
 
-    /// Filters the list of simulators using `filterText`, and assigns the result to `simulators`.
+    /// Filters the list of simulators using `filterText`, and assigns the result to `simulators`
     func filterSimulators() {
         guard loadingStatus == .success else { return }
 

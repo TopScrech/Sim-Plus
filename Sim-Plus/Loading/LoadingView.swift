@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// Shown when the app launches, while simulator data is being fetched from simctl.
+/// Shown when the app launches, while simulator data is being fetched from simctl
 struct LoadingView: View {
     var body: some View {
         Text("Fetching simulator list…")

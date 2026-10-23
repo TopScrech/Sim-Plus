@@ -8,16 +8,16 @@ struct LocationView: View {
     static let defaultLat = 37.323056
     static let defaultLong = -122.031944
 
-    /// Saved locations controller.
+    /// Saved locations controller
     @State private var locationsController = LocationsController()
-    /// Local search controller.
+    /// Local search controller
     @State private var localSearchController = LocalSearchController()
-    /// Current table selection binding.
+    /// Current table selection binding
     @State private var previouslyPickedLocation: Location.ID?
 
-    /// Name of the location user is about save.
+    /// Name of the location user is about save
     @State private var newLocationName = ""
-    /// Indicates whether save location alert is currently presented.
+    /// Indicates whether save location alert is currently presented
     @State private var isShowingNewLocationAlert = false
 
     /// Placeholder that appears in the local search bar
@@ -41,8 +41,8 @@ struct LocationView: View {
     )
     @State private var pinnedLocation: CLLocationCoordinate2D?
 
-    /// A randomly generated location offset from the currentLocation.
-    /// Non-nil only when jittering is enabled.
+    /// A randomly generated location offset from the currentLocation
+    /// Non-nil only when jittering is enabled
     @State private var jitteredLocation: CLLocationCoordinate2D?
 
     @State private var isJittering: Bool = false
@@ -181,7 +181,7 @@ struct LocationView: View {
         }
     }
 
-    /// Updates the simulated location to the value of `currentLocation`.
+    /// Updates the simulated location to the value of `currentLocation`
     func changeLocation() {
         let coordinate = jitteredLocation ?? currentLocation.center
         pinnedLocation = coordinate
@@ -190,7 +190,7 @@ struct LocationView: View {
     }
 
     /// Takes the entered query and performs a local search. If the query is a pasted-in coordinate,
-    /// it will return a `Location` immediately.
+    /// it will return a `Location` immediately
     private func performLocalSearch() {
         if query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             presentResults = false
@@ -241,7 +241,7 @@ struct LocationView: View {
         changeLocation()
     }
 
-    /// Saves currently selected location to user's collection.
+    /// Saves currently selected location to user's collection
     private func savePickedLocation() {
         let latitude = currentLocation.center.latitude
         let longitude = currentLocation.center.longitude
@@ -249,7 +249,7 @@ struct LocationView: View {
         newLocationName = ""
     }
 
-    /// Updates current location on the map when saved location is selected from the table.
+    /// Updates current location on the map when saved location is selected from the table
     private func updatePickedLocation() {
         guard let location = locationsController.item(with: previouslyPickedLocation) else { return }
         currentLocation = location

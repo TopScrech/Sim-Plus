@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// A horizontal split view that shows a left-hand sidebar of simulators and right-hand details.
+/// A horizontal split view that shows a left-hand sidebar of simulators and right-hand details
 struct SplitLayoutView: View {
     @Environment(SimulatorsController.self) var controller
 

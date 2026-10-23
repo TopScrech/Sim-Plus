@@ -1,7 +1,7 @@
 import CoreLocation
 import ScrechKit
 
-/// Controls system-wide settings such as time and appearance.
+/// Controls system-wide settings such as time and appearance
 struct SystemView: View {
     let simulator: Simulator
 
@@ -11,13 +11,13 @@ struct SystemView: View {
     @AppStorage("CRApps_LastOpenURL") private var lastOpenURL = ""
     @AppStorage("CRApps_LastCertificateFilePath") private var lastCertificateFilePath = ""
 
-    /// The current state of logging.
+    /// The current state of logging
     @State private var isLoggingEnabled = false
 
-    /// Whether the user is currently hovering over the area to copy files.
+    /// Whether the user is currently hovering over the area to copy files
     @State private var dropHovering = false
 
-    /// A destructive action waiting for the user to confirm it.
+    /// A destructive action waiting for the user to confirm it
     @State private var pendingDestructiveAction: DestructiveAction?
 
     var body: some View {
@@ -178,7 +178,7 @@ struct SystemView: View {
         }
     }
 
-    /// A labeled path with buttons to copy it or reveal it in Finder or Terminal.
+    /// A labeled path with buttons to copy it or reveal it in Finder or Terminal
     private func pathRow(_ title: LocalizedStringKey, filePath: Simulator.FilePathKind) -> some View {
         LabeledContent(title) {
             HStack {
@@ -209,11 +209,11 @@ struct SystemView: View {
         }
     }
 
-    /// Starts an immediate iCloud sync.
+    /// Starts an immediate iCloud sync
     func triggerSync() {
         SimCtl.triggeriCloudSync(simulator.udid)
     }
-    /// Update logging.
+    /// Update logging
     func updateLogging() {
         if isLoggingEnabled {
             SimCtl.setLogging(simulator, enableLogging: false)
@@ -223,22 +223,22 @@ struct SystemView: View {
             isLoggingEnabled = true
         }
     }
-    /// Get logs.
+    /// Get logs
     func getLogs() {
         SimCtl.getLogs()
     }
 
-    /// Copies the simulator's pasteboard to the Mac.
+    /// Copies the simulator's pasteboard to the Mac
     func copyPasteboardToMac() {
         SimCtl.copyPasteboardToMac(simulator.udid)
     }
 
-    /// Copies the Mac's pasteboard to the simulator.
+    /// Copies the Mac's pasteboard to the simulator
     func copyPasteboardToSim() {
         SimCtl.copyPasteboardToSimulator(simulator.udid)
     }
 
-    /// Opens a URL in the appropriate device app.
+    /// Opens a URL in the appropriate device app
     func openURL() {
         SimCtl.openURL(simulator.udid, URL: lastOpenURL)
     }
@@ -247,7 +247,7 @@ struct SystemView: View {
         SimCtl.addRootCertificate(simulator.udid, filePath: lastCertificateFilePath)
     }
 
-    /// Erases the current device.
+    /// Erases the current device
     func eraseDevice() {
         SimCtl.erase(simulator.udid)
     }
@@ -306,7 +306,7 @@ extension SimCtl.UI.Appearance {
     }
 }
 
-/// A destructive System tab action that needs confirmation.
+/// A destructive System tab action that needs confirmation
 private enum DestructiveAction {
     case resetKeychain, erase
 

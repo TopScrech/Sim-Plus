@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// Shown when loading the simulator data from simctl has failed.
+/// Shown when loading the simulator data from simctl has failed
 struct LoadingFailedView: View {
     let title: String
     let text: String

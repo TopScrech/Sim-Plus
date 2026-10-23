@@ -1,25 +1,25 @@
 import ScrechKit
 
-/// Controls WiFi and cellular data state for the whole device.
+/// Controls WiFi and cellular data state for the whole device
 struct StatusBarView: View {
     let simulator: Simulator
 
     /// The date and time to show in the device
     @State private var time = Date.now
 
-    /// The active data network; can be one of "WiFi", "3G", "4G", "5G", "5G+", "5G-UWB", "LTE", "LTE-A", or "LTE+".
+    /// The active data network; can be one of "WiFi", "3G", "4G", "5G", "5G+", "5G-UWB", "LTE", "LTE-A", or "LTE+"
     @State private var dataNetwork: SimCtl.StatusBar.DataNetwork = .wifi
 
-    /// Whether WiFi is currently active; can be "Active", "Searching", or "Failed".
+    /// Whether WiFi is currently active; can be "Active", "Searching", or "Failed"
     @State private var wiFiMode: SimCtl.StatusBar.WifiMode = .active
 
-    /// How many WiFi bars the device is showing, as a range from 0 through 3.
+    /// How many WiFi bars the device is showing, as a range from 0 through 3
     @State private var wiFiBar: SimCtl.StatusBar.WifiBars = .three
 
-    /// Whether cellular data is currently active; can be "Active", "Searching", "Failed", or "Not Supported".
+    /// Whether cellular data is currently active; can be "Active", "Searching", "Failed", or "Not Supported"
     @State private var cellularMode: SimCtl.StatusBar.CellularMode = .active
 
-    /// How many cellular bars the device is showing, as a range from 0 through 4.
+    /// How many cellular bars the device is showing, as a range from 0 through 4
     @State private var cellularBar: SimCtl.StatusBar.CellularBars = .four
 
     @AppStorage("CRNetwork_CarrierName") private var carrierName = "Carrier"
@@ -135,7 +135,7 @@ struct StatusBarView: View {
         }
     }
 
-    /// An SF Symbol reflecting the selected battery level and state.
+    /// An SF Symbol reflecting the selected battery level and state
     private var batterySymbol: String {
         let percent = switch batteryLevel {
         case ..<13: 0
@@ -185,7 +185,7 @@ struct StatusBarView: View {
     }
 
     /// Sends status bar updates all at once; simctl gets unhappy if we send them individually, but
-    /// also for whatever reason prefers cellular data sent separately from WiFi.
+    /// also for whatever reason prefers cellular data sent separately from WiFi
     private func updateWiFiData() {
         SimCtl.overrideStatusBarWiFi(
             simulator.udid,
@@ -204,7 +204,7 @@ struct StatusBarView: View {
         )
     }
 
-    /// Sends battery updates all at once; simctl gets unhappy if we send them individually.
+    /// Sends battery updates all at once; simctl gets unhappy if we send them individually
     private func updateBattery() {
         SimCtl.overrideStatusBarBattery(
             simulator.udid,
@@ -213,7 +213,7 @@ struct StatusBarView: View {
         )
     }
 
-    /// Triggered when the user adjusts the battery level.
+    /// Triggered when the user adjusts the battery level
     private func levelChanged(_ isEditing: Bool) {
         if isEditing == false {
             updateBattery()

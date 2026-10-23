@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 import MapKit
 
-/// The user's saved location.
+/// The user's saved location
 struct Location: Identifiable, Codable {
     var id: UUID
     var name: String

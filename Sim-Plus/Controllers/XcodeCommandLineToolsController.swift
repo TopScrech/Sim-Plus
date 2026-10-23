@@ -35,7 +35,7 @@ private extension XcodeSelect {
             self.arguments = [subcommand] + arguments
         }
 
-        /// Print the path of the active developer directory.
+        /// Print the path of the active developer directory
         static func printPath() -> Command {
             Command("-p", arguments: [])
         }
@@ -61,7 +61,7 @@ private extension SystemProfiler {
             self.arguments = [subcommand] + arguments
         }
 
-        /// List the available developer tools.
+        /// List the available developer tools
         static func listDeveloperTools() -> Command {
             Command("SPDeveloperToolsDataType", arguments: ["-json"])
         }

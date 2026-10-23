@@ -1,6 +1,6 @@
 import ScrechKit
 
-/// Shows the list of available simulators, allowing selection, filtering, and deletion.
+/// Shows the list of available simulators, allowing selection, filtering, and deletion
 struct SidebarView: View {
     @Environment(Preferences.self) var preferences
     @Environment(SimulatorsController.self) var controller
@@ -81,7 +81,7 @@ struct SidebarView: View {
         }
     }
 
-    /// Deletes all simulators that are currently selected.
+    /// Deletes all simulators that are currently selected
     func deleteSelectedSimulators() {
         guard controller.selectedSimulatorIDs.isNotEmpty else { return }
         SimCtl.delete(controller.selectedSimulatorIDs)

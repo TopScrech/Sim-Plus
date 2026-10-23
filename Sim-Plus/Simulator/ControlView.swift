@@ -1,8 +1,8 @@
 import ScrechKit
 
-/// The main tab view to control simulator settings.
+/// The main tab view to control simulator settings
 struct ControlView: View {
-    /// Used to handle creating screenshots, videos, and GIFs.
+    /// Used to handle creating screenshots, videos, and GIFs
     @State private var captureController = CaptureController()
 
     let simulator: Simulator
@@ -79,12 +79,12 @@ struct ControlView: View {
         }
     }
 
-    /// Launches the current device.
+    /// Launches the current device
     func bootDevice() {
         SimCtl.boot(simulator)
     }
 
-    /// Terminates the current device.
+    /// Terminates the current device
     func shutdownDevice() {
         SimCtl.shutdown(simulator.udid)
     }
@@ -92,8 +92,7 @@ struct ControlView: View {
 
 struct ControlView_Previews: PreviewProvider {
     static var previews: some View {
-        ControlView(simulator: .example,
-                    applications: [])
+        ControlView(simulator: .example, applications: [])
             .environment(SimulatorsController(preferences: Preferences()))
             .environment(Preferences())
             .environment(DeepLinksController())

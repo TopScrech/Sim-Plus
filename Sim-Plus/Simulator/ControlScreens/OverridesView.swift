@@ -3,7 +3,7 @@ import ScrechKit
 struct OverridesView: View {
     let simulator: Simulator
 
-    /// The system-wide appearance; "Light" or "Dark".
+    /// The system-wide appearance; "Light" or "Dark"
     @State private var appearance: SimCtl.UI.Appearance = .light
 
     /// The currently active language identifier
@@ -119,7 +119,7 @@ struct OverridesView: View {
         }
     }
 
-    /// Keeps the region valid when the language changes, falling back to the first region for that language.
+    /// Keeps the region valid when the language changes, falling back to the first region for that language
     private func selectDefaultLocale() {
         let available = locales(for: language)
 
@@ -128,7 +128,7 @@ struct OverridesView: View {
         }
     }
 
-    /// Moves between light and dark mode.
+    /// Moves between light and dark mode
     func updateAppearance() {
         SimCtl.setAppearance(simulator.udid, appearance: appearance)
     }
@@ -150,7 +150,7 @@ struct OverridesView: View {
             }
     }
 
-    /// Update Content Size.
+    /// Update Content Size
     func updateContentSize() {
         SimCtl.setContentSize(simulator.udid, contentSize: contentSize)
     }

@@ -59,7 +59,7 @@ struct PathToTerminalTextFieldView: View {
         }
     }
 
-    /// Whether the configured path points to an existing app.
+    /// Whether the configured path points to an existing app
     private var isValidPath: Bool {
         preferences.terminalAppPath.hasSuffix(".app") && FileManager.default.fileExists(atPath: preferences.terminalAppPath)
     }

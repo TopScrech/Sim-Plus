@@ -1,7 +1,7 @@
 import Foundation
 
-/// Actions that work on the last used simulator, app and URL.
-/// Shared by the menu bar extra and the global keyboard shortcuts.
+/// Actions that work on the last used simulator, app and URL
+/// Shared by the menu bar extra and the global keyboard shortcuts
 enum QuickActions {
     static let defaultPushPayload = """
     {
@@ -16,7 +16,7 @@ enum QuickActions {
 
     private static var defaults: UserDefaults { .standard }
 
-    /// The simulator the quick actions target; falls back to whichever one simctl considers booted.
+    /// The simulator the quick actions target; falls back to whichever one simctl considers booted
     static var lastSimulatorUDID: String {
         let udid = defaults.string(forKey: "CRLastSimulatorUDID") ?? ""
         return udid.isEmpty ? Simulator.default.udid : udid

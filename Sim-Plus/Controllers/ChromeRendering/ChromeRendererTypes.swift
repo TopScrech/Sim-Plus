@@ -1,5 +1,5 @@
 /// This file contains all the Decodable types required to work with Apple's property list and JSON
-/// files that handle simulator device and chrome data.
+/// files that handle simulator device and chrome data
 
 import Foundation
 
