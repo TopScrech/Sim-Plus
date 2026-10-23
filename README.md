@@ -23,7 +23,6 @@ Control Room is packed with features to help you develop apps more effectively, 
 - Picking a custom user location from anywhere in the world
 - Starting, stopping, installing, and removing apps
 - Sending test push notifications or triggering deep links
-- Selecting colors from the simulator, converting them to UIKit or SwiftUI code, or even dragging directly into your asset catalog
 
 Plus there’s an optional menu bar icon adding quick actions such as re-sending the last push notification or re-opening your last deep link
 

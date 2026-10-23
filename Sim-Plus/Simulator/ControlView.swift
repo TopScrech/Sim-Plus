@@ -17,7 +17,6 @@ struct ControlView: View {
                 LocationView(simulator: simulator)
                 StatusBarView(simulator: simulator)
                 OverridesView(simulator: simulator)
-                ColorsView()
             }
             .disabled(simulator.state != .booted)
 

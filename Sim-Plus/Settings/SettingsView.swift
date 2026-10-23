@@ -19,11 +19,6 @@ struct SettingsView: View {
                     Label("Screenshots", systemImage: "camera.on.rectangle")
                 }
 
-            ColorPickerView()
-                .tabItem {
-                    Label("Colors", systemImage: "paintpalette")
-                }
-
             PathToTerminalTextFieldView()
                 .tabItem {
                     Label("Locations", systemImage: "externaldrive")
