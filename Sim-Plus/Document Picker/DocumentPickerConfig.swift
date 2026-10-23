@@ -1,4 +1,3 @@
-import Foundation
 import UniformTypeIdentifiers
 
 /// Finder dialog configuration to select file/s

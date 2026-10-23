@@ -1,4 +1,3 @@
-import Foundation
 import UniformTypeIdentifiers
 
 /// Finder file extension allowed

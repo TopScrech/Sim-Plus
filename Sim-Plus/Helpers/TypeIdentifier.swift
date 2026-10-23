@@ -1,5 +1,4 @@
-import Cocoa
-import CoreServices
+import SwiftUI
 import UniformTypeIdentifiers
 
 struct TypeIdentifier: Hashable {
@@ -32,6 +31,7 @@ struct TypeIdentifier: Hashable {
     func conformsTo(_ other: TypeIdentifier) -> Bool {
         let ourType = UTType(rawValue) ?? .bundle
         let otherType = UTType(other.rawValue) ?? .bundle
+
         return ourType.conforms(to: otherType)
     }
 

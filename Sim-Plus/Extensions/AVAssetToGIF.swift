@@ -1,12 +1,11 @@
-import AVFoundation
 import Foundation
-import UniformTypeIdentifiers
+import AVFoundation
 
 enum GIFError: Error {
-    case unableToReadFile
-    case unableToFindTrack
-    case unableToCreateOutput
-    case unknown
+    case unableToReadFile,
+         unableToFindTrack,
+         unableToCreateOutput,
+         unknown
 }
 
 extension URL {
@@ -111,7 +110,7 @@ extension URL {
 
             // Should probably look into why the delay stack would be empty here, but
             // I assume it's just a total frames reporting issue with AVFoundation and
-            // this seems to work fine.
+            // this seems to work fine
             guard appliedFrameDelayStack.isNotEmpty else { break }
 
             // See description of frame delay stack above
