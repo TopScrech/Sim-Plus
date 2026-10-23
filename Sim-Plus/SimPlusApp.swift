@@ -1,13 +1,23 @@
-import KeyboardShortcuts
 import ScrechKit
+import KeyboardShortcuts
 
 @main
-struct ControlRoomApp: App {
+struct SimPlusApp: App {
     @AppStorage("CRWantsMenuBarIcon") private var wantsMenuBarIcon = true
 
     @State var preferences: Preferences
     @State var controller: SimulatorsController
     @State var deepLinks = DeepLinksController()
+
+    init() {
+        let preferences = Preferences()
+        let controller = SimulatorsController(preferences: preferences)
+        _preferences = State(initialValue: preferences)
+        _controller = State(initialValue: controller)
+        
+        controller.startWatching()
+        registerGlobalShortcuts()
+    }
 
     var body: some Scene {
         Window("Control Room", id: "main") {
@@ -52,16 +62,6 @@ struct ControlRoomApp: App {
                 .environment(controller)
                 .environment(deepLinks)
         }
-    }
-
-    init() {
-        let preferences = Preferences()
-        let controller = SimulatorsController(preferences: preferences)
-        _preferences = State(initialValue: preferences)
-        _controller = State(initialValue: controller)
-
-        controller.startWatching()
-        registerGlobalShortcuts()
     }
 
     private func registerGlobalShortcuts() {
