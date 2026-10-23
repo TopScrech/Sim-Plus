@@ -1,9 +1,8 @@
 import Foundation
 
-// This file describes the file format used by Xcode asset catalog
-// color sets. The struct names follow the format of the file, so
-// even though some look a little redundant it's what Xcode
-// is looking for.
+/// This file describes the file format used by Xcode asset catalog
+/// color sets. The struct names follow the format of the file, so
+/// even though some look a little redundant it's what Xcode is looking for
 struct XcodeColorSet: Codable {
     var colors: [XcodeColors]
     var info: XcodeColorInfo
