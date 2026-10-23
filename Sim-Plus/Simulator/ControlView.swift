@@ -12,7 +12,6 @@ struct ControlView: View {
         TabView {
             SystemView(simulator: simulator)
                 .disabled(simulator.state != .booted)
-            SnapshotsView(simulator: simulator)
             Group {
                 AppView(simulator: simulator, applications: applications)
                 LocationView(simulator: simulator)
@@ -22,6 +21,7 @@ struct ControlView: View {
             }
             .disabled(simulator.state != .booted)
 
+            SnapshotsView(simulator: simulator)
         }
         .navigationSubtitle("\(simulator.name) – \(simulator.runtime?.name ?? "Unknown OS")")
         .onChange(of: simulator.state) {
