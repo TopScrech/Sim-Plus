@@ -27,6 +27,11 @@ struct MainView: View {
 				LoadingView()
 			}
         }
+        .focusedSceneValue(controller)
+        .focusedSceneValue(preferences)
+        .background {
+            WindowLevelView(isFloating: preferences.wantsFloatingWindow)
+        }
         .onAppear {
             controller.startWatching()
         }

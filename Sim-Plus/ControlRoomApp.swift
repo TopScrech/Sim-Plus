@@ -18,6 +18,9 @@ struct ControlRoomApp: App {
                 .environment(deepLinks)
         }
         .commands {
+            SimulatorCommands()
+            SidebarCommands()
+
             CommandGroup(replacing: .appInfo) {
                 Button("About Control Room") {
                     let authors = Bundle.main.authors
