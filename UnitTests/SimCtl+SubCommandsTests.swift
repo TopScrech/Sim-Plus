@@ -2,7 +2,6 @@
 import Testing
 
 struct SimCtlSubCommandsTests {
-
     @Test
     func testDeleteUnavailable() throws {
         let command: SimCtl.Command = .delete(.unavailable)

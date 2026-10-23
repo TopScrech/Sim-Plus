@@ -51,8 +51,8 @@
         {
           "target": "Unit Tests",
           "inclusions": [
-            "Controllers/SimCtl+SubCommandsTests.swift",
-            "Controllers/StatusBarTimeTests.swift",
+            "SimCtl+SubCommandsTests.swift",
+            "StatusBarTimeTests.swift",
           ],
         },
       ],

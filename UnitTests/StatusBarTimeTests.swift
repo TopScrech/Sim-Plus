@@ -8,6 +8,7 @@ struct StatusBarTimeTests {
         ("Europe/Amsterdam", "2007-01-09T09:41:00.000+01:00"),
         ("Asia/Kolkata", "2007-01-09T14:11:00.000+05:30")
     ])
+
     func formattedOverride(timeZoneIdentifier: String, expectedTime: String) throws {
         let timeZone = try #require(TimeZone(identifier: timeZoneIdentifier))
         let date = Date(timeIntervalSince1970: 1_168_332_060)
