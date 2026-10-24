@@ -59,6 +59,7 @@
           "inclusions": [
             "SimCtl+SubCommandsTests.swift",
             "StatusBarTimeTests.swift",
+            "ThermalOverrideTests.swift",
           ],
         },
       ],

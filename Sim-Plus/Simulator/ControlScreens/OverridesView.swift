@@ -39,6 +39,9 @@ struct OverridesView: View {
 
     var body: some View {
         Form {
+            ThermalOverrideView(simulator: simulator)
+                .id(simulator.udid)
+
             Section {
                 Picker("Appearance", selection: $appearance.onChange(updateAppearance)) {
                     ForEach(SimCtl.UI.Appearance.allCases, id: \.self) {
