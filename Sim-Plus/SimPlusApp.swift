@@ -14,7 +14,7 @@ struct SimPlusApp: App {
         let controller = SimulatorsController(preferences: preferences)
         _preferences = State(initialValue: preferences)
         _controller = State(initialValue: controller)
-        
+
         controller.startWatching()
         registerGlobalShortcuts()
     }
